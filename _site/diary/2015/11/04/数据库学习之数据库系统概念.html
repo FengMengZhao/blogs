@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - 数据库学习之数据库系统概念</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/11/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  November 04, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">数据库学习之数据库系统概念</h1>
+
+<div id="post">
+  <h2 id="目录">目录</h2>
+
+<ul>
+  <li>
+    <p><a href="#1">1 简单SQL</a></p>
+  </li>
+  <li>
+    <p><a href="#2">2 高级SQL</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 简单SQL</h2>
+
+<h3 id="基本域类型">基本域类型</h3>
+
+<p>  <code class="highlighter-rouge">char(n)</code>：表示固定长度的字符串，用户指定长度n。也可以用全称character。</p>
+
+<p>  <code class="highlighter-rouge">varchar(n)</code>：表示可变长度的字符串，用户指定最大长度为n。等价于character varying。</p>
+
+<p>  <code class="highlighter-rouge">int</code>：整形类型，等价于integer。</p>
+
+<p>  <code class="highlighter-rouge">numeric(p, d)</code>：定点数，精度由用户指定。这个数有p位数字(还有一个符号位)，其中d位数字在小数点右边。numeric(3, 1)可以储存44.5，但是不能储存444.5或0.32这样的数。</p>
+
+<p>  <code class="highlighter-rouge">real, double precision</code>：浮点数与双精度浮点数，精度与机器相关。</p>
+
+<p>  <code class="highlighter-rouge">float(n)</code>：精度至少为n的浮点数。</p>
+
+<p>  SQL的基本模式定义：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create table r(A1	D1,
+	       A2	D2,
+	       A3	D3,
+	       ...,
+	       完整性约束)
+</code></pre></div></div>
+
+<p>  示例代码：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> create table customer(
+ customer_name    char(20),
+ customer_street  char(30),
+ customer_city    char(30),
+ primary key(customer_name)
+) ;
+</code></pre></div></div>
+
+<p>  插入语句：<code class="highlighter-rouge">insert into r values(...)</code></p>
+
+<p>  删除语句：<code class="highlighter-rouge">delete from r</code>，此处的删除只是删除元组，不删除关系。</p>
+
+<p>  删除关系语句：<code class="highlighter-rouge">drop table r</code></p>
+
+<p>  为已经有的关系增加属性：<code class="highlighter-rouge">alert table r add A D</code>，A代表属性的名字，D代表属性的域；<code class="highlighter-rouge">alert table r drop A</code>：表示从关系中去掉属性。</p>
+
+<h3 id="1.1">1.1 SQL查询的基本结构</h3>
+
+<p>  select字句对应关系代数中的投影运算，用来列出查询结果所要的属性</p>
+
+<blockquote>
+  <p>select子句默认是包含重复的，如果要强行删除重复，可以用：<code class="highlighter-rouge">distinc</code>；还可以显示的使用<code class="highlighter-rouge">all</code>来包含重复元组。</p>
+</blockquote>
+
+<p>  from字句对应关系代数中的笛卡尔积，它列出表达式求值中需要扫描的关系</p>
+
+<p>  where字句对应关系中的选择谓词，它包含一个作用在from字句中关系的属性上的谓词。</p>
+
+<p>  典型的sql查询：<code class="highlighter-rouge">select A1, A2, A3... from r1, r2, r3... where P</code>，如果where字句省略，则P为true。</p>
+
+<p>  更换属性名：<code class="highlighter-rouge">旧名 as 新名</code></p>
+
+<p>  用as来修改元组变量：<code class="highlighter-rouge">select T.stname from st_homework_grade as T, st_homework_grade as S where T.st_5_grade &gt; S.st_5_grade and S.stname = '董建芳'</code></p>
+
+<blockquote>
+  <p>上述用法主要用于同一个关系中的两个元组的比较中，使用它会特别有用。</p>
+</blockquote>
+
+<h4 id="字符串运算">字符串运算</h4>
+
+<p>  <code class="highlighter-rouge">''</code>可以表示<code class="highlighter-rouge">'</code></p>
+
+<p>  <code class="highlighter-rouge">%</code>表示匹配任意子串</p>
+
+<p>  <code class="highlighter-rouge">_</code>表示匹配任意字符</p>
+
+<blockquote>
+  <p>上述模式是大小写敏感的</p>
+</blockquote>
+
+<p>  示例：<code class="highlighter-rouge">Perry%</code>表示匹配任意以”Perry”开头的字符串；<code class="highlighter-rouge">%idge%</code>表示匹配任何包含”idge”为子串的字符串；<code class="highlighter-rouge">___</code>表示匹配只含有三个字符的字符串；<code class="highlighter-rouge">__%</code>表示匹配至少含有三个字符的字符串</p>
+
+<blockquote>
+  <p>在sql语句中，当进行匹配的时候要用关键字：<code class="highlighter-rouge">like</code>。</p>
+</blockquote>
+
+<p>  排列元组的显示次序：<code class="highlighter-rouge">order by</code>，默认使用升序排列，可以用<code class="highlighter-rouge">desc</code>表示降序，用<code class="highlighter-rouge">asc</code>表示升序。</p>
+
+<h4 id="集合的运算">集合的运算</h4>
+
+<p>  <code class="highlighter-rouge">union</code>表示交集，默认会删除重复(只出现一次)，如果需要列出重复，需要显示的使用：<code class="highlighter-rouge">union all</code>。</p>
+
+<p>  <code class="highlighter-rouge">intersect</code>表示交集，默认删除重复(只出现一次)，列出重复，需使用：<code class="highlighter-rouge">intersect all</code>。</p>
+
+<p>  <code class="highlighter-rouge">except</code>表示补集，默认删除重复(只出现一次)，列出重复，需使用：<code class="highlighter-rouge">except all</code> 。</p>
+
+<h4 id="聚集函数">聚集函数</h4>
+
+<p>  <code class="highlighter-rouge">avg</code>平均数；<code class="highlighter-rouge">min</code>最小值；<code class="highlighter-rouge">max</code>最大值；<code class="highlighter-rouge">sum</code>总和；<code class="highlighter-rouge">count</code>计数。其中，sum和avg必须是数字集合，其他的运算符可以作用于非数字的数据类型。</p>
+
+<p>  我们可以将聚集函数应用在单个元组上：<code class="highlighter-rouge">select avg(balance) as '平均结余' from account where branch_name = 'ICBC' ;</code>。</p>
+
+<p>  我们也可应将聚集函数应用在一组元组集上，在SQL中可以使用<code class="highlighter-rouge">group by</code>子句实现：<code class="highlighter-rouge">select branch_name, avg(balance) as '平均结余' from account group by branch_name ;</code>。算出每个支行的平均结余。</p>
+
+<p>  有些情况，我们需要在聚集函数前面删除掉重复项：<code class="highlighter-rouge">select branch_name, count(distinct customer_name) as 储户数量 from depositor, account where depositor.account_number = account.account_number group by branch_name ;</code>。找出各个支行中储户的数量，如果具有相同的名字，则认为是一个储户。</p>
+
+<p>  我们还可以对分组进行条件的限定，在SQL语句中，我们使用<code class="highlighter-rouge">having</code>子句：<code class="highlighter-rouge">select branch_name, avg(balance) as '平均结余大于4500' from account group by branch_name having avg(balance) &gt; 4500 ;</code></p>
+
+<p>  我们可以将整个关系看成是一个分组：<code class="highlighter-rouge">select avg(balance) from account ;</code></p>
+
+<p>  我们经常使用聚集函数count来计算一个关系中元组的个数：<code class="highlighter-rouge">select count(*) from customer ;</code></p>
+
+<p>  总之查询都在这样的一个函数当中：<code class="highlighter-rouge">select A... form r... where P... group by A... having P...</code>。</p>
+
+<h4 id="数据库的修改">数据库的修改</h4>
+
+<p>  删除：<code class="highlighter-rouge">delete from r where P in...</code>在这个可以用嵌套字句。例如：<code class="highlighter-rouge">delete from account where branch_name in (select branch_name from branch where assets &gt;  738422233) ;</code></p>
+
+<p>  插入：<code class="highlighter-rouge">insert into r values(...)</code>；也可以用嵌套字句：<code class="highlighter-rouge">insert into r select... from... where...</code>。例如：<code class="highlighter-rouge">insert into account select loan_number, branch_name, 22 from loan where branch_name = "ICBC" ;</code>。</p>
+
+<p>  更新，我们希望在不改变元组的情况下，来改变元组的属性值。语法：<code class="highlighter-rouge">update r set... where...</code>。例如：<code class="highlighter-rouge"> update account set balance = balance * 10 where branch_name = '工商银行' ;</code>。</p>
+
+<p>  更新操作还提供了<code class="highlighter-rouge">case</code>结构，语法：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case
+	when pred1 then result1
+	when pred2 then result2
+	when pred3 then result3
+	...
+	when predn then resultn
+	else result0
+end
+</code></pre></div></div>
+
+<p>  例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>update account set balance = case
+				when balance &lt;=1000 then balance*1.05
+				else balance*1.06
+				end
+</code></pre></div></div>
+
+<h4 id="视图">视图</h4>
+
+<p>  任何不适逻辑模型的一部分但作为虚关系对用户可见的关系称之为视图(view)。</p>
+
+<p>  视图定义：<code class="highlighter-rouge">create view v as&lt;查询表达式&gt;</code>。例如：<code class="highlighter-rouge">create view account_view as select * from account</code>。</p>
+
+<h4 id="事务transaction">事务(transaction)</h4>
+
+<p>  事务是由查询或者更新语句序列组成。commit work：提交当前事务，也就是将该事物所做的更新在数据库中持久保存，事务被提交后，一个新的事务开始。rollback work：回滚当前事务，即，撤销该事物中所有sql语句对数据库的更新。这样数据库就恢复到执行该事物第一条语句之前的状态。</p>
+
+<hr />
+
+<hr />
+
+<h2 id="2">2 高级SQL</h2>
+
+<h4 id="sql的数据类型与模式">SQL的数据类型与模式</h4>
+
+<h5 id="sql的内建数据类型">SQL的内建数据类型</h5>
+
+<p>  <code class="highlighter-rouge">date</code>日历日期，包含年(四位)、月、日。</p>
+
+<p>  <code class="highlighter-rouge">time</code>一天中的时间，包含小时、分、秒。可以用一个变量time(p)来表示秒的小数点的后的数字(默认值为0)。</p>
+
+<p>  <code class="highlighter-rouge">timestamp</code>data和time的组合变量，可以用一个变量timestamp(p)表示秒的小数点后面的数字(这里的默认值6)。</p>
+
+<h5 id="用户定义类型">用户定义类型</h5>
+
+<p>  语法：<code class="highlighter-rouge">create type Dollars as numeric(12, 2) final</code></p>
+
+<h4 id="完整性约束">完整性约束</h4>
+
+<p>  完整性约束保证党授权用户对数据库进行修改时不会破坏数据的一致性。因此，完整性约束时防止对数据的以外破坏。</p>
+
+<h5 id="单个关系的约束">单个关系的约束</h5>
+
+<p>  <code class="highlighter-rouge">not null</code>、<code class="highlighter-rouge">unique</code>、<code class="highlighter-rouge">check(&lt;谓词&gt;)</code></p>
+
+<p>  not null：示例代码：<code class="highlighter-rouge">create domain Dollars numeric(12, 2) not null</code>。如果插入空值，数据库都会产生错误的诊断信息。</p>
+
+<p>  unique：限定属性形成一个候选码。</p>
+
+<p>  check子句：<code class="highlighter-rouge">check(assets &gt;= 0)</code></p>
+
+<h5 id="参照完整性referential-integrity">参照完整性(referential integrity)</h5>
+
+<p>  参照完整性：一个关系中给定属性集上的取值也在另外一个关系的某一个属性的取值中出现。语法：<code class="highlighter-rouge">foreign key(A) references r</code></p>
+
+<hr />
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

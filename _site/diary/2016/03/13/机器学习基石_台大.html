@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - 机器学习基石_台大</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2016/03/13/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3_%E5%8F%B0%E5%A4%A7.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  March 13, 2016
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">机器学习基石_台大</h1>
+
+<div id="post">
+  <h3 id="the-learning-problem">The learning problem</h3>
+
+<p>machine learning:improving some performance meachure with experience computed from data</p>
+
+<p>machine learning:use data compute hypothesis ‘g’ that approximates target ‘f’</p>
+
+<p>data mining:use huge data to find property that is interesting</p>
+
+<p>artificial inteligence:compute something that shows intelligent behavior</p>
+
+<p>statistics:use data to make inference about an unknown process</p>
+
+<p>Some Use Scenarios</p>
+
+<p>1) when human cannot program the system mannually–navigating on Mars</p>
+
+<p>2) when human cannot define the solution easily–speech/visual recognition</p>
+
+<p>3) when needing rapid decisions that human cannot do–high-frequency trading</p>
+
+<p>4) when needing to be user-oriented in a massive scale–consumer-targeted marketing</p>
+
+<blockquote>
+  <p>Given a computer a fish, you feed it for a day; teach it how to fish, you need it for a lifetime.</p>
+</blockquote>
+
+<h4 id="key-essence-of-machine-learning">Key Essence of Machine Learning</h4>
+
+<p>1) exists some “underlying pattern” to be learned–so “performance measure” can be improved</p>
+
+<p>2) but no programmable(easy) definition –so ML is needed</p>
+
+<p>3) somehow there is data about the pattern –so ML has some inputs to learn from</p>
+
+<hr />
+
+<hr />
+
+<h3 id="learning-to-answer-yesno">Learning to answer Yes/No</h3>
+
+<h4 id="plaperceptron-learning-algorithm">PLA(perceptron learning algorithm)</h4>
+
+<blockquote>
+  <p>可以证明在线性可分的情况下PLA最终是会停止的</p>
+</blockquote>
+
+<h4 id="linear-separability线性可分">Linear Separability，线性可分</h4>
+
+<p>如果数据不是线性可分的或者不知道是否是线性可分的情况下，我们可以使用Pocket Algorithm算法来找出还不错的’g’来近似’f’</p>
+
+<hr />
+
+<hr />
+
+<h3 id="types-of-learning">Types of learning</h3>
+
+<p>Learning with Different Output Space y(不同的输出空间):</p>
+
+<ul>
+  <li>
+    <p>binary classification: y={-1, +1}</p>
+  </li>
+  <li>
+    <p>multiclass classfication: y={1,2,…,k}</p>
+  </li>
+  <li>
+    <p>regression: y=R</p>
+  </li>
+  <li>
+    <p>structured learning: y=structures</p>
+  </li>
+</ul>
+
+<p>Learning with different Data Label y:</p>
+
+<ul>
+  <li>
+    <p>supervised learning(监督学习)</p>
+  </li>
+  <li>
+    <p>unsupervised learning(非监督学习)，for example:clustering(聚类)</p>
+  </li>
+  <li>
+    <p>semi-supervised learning(半监督学习)</p>
+  </li>
+  <li>
+    <p>reinforcement learning(增强学习)，例如：使用惩罚和奖励来训练宠物狗的动作</p>
+  </li>
+</ul>
+
+<p>Learning with differnt protocol</p>
+
+<ul>
+  <li>
+    <p>batch learning:’duck feeding’</p>
+  </li>
+  <li>
+    <p>online learning:’passive sequential’</p>
+  </li>
+  <li>
+    <p>active learning:’question asking(sequentially)’</p>
+  </li>
+</ul>
+
+<p>Learning with differnt input space</p>
+
+<ul>
+  <li>
+    <p>concrete</p>
+  </li>
+  <li>
+    <p>raw</p>
+  </li>
+  <li>
+    <p>abstract</p>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h3 id="feasibility-of-learning">Feasibility of Learning</h3>
+
+<p>feasible——if we can remove bad data for all the hypothesis</p>
+
+<hr />
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

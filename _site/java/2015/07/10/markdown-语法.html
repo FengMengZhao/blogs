@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - markdown 语法</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/java/2015/07/10/markdown-%E8%AF%AD%E6%B3%95.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  July 10, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">markdown 语法</h1>
+
+<div id="post">
+  <h3 id="标题">标题</h3>
+
+<ol>
+  <li><code class="highlighter-rouge">#</code>表示一级标题</li>
+  <li><code class="highlighter-rouge">##</code>表示二级标题</li>
+  <li><code class="highlighter-rouge">###</code>表示三级标题</li>
+  <li><code class="highlighter-rouge">####</code>表示四级标题</li>
+  <li><code class="highlighter-rouge">#####</code>表示五级标题</li>
+  <li><code class="highlighter-rouge">######</code>表示六级标题</li>
+</ol>
+
+<p>例如</p>
+
+<h1 id="这是一级标题">这是一级标题</h1>
+
+<h2 id="这是二级标题">这是二级标题</h2>
+
+<h3 id="这是三级标题">这是三级标题</h3>
+
+<h4 id="这是四级标题">这是四级标题</h4>
+
+<h5 id="这是五级标题">这是五级标题</h5>
+
+<h6 id="这是六级标题">这是六级标题</h6>
+
+<hr />
+
+<h3 id="区块引用">区块引用</h3>
+
+<p><code class="highlighter-rouge">&gt;</code>表示区块引用
+<code class="highlighter-rouge">&gt;&gt;</code>表示区块引用的嵌套</p>
+
+<p>例如</p>
+
+<blockquote>
+  <p>这是一个区块引用
+可以在行首只用一个区块引用的符号</p>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <p>这是引用内的引用，又叫区块引用的嵌套</p>
+  </blockquote>
+</blockquote>
+
+<hr />
+
+<h3 id="列表">列表</h3>
+
+<p><code class="highlighter-rouge">1. 2. 3. 4. </code>表示有序列表
+<code class="highlighter-rouge">* * * *</code>表示无序列表</p>
+
+<p>例如</p>
+
+<ol>
+  <li>表示有序列表1</li>
+  <li>表示有序列表2</li>
+  <li>表示有序列表3</li>
+</ol>
+
+<ul>
+  <li>表示无序列表</li>
+  <li>表示无序列表</li>
+  <li>表示无序列表</li>
+</ul>
+
+<hr />
+
+<h3 id="代码块">代码块</h3>
+
+<p><code class="highlighter-rouge">\t</code>表示代码块</p>
+
+<p><code class="highlighter-rouge"></code> 表示行内代码，不是单引号而是ESC键下面的符号</p>
+
+<p>例如</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class code{
+	public static void main(String args[]){
+		
+	}
+}
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="分割线">分割线</h3>
+
+<p><code class="highlighter-rouge">***</code>表示分割线</p>
+
+<p>例如</p>
+
+<hr />
+
+<hr />
+
+<h3 id="链接">链接</h3>
+
+<ol>
+  <li>
+    <p>行内式链接</p>
+
+    <p><code class="highlighter-rouge">[text](url "Title")</code>表示行内式链接，text为链接文字，url为链接网址，Title表示链接说明</p>
+  </li>
+  <li>
+    <p>参考式链接</p>
+
+    <p><code class="highlighter-rouge">[text][id]</code> <code class="highlighter-rouge">[id]: url "Title"</code>表示参考式链接</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>行内式链接和参考式链接之间可以相互转化，<a href="http://fengmengzhao.github.io/diary/2015/07/09/%E5%8F%82%E8%80%83%E5%BC%8F%E9%93%BE%E6%8E%A5%E7%9A%84%E8%8C%83%E4%BE%8B.html">github不支持参考式链接</a>
+参考式链接的冒号与url之间必须有空格</p>
+</blockquote>
+
+<hr />
+
+<h3 id="强调">强调</h3>
+
+<p><code class="highlighter-rouge">* *</code>表示斜体
+<code class="highlighter-rouge">** **</code>表示加粗</p>
+
+<p>例如</p>
+
+<p><em>这是斜体</em></p>
+
+<p><strong>这是加粗</strong></p>
+
+<hr />
+
+<h3 id="图片">图片</h3>
+
+<p><code class="highlighter-rouge">![Alt text](/path/to/img.jpg "Title")</code>表示行内式图片链接
+<code class="highlighter-rouge">![Alt text][id]</code> <code class="highlighter-rouge">[id]: url/to/image "Title"</code>表示参考式图片链接</p>
+
+<hr />
+
+<h3 id="反斜杠">反斜杠</h3>
+
+<p>Markdown支持在某些符号前面加反斜杠来插入普通符号</p>
+
+<p>如<code class="highlighter-rouge">{}</code>需要变为<code class="highlighter-rouge">\{}</code></p>
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

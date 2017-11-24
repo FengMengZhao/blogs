@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - javaweb开发高级篇之JSP标签编程</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/09/01/javaweb-%E5%BC%80%E5%8F%91%E9%AB%98%E7%BA%A7%E7%AF%87%E4%B9%8B-JSP-%E6%A0%87%E7%AD%BE%E7%BC%96%E7%A8%8B.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  September 01, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">javaweb开发高级篇之JSP标签编程</h1>
+
+<div id="post">
+  <h2 id="目录">目录</h2>
+
+<ul>
+  <li>
+    <p><a href="#1">1 标签编程简介</a></p>
+  </li>
+  <li>
+    <p><a href="#2">2 定义一个简单的标签</a></p>
+  </li>
+  <li>
+    <p><a href="#3">3 定义有属性的标签</a></p>
+  </li>
+  <li>
+    <p><a href="#4">4 TagSupport类</a></p>
+  </li>
+  <li>
+    <p><a href="#5">5 定义有标签体的标签库</a></p>
+  </li>
+  <li>
+    <p><a href="#6">6 开发迭代标签</a></p>
+  </li>
+  <li>
+    <p><a href="#7">7 BodyTagSupport类</a></p>
+  </li>
+  <li>
+    <p><a href="#8">8 TagExtraInfo和VariableInfo类</a></p>
+  </li>
+  <li>
+    <p><a href="#9">9 使用BodyTagSupport类开发迭代输出</a></p>
+  </li>
+  <li>
+    <p><a href="#10">10 简单标签</a></p>
+  </li>
+  <li>
+    <p><a href="#11">11 DynamicAttribute接口</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 标签编程简介</h2>
+
+<p>  JSP的开发就是在HTML代码中嵌入了大量的java代码，但是这样维护起来非常的不方便，而使用JSP标签库编程的主要目的是减少页面中Scriptlet代码，使程序更加容易理解和修改。</p>
+
+<h2 id="2">2 定义一个简单的标签</h2>
+
+<p>  要想实现一个标签，可以直接继承javax.servlet.jsp.tagext.TagSupport类，如果定义的标签内没有标签体，可以直接覆写TagSupport类中的doStartTag()方法</p>
+
+<blockquote>
+  <p>没有标签体的标签，例如：<jsp:forward page=""></jsp:forward></p>
+</blockquote>
+
+<p>  定义标签的操作类-HelloTag.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">HelloTag</span> <span class="n">extends</span> <span class="n">TagSupport</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">doStartTag</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="n">JspWriter</span> <span class="n">out</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getOut</span><span class="p">()</span> <span class="p">;//</span><span class="err">取得页面的输出流对象</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"&lt;h3&gt;Hello Word！！！&lt;/h3&gt;"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>此程序TagSupport类中的pageContext对象取得了当前页面的输出对象进行输出，由于此标签没有任何标签体，所以在程序的最会返回SKIP_BODY常量，表示不执行标签体的内容。</p>
+</blockquote>
+
+<p>  标签类定义完成之后需要标签描述文件(Tag Library Discriptor，TLD)，在*.tld文件中，可以描述标签的名称、简介、处理类和标签使用到的各个属性等。</p>
+
+<p>  定义标签描述文件-WEB-INF/hellotag.tld</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;taglib</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/j2ee"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_1.xsd"</span>
+    <span class="na">version=</span><span class="s">"2.1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tlib-version&gt;</span>1.0<span class="nt">&lt;/tlib-version&gt;</span>				表示标签库的版本
+    <span class="nt">&lt;short-name&gt;</span>firsttag<span class="nt">&lt;/short-name&gt;</span>				表示标签库在TLD中描述的名称
+    <span class="nt">&lt;tag&gt;</span>				
+	<span class="nt">&lt;name&gt;</span>hello<span class="nt">&lt;/name&gt;</span>					表示标签在JSP中使用的名称
+	<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.HelloTag<span class="nt">&lt;/tag-class&gt;</span>		表示标签所指向的class文件
+	<span class="nt">&lt;body-content&gt;</span>empty<span class="nt">&lt;/body-content&gt;</span>			表示标签体的内容为空
+    <span class="nt">&lt;/tag&gt;</span>
+<span class="nt">&lt;/taglib&gt;</span>
+</code></pre></div></div>
+
+<p>  JSP使用标签的格式：</p>
+
+<p>  <code class="highlighter-rouge">&lt;%@ taglib prefix="标签前缀" uri="TLD文件路径"%&gt;</code></p>
+
+<blockquote>
+  <p>prefix表示标签使用时的前缀，这一点与<jsp:forward>中的jsp类似，而uri表示此标签对应的*.tld文件的路径</jsp:forward></p>
+</blockquote>
+
+<p>  编写JSP文件调用标签-hellotag.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"mytag"</span> <span class="na">uri=</span><span class="s">"/WEB-INF/hellotag.tld"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;mytag:hello/&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  由于编写TLD文件的引用非常麻烦：<code class="highlighter-rouge">uri="/WEB-INF/hellotag.tld"</code>，可以采用映射的方法简化</p>
+
+<p>  修改web.xml文件，映射TLD文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;jsp-config&gt;
+	&lt;taglib&gt;
+		&lt;taglib-uri&gt;hellotag&lt;/taglib-uri&gt;
+		&lt;taglib-location&gt;/WEB-INF/hellotag.tld&lt;/taglib-location&gt;
+	&lt;/taglib&gt;
+&lt;/jsp-config&gt;
+</code></pre></div></div>
+
+<p>  修改JSP文件：<code class="highlighter-rouge">&lt;%@ taglib prefix="mytag" uri="hellotag"%&gt;</code>，即可以访问TLD文件</p>
+
+<p>  完成标签操作需要的步骤：</p>
+
+<p>  1. 标签处理类，HelloTag.java</p>
+
+<p>  2. 标签描述文件：hellotag.tld</p>
+
+<p>  3. JSP页面，通过&lt;%@ taglib%&gt;完成</p>
+
+<p>  4. 在web.xml文件中配置映射名称(可选)</p>
+
+<hr />
+
+<hr />
+
+<h2 id="3">3 定义有属性的标签</h2>
+
+<p>  在<jsp:forward page=""></jsp:forward>跳转语句中，可以通过page属性指定一个跳转路径，在用户自定义标签时也可以定义属性。</p>
+
+<p>  开发一个格式化显示日期的标签</p>
+
+<p>  格式化日期标签类-DateTag.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">text</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">DateTag</span> <span class="n">extends</span> <span class="n">TagSupport</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">format</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">doStartTag</span><span class="p">()</span> <span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="n">SimpleDateFormat</span> <span class="n">sdf</span> <span class="p">=</span> <span class="n">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">format</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getOut</span><span class="p">().</span><span class="nb">write</span><span class="p">(</span><span class="n">sdf</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">new</span> <span class="n">Date</span><span class="p">()))</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setFormat</span><span class="p">(</span><span class="k">String</span> <span class="n">format</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">format</span> <span class="p">=</span> <span class="n">format</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getFormat</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">format</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>在本类中定义了一个format属性，并且编写了setter和getter方法，当用户通过变迁设置属性时，就会调用其中的setter方法完成属性的设置，实际上时java的反射机制在起作用。</p>
+</blockquote>
+
+<p>  定义标签描述文件-datetag.tld</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;taglib</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/j2ee"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_3_1.xsd"</span>
+    <span class="na">version=</span><span class="s">"3.1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tlib-version&gt;</span>1.0<span class="nt">&lt;/tlib-version&gt;</span>
+    <span class="nt">&lt;short-name&gt;</span>datetag<span class="nt">&lt;/short-name&gt;</span>
+    <span class="nt">&lt;tag&gt;</span>
+		<span class="nt">&lt;name&gt;</span>date<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.DateTag<span class="nt">&lt;/tag-class&gt;</span>
+		<span class="nt">&lt;body-content&gt;</span>empty<span class="nt">&lt;/body-content&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>format<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;/tag&gt;</span>
+<span class="nt">&lt;/taglib&gt;</span>
+</code></pre></div></div>
+
+<p>  配置web.xml文件
+		<jsp-config>
+			<taglib>
+				<taglib-uri>datetag</taglib-uri>
+				<taglib-location>/WEB-INF/datetag.tld</taglib-location>
+			</taglib>
+		</jsp-config></p>
+
+<p>  测试格式化日期-datetag.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"mytag"</span> <span class="na">uri=</span><span class="s">"datetag"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h1&gt;&lt;mytag:date</span> <span class="na">format=</span><span class="s">"yyyy-MM-dd HH:mm:ss.SSS"</span><span class="nt">/&gt;&lt;/h1&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>关于TLD文件中的<rtexprvalue>元素的主要功能是定义format属性是否支持表达式输出，如果设置成true，则可以通过如下代码完成format属性内容的设置</rtexprvalue></p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% pageContext.setAttribute("fm","yyyy-MM-dd HH:mm:ss.SSS"); %&gt;
+&lt;mytag:date format="${fm}"/&gt;
+或者
+String fm = "yyyy-MM-dd HH:mm:ss.SSS" ;
+&lt;mytag:date format="&lt;%=fm%&gt;"/&gt;
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="4">4 TagSupport类</h2>
+
+<p>  在整个TagSupport类中，doStartTag()、doEndTag()、doAfterBody()和release()4个方法最为重要：</p>
+
+<p>  doStartTag()：此方法有两个返回值，一个是SKIP_BODY，另外一个事EVAL_BODY_INCLUDE，前者表示忽略标签体的内容，交给doEndTag()方法处理；后者表示执行标签体的内容。</p>
+
+<p>  doAfterBody()：用来重复执行标签体的内容，有两个返回值，一个是SKIP_BODY，另外一个是EVAL_BODY_AGAIN。返回后者重复调用doAferBody()方法，一直循环下去直到doAfterBody()返回SKIP_BODY值</p>
+
+<p>  doEndTag()：此方法在标签结束时使用，有两个返回值，一个SKIP_PAGE，表示JSP页面立即停止执行，并将输出的结果传到浏览器上；另外一个事EVAL_PAGE，表示JSP页面可以正常的运行完毕。</p>
+
+<p>  release()：将标签处理类所产生或者获得的资源全部释放，等待用户下次继续使用。</p>
+
+<hr />
+
+<hr />
+
+<h2 id="5">5 定义有标签体的标签库</h2>
+
+<p>  标签处理类-AttributeTag.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">AttributeTag</span> <span class="n">extends</span> <span class="n">TagSupport</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">scope</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">doStartTag</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="n">Object</span> <span class="n">value</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"page"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">PAGE_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"request"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">REQUEST_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"session"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">SESSION_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"application"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">APPLICATION_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="p">==</span> <span class="n">null</span><span class="p">){</span>
+			<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">EVAL_BODY_INCLUDE</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setScope</span><span class="p">(</span><span class="k">String</span> <span class="n">scope</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">scope</span> <span class="p">=</span> <span class="n">scope</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getScope</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">scope</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  定义标签描述文件-fmztag.tld</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;taglib</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/j2ee"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_3_1.xsd"</span>
+    <span class="na">version=</span><span class="s">"3.1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tlib-version&gt;</span>1.0<span class="nt">&lt;/tlib-version&gt;</span>
+    <span class="nt">&lt;short-name&gt;</span>attributetag<span class="nt">&lt;/short-name&gt;</span>
+    <span class="nt">&lt;tag&gt;</span>
+		<span class="nt">&lt;name&gt;</span>present<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.AttributeTag<span class="nt">&lt;/tag-class&gt;</span>
+		<span class="nt">&lt;body-content&gt;</span>JSP<span class="nt">&lt;/body-content&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>name<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>scope<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;/tag&gt;</span>
+<span class="nt">&lt;/taglib&gt;</span>
+</code></pre></div></div>
+
+<p>  配置web.xml，设置映射名称</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;jsp-config&gt;
+	&lt;taglib&gt;
+		&lt;taglib-uri&gt;fmztag&lt;/taglib-uri&gt;
+		&lt;taglib-location&gt;/WEB-INF/fmztag.tld&lt;/taglib-location&gt;
+	&lt;/taglib&gt;
+&lt;/jsp-config&gt;
+</code></pre></div></div>
+
+<p>  调用标签，完成判断-presenttag.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"mytag"</span> <span class="na">uri=</span><span class="s">"fmztag"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">scope =</span><span class="err"> </span><span class="s">"session"</span> <span class="err">;</span>
+			<span class="na">session</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">blog</span><span class="err">","</span><span class="na">http:</span><span class="err">//</span><span class="na">fengmengzhao</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="err">")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;mytag:present</span> <span class="na">name=</span><span class="s">"blog"</span> <span class="na">scope=</span><span class="s">"&lt;%=scope%&gt;"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>session属性范围存在属性，内容是："${sessionScope.blog}"<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;/mytag:present&gt;</span>
+		<span class="nt">&lt;mytag:present</span> <span class="na">name=</span><span class="s">"allusers"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>request属性范围存在属性，内容是："${requestScope.allusers}"<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;/mytag:present&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="6">6 开发迭代标签</h2>
+
+<p>  在程序开发中迭代输出是一种比较常见的输出，JSP页面的主要功能是进行输出，在JSP中应该尽量避免Scriptlet代码的出现，为了达到这种页面的编写效果，可以通过迭代标签的开发完成。</p>
+
+<p>  开发迭代标签处理类-IteratorTag.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">IteratorTag</span> <span class="n">extends</span> <span class="n">TagSupport</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">scope</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">id</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">Iterator</span><span class="p">&lt;?&gt;</span> <span class="n">iter</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+
+	<span class="k">public</span> <span class="n">int</span> <span class="n">doStartTag</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="n">Object</span> <span class="n">value</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"page"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">PAGE_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"request"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">REQUEST_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"session"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">SESSION_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"application"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">APPLICATION_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="c1">!= null &amp;&amp; value instanceof List&lt;?&gt;){
+</span>			<span class="n">this</span><span class="p">.</span><span class="n">iter</span> <span class="p">=</span> <span class="p">((</span><span class="k">List</span><span class="p">&lt;?&gt;)</span><span class="n">value</span><span class="p">).</span><span class="n">iterator</span><span class="p">()</span> <span class="p">;//</span><span class="err">向</span><span class="n">List</span><span class="err">接口进行向下转型</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+				<span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="n">iter</span><span class="p">.</span><span class="k">next</span><span class="p">())</span> <span class="p">;//</span><span class="err">强属性保存在</span><span class="n">page</span><span class="err">属性范围中</span>
+				<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">EVAL_BODY_INCLUDE</span> <span class="p">;</span>
+			<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+				<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">doAfterBody</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+				<span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="n">iter</span><span class="p">.</span><span class="k">next</span><span class="p">())</span> <span class="p">;//</span><span class="err">强属性保存在</span><span class="n">page</span><span class="err">属性范围中</span>
+				<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">EVAL_BODY_AGAIN</span><span class="p">;//</span><span class="err">反复执行</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+				<span class="n">return</span> <span class="n">TagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setScope</span><span class="p">(</span><span class="k">String</span> <span class="n">scope</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">scope</span> <span class="p">=</span> <span class="n">scope</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setId</span><span class="p">(</span><span class="k">String</span> <span class="n">id</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">id</span> <span class="p">=</span> <span class="n">id</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getScope</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">scope</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="nf">getId</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">id</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  修改标签描述文件，增加迭代标签配置-fmztag.tld</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;taglib</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/j2ee"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_3_1.xsd"</span>
+    <span class="na">version=</span><span class="s">"3.1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tlib-version&gt;</span>1.0<span class="nt">&lt;/tlib-version&gt;</span>
+    <span class="nt">&lt;short-name&gt;</span>fmztag<span class="nt">&lt;/short-name&gt;</span>
+    <span class="nt">&lt;tag&gt;</span>
+		<span class="nt">&lt;name&gt;</span>present<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.AttributeTag<span class="nt">&lt;/tag-class&gt;</span>
+		<span class="nt">&lt;body-content&gt;</span>JSP<span class="nt">&lt;/body-content&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>name<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>scope<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;/tag&gt;</span>
+    <span class="nt">&lt;tag&gt;</span>
+		<span class="nt">&lt;name&gt;</span>iterator<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.IteratorTag<span class="nt">&lt;/tag-class&gt;</span>
+		<span class="nt">&lt;body-content&gt;</span>JSP<span class="nt">&lt;/body-content&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>name<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>scope<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>id<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;/tag&gt;</span>
+<span class="nt">&lt;/taglib&gt;</span>
+</code></pre></div></div>
+
+<p>  编写JSP执行标签-iteratortag.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"mytag"</span> <span class="na">uri=</span><span class="s">"fmztag"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">List</span><span class="err">&lt;</span><span class="na">String</span><span class="nt">&gt;</span> list = new ArrayList<span class="nt">&lt;String&gt;</span>() ;
+			list.add("http://fengmengzhao.github.io") ;
+			list.add("fengmengzhao@gmail.com") ;
+			list.add("1913565900@qq.com") ;
+			request.setAttribute("info",list) ;
+		%&gt;
+		<span class="nt">&lt;mytag:present</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;mytag:iterator</span> <span class="na">id=</span><span class="s">"url"</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>网站：${url}<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;/mytag:iterator&gt;</span>
+		<span class="nt">&lt;/mytag:present&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>本程序首先在request属性范围内保存了一个List集合，之后通过<mytag:present name="" scope=""></mytag:present>标签判断request范围内是否存在此属性，如果存在则使用迭代输出标签输出全部的内容。</p>
+</blockquote>
+
+<blockquote>
+  <p>在MVC设计模式中，集合是在Servlet保存之后再传递给JSP页面中的。</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h2 id="7">7 BodyTagSupport类</h2>
+
+<p>  BodyTagSupport类是TagSupport类的子类，可以直接处理标签提内容的数据。</p>
+
+<hr />
+
+<hr />
+
+<h2 id="8">8 TagExtraInfo类和VariableInfo类</h2>
+
+<p>  在使用<jsp:useBean scope="" class=""></jsp:useBean>时，定义了一个id属性，这个属性可以像对象一样直接在Script中访问，而如果用户也想实现同样的效果，就需要TagExtraInfo类和VariableInfo类完成</p>
+
+<p>  在JSP中定义一个变量-BodyIteratorTagExtraInfo.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">BodyIteratorTagExtraInfo</span> <span class="n">extends</span> <span class="n">TagExtraInfo</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">VariableInfo</span><span class="p">[]</span> <span class="n">getVariableInfo</span><span class="p">(</span><span class="n">TagData</span> <span class="n">data</span><span class="p">){</span>
+		<span class="n">return</span> <span class="n">new</span> <span class="n">VariableInfo</span><span class="p">[]{</span><span class="n">new</span> <span class="n">VariableInfo</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">getId</span><span class="p">(),</span><span class="s2">"java.lang.String"</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="n">VariableInfo</span><span class="p">.</span><span class="n">NESTED</span><span class="p">)}</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>本程序定义的是一个脚本变量，在getVariableInfo()方法中定义了一个TagData对象，通过此对象的getId()方法，可以找到标签定义的id属性内容。由于只定义一个变量，所以只返回一个VariableInfo类对象，根据id指定的名称定义变量，变量的类型是String，而且是声明一个新的变量(true)，变量的有效期是在标签之中(标签开始和标签结束有效)</p>
+</blockquote>
+
+<blockquote>
+  <p>定义完之后，要想在标签中真正的起作用，需要在*.tld文件中增加如下配置：<code class="highlighter-rouge">&lt;tei-class&gt;org.fmz.tagdemo.BodyIteratorTagExtraInfo&lt;/tei-class&gt;</code>，随后就可以在标签中编写的id属性定义成变量。</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h2 id="9">9 使用BodyTagSupport开发迭代输出</h2>
+
+<p>  定义标签处理类-BodyIteratorTag.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">BodyIteratorTag</span> <span class="n">extends</span> <span class="n">BodyTagSupport</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">scope</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">id</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">Iterator</span><span class="p">&lt;?&gt;</span> <span class="n">iter</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+
+	<span class="k">public</span> <span class="n">int</span> <span class="n">doStartTag</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="n">Object</span> <span class="n">value</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"page"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">PAGE_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"request"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">REQUEST_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"session"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">SESSION_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"application"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">value</span> <span class="p">=</span> <span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">pageContext</span><span class="p">.</span><span class="n">APPLICATION_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="c1">!= null &amp;&amp; value instanceof List&lt;?&gt;){
+</span>			<span class="n">this</span><span class="p">.</span><span class="n">iter</span> <span class="p">=</span> <span class="p">((</span><span class="k">List</span><span class="p">&lt;?&gt;)</span><span class="n">value</span><span class="p">).</span><span class="n">iterator</span><span class="p">()</span> <span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+				<span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="n">iter</span><span class="p">.</span><span class="k">next</span><span class="p">())</span> <span class="p">;//</span><span class="err">强属性保存在</span><span class="n">page</span><span class="err">属性范围中</span>
+				<span class="n">return</span> <span class="n">BodyTagSupport</span><span class="p">.</span><span class="n">EVAL_BODY_BUFFERED</span> <span class="p">;</span>
+			<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+				<span class="n">return</span> <span class="n">BodyTagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="n">return</span> <span class="n">BodyTagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">doAfterBody</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+				<span class="n">super</span><span class="p">.</span><span class="n">pageContext</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="n">iter</span><span class="p">.</span><span class="k">next</span><span class="p">())</span> <span class="p">;//</span><span class="err">强属性保存在</span><span class="n">page</span><span class="err">属性范围中</span>
+				<span class="n">return</span> <span class="n">BodyTagSupport</span><span class="p">.</span><span class="n">EVAL_BODY_AGAIN</span><span class="p">;//</span><span class="err">反复执行</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+				<span class="n">return</span> <span class="n">BodyTagSupport</span><span class="p">.</span><span class="n">SKIP_BODY</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">doEndTag</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">super</span><span class="p">.</span><span class="n">bodyContent</span> <span class="c1">!= null){
+</span>			<span class="n">try</span><span class="p">{</span>
+				<span class="n">super</span><span class="p">.</span><span class="n">bodyContent</span><span class="p">.</span><span class="n">writeOut</span><span class="p">(</span><span class="n">super</span><span class="p">.</span><span class="n">getPreviousOut</span><span class="p">())</span> <span class="p">;</span>
+			<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+				<span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="n">BodyTagSupport</span><span class="p">.</span><span class="n">EVAL_PAGE</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setScope</span><span class="p">(</span><span class="k">String</span> <span class="n">scope</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">scope</span> <span class="p">=</span> <span class="n">scope</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setId</span><span class="p">(</span><span class="k">String</span> <span class="n">id</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">id</span> <span class="p">=</span> <span class="n">id</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getScope</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">scope</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="nf">getId</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">id</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  定义标签描述文件-fmztag.tld</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;taglib</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/j2ee"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_3_1.xsd"</span>
+    <span class="na">version=</span><span class="s">"3.1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tlib-version&gt;</span>1.0<span class="nt">&lt;/tlib-version&gt;</span>
+    <span class="nt">&lt;short-name&gt;</span>fmztag<span class="nt">&lt;/short-name&gt;</span>
+    <span class="nt">&lt;tag&gt;</span>
+		<span class="nt">&lt;name&gt;</span>present<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.AttributeTag<span class="nt">&lt;/tag-class&gt;</span>
+		<span class="nt">&lt;body-content&gt;</span>JSP<span class="nt">&lt;/body-content&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>name<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>scope<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;/tag&gt;</span>
+    <span class="nt">&lt;tag&gt;</span>
+		<span class="nt">&lt;name&gt;</span>bodyiterator<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.BodyIteratorTag<span class="nt">&lt;/tag-class&gt;</span>
+		<span class="nt">&lt;tei-class&gt;</span>org.fmz.tagdemo.BodyIteratorTagExtraInfo<span class="nt">&lt;/tei-class&gt;</span>
+		<span class="nt">&lt;body-content&gt;</span>JSP<span class="nt">&lt;/body-content&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>name<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>scope<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>id<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;/tag&gt;</span>
+<span class="nt">&lt;/taglib&gt;</span>
+</code></pre></div></div>
+
+<p>  使用标签体执行操作-bodyiteratortag.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"mytag"</span> <span class="na">uri=</span><span class="s">"fmztag"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">List</span><span class="err">&lt;</span><span class="na">String</span><span class="nt">&gt;</span> list = new ArrayList<span class="nt">&lt;String&gt;</span>() ;
+			list.add("http://fengmengzhao.github.io") ;
+			list.add("fengmengzhao@gmail.com") ;
+			list.add("1913565900@qq.com") ;
+			request.setAttribute("info",list) ;
+		%&gt;
+		<span class="nt">&lt;mytag:present</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;mytag:bodyiterator</span> <span class="na">id=</span><span class="s">"url"</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>网站：${url}、<span class="nt">&lt;</span><span class="err">%=</span><span class="na">url</span><span class="err">.</span><span class="na">length</span><span class="err">()%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+			<span class="nt">&lt;/mytag:bodyiterator&gt;</span>
+		<span class="nt">&lt;/mytag:present&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>不建议用户开发标签库，进行标签库的开发非常麻烦，而且用户自己开发的无法带来广泛的应用，所以读者只需要明白标签库操作的基本原理即可，以后会使用第三方标签库中的标签，如JSTL或者Struts等。</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h2 id="10">10 简单标签</h2>
+
+<p>  定义标签处理类-SimpleDateTag.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">text</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">SimpleDateTag</span> <span class="n">extends</span> <span class="n">SimpleTagSupport</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">format</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">doTag</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">,</span><span class="n">IOException</span><span class="p">{</span>
+		<span class="n">SimpleDateFormat</span> <span class="n">sdf</span> <span class="p">=</span> <span class="n">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">format</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">super</span><span class="p">.</span><span class="n">getJspContext</span><span class="p">().</span><span class="n">getOut</span><span class="p">().</span><span class="nb">write</span><span class="p">(</span><span class="n">sdf</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">new</span> <span class="n">Date</span><span class="p">()))</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setFormat</span><span class="p">(</span><span class="k">String</span> <span class="n">format</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">format</span> <span class="p">=</span> <span class="n">format</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getFormat</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">format</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  修改标签描述文件-fmztag.tld</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;taglib</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/j2ee"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_3_1.xsd"</span>
+    <span class="na">version=</span><span class="s">"3.1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tlib-version&gt;</span>1.0<span class="nt">&lt;/tlib-version&gt;</span>
+    <span class="nt">&lt;short-name&gt;</span>fmztag<span class="nt">&lt;/short-name&gt;</span>
+    <span class="nt">&lt;tag&gt;</span>
+		<span class="nt">&lt;name&gt;</span>simpledate<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.SimpleDateTag<span class="nt">&lt;/tag-class&gt;</span>
+		<span class="nt">&lt;body-content&gt;</span>empty<span class="nt">&lt;/body-content&gt;</span>
+		<span class="nt">&lt;attribute&gt;</span>
+			<span class="nt">&lt;name&gt;</span>format<span class="nt">&lt;/name&gt;</span>
+			<span class="nt">&lt;required&gt;</span>true<span class="nt">&lt;/required&gt;</span><span class="c">&lt;!-- 此属性必须设置 --&gt;</span>
+			<span class="nt">&lt;rtexprvalue&gt;</span>true<span class="nt">&lt;/rtexprvalue&gt;</span><span class="c">&lt;!-- 支持表达式的输出--&gt;</span>
+		<span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;/tag&gt;</span>
+<span class="nt">&lt;/taglib&gt;</span>
+</code></pre></div></div>
+
+<p>  在JSP文件中使用标签-simpledatetag.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"mytag"</span> <span class="na">uri=</span><span class="s">"fmztag"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>
+			<span class="nt">&lt;mytag:simpledate</span> <span class="na">format=</span><span class="s">"yyyy-MM-dd HH:mm:ss.SSS"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/h1&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  完成迭代输出</p>
+
+<p>  定义标签处理类-SimpleIteratorTag.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">SimpleIteratorTag</span> <span class="n">extends</span> <span class="n">SimpleTagSupport</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">id</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">scope</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">doTag</span><span class="p">()</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">,</span><span class="n">IOException</span><span class="p">{</span>
+		<span class="n">Object</span> <span class="n">value</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"page"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">super</span><span class="p">.</span><span class="n">getJspContext</span><span class="p">().</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">PageContext</span><span class="p">.</span><span class="n">PAGE_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"request"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">super</span><span class="p">.</span><span class="n">getJspContext</span><span class="p">().</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">PageContext</span><span class="p">.</span><span class="n">REQUEST_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"session"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">super</span><span class="p">.</span><span class="n">getJspContext</span><span class="p">().</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">PageContext</span><span class="p">.</span><span class="n">SESSION_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="s2">"application"</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">scope</span><span class="p">)){</span>
+			<span class="n">super</span><span class="p">.</span><span class="n">getJspContext</span><span class="p">().</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="n">PageContext</span><span class="p">.</span><span class="n">APPLICATION_SCOPE</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="c1">!= null &amp;&amp; value instanceof List&lt;?&gt;){
+</span>			<span class="n">Iterator</span><span class="p">&lt;?&gt;</span> <span class="n">iter</span> <span class="p">=</span> <span class="p">((</span><span class="k">List</span><span class="p">&lt;?&gt;)</span><span class="n">value</span><span class="p">).</span><span class="n">iterator</span><span class="p">()</span> <span class="p">;</span>
+			<span class="k">while</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+				<span class="n">super</span><span class="p">.</span><span class="n">getJspContext</span><span class="p">().</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="n">iter</span><span class="p">.</span><span class="k">next</span><span class="p">())</span> <span class="p">;</span>
+				<span class="n">super</span><span class="p">.</span><span class="n">getJspBody</span><span class="p">().</span><span class="n">invoke</span><span class="p">(</span><span class="n">null</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setId</span><span class="p">(</span><span class="k">String</span> <span class="n">id</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">id</span> <span class="p">=</span> <span class="n">id</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setScope</span><span class="p">(</span><span class="k">String</span> <span class="n">scope</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">scope</span> <span class="p">=</span> <span class="n">scope</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="nf">getId</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">id</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getScope</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">scope</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  修改标签文件，增加新的的标签配置-fmztag.tld</p>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_3_1.xsd" version="3.1">
+    <tlib-version>1.0</tlib-version>
+    <short-name>fmztag</short-name>
+    <tag>
+		<name>simpleiterator</name>
+		<tag-class>org.fmz.tagdemo.SimpleIteratorTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>id</name>
+			<required>true</required><!-- 此属性必须设置 -->
+			<rtexprvalue>true</rtexprvalue><!-- 支持表达式的输出-->
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required><!-- 此属性必须设置 -->
+			<rtexprvalue>true</rtexprvalue><!-- 支持表达式的输出-->
+		</attribute>
+		<attribute>
+			<name>scope</name>
+			<required>true</required><!-- 此属性必须设置 -->
+			<rtexprvalue>true</rtexprvalue><!-- 支持表达式的输出-->
+		</attribute>
+    </tag>
+</taglib>
+
+<blockquote>
+  <body-content>中可以设置的内容一共有三种：1，empty表示没有标签体。2，JSP标签体可以包含文本、EL表达式或者JSP标签，但对于简单标签无效。3，sciptless标签体可以包含文本、EL表达式或者JSP标签，但是不能包含JSP的脚本元素。4，tagdepedent表示标签体交由标签本身去解析处理。
+</body-content>
+</blockquote>
+
+<p>  在JSP文件中使用标签-SimpleIteratortag.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"mytag"</span> <span class="na">uri=</span><span class="s">"fmztag"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">List</span><span class="err">&lt;</span><span class="na">String</span><span class="nt">&gt;</span> list = new ArrayList<span class="nt">&lt;String&gt;</span>() ;
+			list.add("http://fengmengzhao.github.io") ;
+			list.add("fengmengzhao@gmail.com") ;
+			list.add("1913565900@qq.com") ;
+			request.setAttribute("info",list) ;
+		%&gt;
+		<span class="nt">&lt;mytag:present</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;mytag:bodyiterator</span> <span class="na">id=</span><span class="s">"url"</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>网站：${url}、<span class="nt">&lt;</span><span class="err">%=</span><span class="na">url</span><span class="err">.</span><span class="na">length</span><span class="err">()%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+			<span class="nt">&lt;/mytag:bodyiterator&gt;</span>
+		<span class="nt">&lt;/mytag:present&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="11">11 DynamicAttributes接口</h2>
+
+<p>  之前的标签只能编写制定个数及名称的属性，JSP2.0之后增加了一个DynamicAttributes接口，此接口的主要功能是完成动态属性的设置。</p>
+
+<p>  完成一个动态加法操作</p>
+
+<p>  标签处理类-DynamicAddTag.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">tagdemo</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">jsp</span><span class="p">.</span><span class="n">tagext</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">DynamicAddTag</span> <span class="n">extends</span> <span class="n">SimpleTagSupport</span> <span class="n">implements</span> <span class="n">DynamicAttributes</span><span class="p">{</span>
+	<span class="n">private</span> <span class="n">Map</span><span class="p">&lt;</span><span class="k">String</span><span class="p">,</span><span class="n">Float</span><span class="p">&gt;</span> <span class="n">num</span> <span class="p">=</span> <span class="n">new</span> <span class="n">HashMap</span><span class="p">&lt;</span><span class="k">String</span><span class="p">,</span><span class="n">Float</span><span class="p">&gt;()</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setDynamicAttribute</span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="n">lang</span><span class="p">.</span><span class="k">String</span> <span class="n">uri</span><span class="p">,</span> <span class="n">java</span><span class="p">.</span><span class="n">lang</span><span class="p">.</span><span class="k">String</span> <span class="n">localName</span><span class="p">,</span> <span class="n">java</span><span class="p">.</span><span class="n">lang</span><span class="p">.</span><span class="n">Object</span> <span class="n">value</span><span class="p">)</span><span class="n">throws</span> <span class="n">JspException</span><span class="p">{</span>
+		<span class="n">num</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">localName</span><span class="p">,</span><span class="n">Float</span><span class="p">.</span><span class="n">parseFloat</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">toString</span><span class="p">()))</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">doTag</span><span class="p">()</span> <span class="n">throws</span> <span class="n">JspException</span><span class="p">,</span><span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">IOException</span><span class="p">{</span>
+		<span class="n">Float</span> <span class="k">sum</span> <span class="p">=</span> <span class="m">0.0f</span> <span class="p">;//</span><span class="err">定义变量，保存相加结果</span>
+		<span class="n">Iterator</span><span class="p">&lt;</span><span class="n">Map</span><span class="p">.</span><span class="n">Entry</span><span class="p">&lt;</span><span class="k">String</span><span class="p">,</span><span class="n">Float</span><span class="p">&gt;&gt;</span> <span class="n">iter</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">num</span><span class="p">.</span><span class="n">entrySet</span><span class="p">().</span><span class="n">iterator</span><span class="p">()</span> <span class="p">;//</span><span class="err">迭代输出</span>
+		<span class="k">while</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+			<span class="n">Map</span><span class="p">.</span><span class="n">Entry</span><span class="p">&lt;</span><span class="k">String</span><span class="p">,</span><span class="n">Float</span><span class="p">&gt;</span> <span class="n">value</span> <span class="p">=</span> <span class="n">iter</span><span class="p">.</span><span class="k">next</span><span class="p">()</span> <span class="p">;//</span><span class="err">取出每一个</span><span class="n">Map</span><span class="p">.</span><span class="n">Entry</span>
+			<span class="k">sum</span> <span class="p">+=</span> <span class="n">value</span><span class="p">.</span><span class="nf">getValue</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">super</span><span class="p">.</span><span class="n">getJspContext</span><span class="p">().</span><span class="n">getOut</span><span class="p">().</span><span class="nb">write</span><span class="p">(</span><span class="k">sum</span> <span class="p">+</span> <span class="s2">""</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  编写标签描述文件，增加动态属性设置</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;taglib</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/j2ee"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_3_1.xsd"</span>
+    <span class="na">version=</span><span class="s">"3.1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tlib-version&gt;</span>1.0<span class="nt">&lt;/tlib-version&gt;</span>
+    <span class="nt">&lt;short-name&gt;</span>fmztag<span class="nt">&lt;/short-name&gt;</span>
+    <span class="nt">&lt;tag&gt;</span>
+		<span class="nt">&lt;name&gt;</span>add<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;tag-class&gt;</span>org.fmz.tagdemo.DynamicAddTag<span class="nt">&lt;/tag-class&gt;</span>
+		<span class="nt">&lt;body-content&gt;</span>empty<span class="nt">&lt;/body-content&gt;</span>
+		<span class="nt">&lt;dynamic-attributes&gt;</span>true<span class="nt">&lt;/dynamic-attributes&gt;</span>
+    <span class="nt">&lt;/tag&gt;</span>
+<span class="nt">&lt;/taglib&gt;</span>
+</code></pre></div></div>
+
+<p>  调用标签，设置动态属性-addtag.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"mytag"</span> <span class="na">uri=</span><span class="s">"fmztag"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>
+			计算结果：<span class="nt">&lt;mytag:add</span> <span class="na">num1=</span><span class="s">"11.2"</span> <span class="na">num2=</span><span class="s">"12.3"</span> <span class="na">num3=</span><span class="s">"13.5"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

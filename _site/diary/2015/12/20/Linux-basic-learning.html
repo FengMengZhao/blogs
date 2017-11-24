@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - Linux basic leaning</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/12/20/Linux-basic-learning.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  December 20, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">Linux basic leaning</h1>
+
+<div id="post">
+  <hr />
+
+<hr />
+
+<h3 id="linux-系统安装">Linux 系统安装</h3>
+
+<p>设置系统计入模式：<code class="highlighter-rouge">vi /etc/inittab</code>，需改<code class="highlighter-rouge">id:5:inindefault</code>为<code class="highlighter-rouge">id:3:initdefault</code></p>
+
+<p>常用指令：<code class="highlighter-rouge">history -c</code>：清空历史记录；<code class="highlighter-rouge">ls</code>：查看当前目录下的文件；<code class="highlighter-rouge">cd</code>：切换目录</p>
+
+<p><code class="highlighter-rouge">/dev/cdrom</code>：光驱；<code class="highlighter-rouge">/dev/sda</code>：scsi硬盘；<code class="highlighter-rouge">/dev/sda1</code>：第一块scsi硬盘的以一个主分区；<code class="highlighter-rouge">/dev/sdb2</code>：第二块scsi硬盘的第二个主分区；<code class="highlighter-rouge">/dev/sda7</code>：第一块scsi硬盘的第三个逻辑分区；<code class="highlighter-rouge">/dev/sdb4</code>：第二块scsi硬盘的第四个主分区或者扩展分区</p>
+
+<p>网卡配置：<code class="highlighter-rouge">192.168.100.1</code>；检查ip是否生效：<code class="highlighter-rouge">ifconfig eth0</code></p>
+
+<p>如果没有ip，设置ip：<code class="highlighter-rouge">vi /etc/sysconfig/network-scripts/ifcfg-eth0</code>，设置<code class="highlighter-rouge">IPADDR=192.168.100.1 NETMASK=255.255.255.0 ONBOOT=yes BOOTPROTO=none</code>这里设置的是静态IP地址</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DEVICE=eth0
+HWADDR=00:23:24:8C:38:E5
+TYPE=Ethernet
+UUID=85441b22-21c0-47cd-a628-ffad599d1d2a
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+IPADDR=192.168.1.4
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+</code></pre></div></div>
+
+<p>设置免费的域名解析器：</p>
+
+<p><code class="highlighter-rouge">vim /etc/resolv.conf</code>，在文件的里面添加一行：<code class="highlighter-rouge">nameserver 168.95.1.1</code></p>
+
+<hr />
+
+<hr />
+
+<h3 id="linux-常用命令">Linux 常用命令</h3>
+
+<p><code class="highlighter-rouge">ctrl + c</code>：强制中断当前程序</p>
+
+<p><code class="highlighter-rouge">clear</code>：请屏；<code class="highlighter-rouge">ctrl + l</code>：清屏</p>
+
+<p><code class="highlighter-rouge">cd-</code>：切换最近使用过的两次目录</p>
+
+<p><code class="highlighter-rouge">pwd</code>：查看当前路径</p>
+
+<p><code class="highlighter-rouge">ctrl + u</code>：清空当前的命令行</p>
+
+<p><code class="highlighter-rouge">tab</code>：命令不全功能</p>
+
+<p><code class="highlighter-rouge">[root@localhost home]#</code>：命令提示符 [当前用户名@主机名 当前目录]#</p>
+
+<blockquote>
+  <p>用鼠标划着就是复制，点右键就是粘贴</p>
+</blockquote>
+
+<h4 id="根目录规划">根目录规划</h4>
+
+<p><code class="highlighter-rouge">/home</code>：普通用户的家目录</p>
+
+<p><code class="highlighter-rouge">/root</code>：root用户家目录</p>
+
+<p><code class="highlighter-rouge">/dev</code>：磁盘管理器，专门用来管理设备的</p>
+
+<p><code class="highlighter-rouge">/media</code>：测试目录，挂载光盘</p>
+
+<p><code class="highlighter-rouge">/mnt</code>：测试目录，挂在U盘</p>
+
+<p><code class="highlighter-rouge">/boot</code>：Linux内核文件和init进程启动文件</p>
+
+<p><code class="highlighter-rouge">/etc</code>：应用程序的配置文件</p>
+
+<p><code class="highlighter-rouge">/usr</code>：用户自定义安装的应用程序或源代码</p>
+
+<p><code class="highlighter-rouge">/bin</code>：所用用户可执行的命令；<code class="highlighter-rouge">/usr/bin</code>：所用用户可执行的命令</p>
+
+<p><code class="highlighter-rouge">/sbin</code>：超级用户root才能执行的命令；<code class="highlighter-rouge">/usr/sbin</code>：超级用于root才能执行的命令</p>
+
+<p><code class="highlighter-rouge">/var</code>：日志文件</p>
+
+<p><code class="highlighter-rouge">/tmp</code>：临时文件</p>
+
+<h4 id="文件管理">文件管理</h4>
+
+<p>新建文件：<code class="highlighter-rouge">vi file.txt</code> <code class="highlighter-rouge">touch file.txt</code></p>
+
+<p>删除文件：<code class="highlighter-rouge">rm -rf file.txt</code>；删除所有文件和目录：<code class="highlighter-rouge">rm -rf *</code></p>
+
+<p>复制文件：<code class="highlighter-rouge">cp file.txt /mnt</code></p>
+
+<p>移动文件：<code class="highlighter-rouge">mv file.txt /mnt</code></p>
+
+<p>重命名文件：<code class="highlighter-rouge">mv file1.txt file2.txt</code></p>
+
+<p>查看文件内容：<code class="highlighter-rouge">cat file.txt</code>；从始行查看所有的文件内容：<code class="highlighter-rouge">cat file.txt |more</code>；查看文件的前十行：<code class="highlighter-rouge">head file.txt</code>；查看文件的后十行：<code class="highlighter-rouge">tail file.txt</code>；查看前五行：<code class="highlighter-rouge">head-5 file.txt</code>；查看后五行：<code class="highlighter-rouge">tail-5 file.txt</code></p>
+
+<h5 id="查找文件">查找文件</h5>
+
+<p>查找包括file的文件名：<code class="highlighter-rouge">find / -name file*</code></p>
+
+<p>建立搜索数据库：<code class="highlighter-rouge">updatedb</code>，在数据库中查找文件：<code class="highlighter-rouge">locate file</code>(查找包含file的文件名，同上一个区分，此处不需要使用通配符)</p>
+
+<h5 id="查找应用命令">查找应用命令</h5>
+
+<p><code class="highlighter-rouge">which ls</code></p>
+
+<h5 id="在文件总过滤查找">在文件总过滤查找</h5>
+
+<p>查找文件中包含root的那些行：<code class="highlighter-rouge">cat /etc/passwd |grep rooot*</code>；查找文件中以root开头的那些行：<code class="highlighter-rouge">cat /etc/passwd |grep ^root</code></p>
+
+<h5 id="创建隐藏文件夹">创建隐藏文件夹</h5>
+
+<p><code class="highlighter-rouge">touch .a.txt</code>：文件名字前面加一个点就是隐藏文件夹；<code class="highlighter-rouge">ls -a</code>：查看所有文件夹</p>
+
+<h5 id="同步目录文件">同步目录文件</h5>
+
+<p><code class="highlighter-rouge">rsync -azv /path/to/some_source_dir /path/to/some_destination_dir</code>，<code class="highlighter-rouge">-a</code>表示保留文件的时间戳；<code class="highlighter-rouge">-z</code>表示可以进行压缩；<code class="highlighter-rouge">-v</code>表示显示进度(verbose)</p>
+
+<h5 id="查看目录文件占用磁盘的大小">查看目录文件占用磁盘的大小</h5>
+
+<p><code class="highlighter-rouge">du -hs /path/to/some_dir</code>，<code class="highlighter-rouge">-h</code>表示human readable；<code class="highlighter-rouge">-s</code>表示不深入到目录的子目录(separate)</p>
+
+<h5 id="查看文件的时间戳">查看文件的时间戳</h5>
+
+<p><code class="highlighter-rouge">stat /path/to/some_file</code>，时间戳有Last Access Time：最近的使用事件；Last Modify Time: 最近的修改时间，指的是内容的修改；Last Change Time：最近的改变时间，指的是文件metadata的改变。</p>
+
+<h4 id="目录操作">目录操作</h4>
+
+<p>目录创建：<code class="highlighter-rouge">mkdir dir1</code></p>
+
+<p>目录删除：<code class="highlighter-rouge">rm -rf dir1</code></p>
+
+<p>目录复制：<code class="highlighter-rouge">cp -R dir1 dir2</code>(递归的复制目录1给目录2)</p>
+
+<p>目录移动：<code class="highlighter-rouge">mv dir1 dir2</code></p>
+
+<p>查看目录树：<code class="highlighter-rouge">tree dir1</code></p>
+
+<p>递归的创建新目录：<code class="highlighter-rouge">mkdir -p a/b/c/d/e/f</code></p>
+
+<p>查看目录的大小：<code class="highlighter-rouge">du -hs /path/to/some_file</code>, <code class="highlighter-rouge">-h</code>表示将字节转化为人类可读的形式(human)，<code class="highlighter-rouge">-s</code>表示不展示字母占用的大小，<code class="highlighter-rouge">du</code>命令表示磁盘占用的大小查看</p>
+
+<h4 id="用户管理">用户管理</h4>
+
+<p>创建用户：<code class="highlighter-rouge">useradd user1</code></p>
+
+<h5 id="了解用户">了解用户</h5>
+
+<p>用户的家目录：<code class="highlighter-rouge">/home/user1</code></p>
+
+<p>用户文件：<code class="highlighter-rouge">/etc/passwd</code></p>
+
+<p>组文件：<code class="highlighter-rouge">/etc/group</code></p>
+
+<p>密码文件：<code class="highlighter-rouge">/etc/shadow</code>，<code class="highlighter-rouge">!!</code>说明没有密码，<code class="highlighter-rouge">!</code>说明被禁用</p>
+
+<h5 id="删除用户">删除用户</h5>
+
+<p><code class="highlighter-rouge">userdel -r user1</code></p>
+
+<h5 id="设置密码">设置密码</h5>
+
+<p><code class="highlighter-rouge">passwd user1</code></p>
+
+<h5 id="查看用户">查看用户</h5>
+
+<p><code class="highlighter-rouge">cat /etc/passwd</code>；<code class="highlighter-rouge">id user1</code></p>
+
+<h5 id="禁用用户">禁用用户</h5>
+
+<p><code class="highlighter-rouge">usermod -L userl</code></p>
+
+<h5 id="启用用户">启用用户</h5>
+
+<p><code class="highlighter-rouge">usermod -U user1</code></p>
+
+<h4 id="文件压缩">文件压缩</h4>
+
+<h5 id="gz-压缩包">gz 压缩包</h5>
+
+<p>压缩：<code class="highlighter-rouge">tar czf file.tar.gz *</code>(将当前目录的所有文件压缩)</p>
+
+<p>查看压缩包中的内容：<code class="highlighter-rouge">tar tf file.tar.gz</code></p>
+
+<p>解压：<code class="highlighter-rouge">tar xzf file.tar.gz</code></p>
+
+<h5 id="zip-压缩包">zip 压缩包</h5>
+
+<p>压缩：<code class="highlighter-rouge">zip file.zip *</code></p>
+
+<p>查看压缩包中的内容：<code class="highlighter-rouge">unzip -l file.zip</code></p>
+
+<p>解压：<code class="highlighter-rouge">unzip file.zip</code></p>
+
+<h4 id="网络设置">网络设置</h4>
+
+<p>重新启动网络：<code class="highlighter-rouge">service network restart</code></p>
+
+<p>临时修改网卡ip：<code class="highlighter-rouge">ifconfig eth0 192.168.100.3</code></p>
+
+<h4 id="防火墙设置">防火墙设置</h4>
+
+<h5 id="iptables-网络防火墙">iptables 网络防火墙</h5>
+
+<p>查看防火墙：<code class="highlighter-rouge">iptables -L</code></p>
+
+<p>清空防火墙策略：<code class="highlighter-rouge">iptables -F</code>(flush)</p>
+
+<p>保存防火墙策略：<code class="highlighter-rouge">service iptables save</code></p>
+
+<h5 id="selinux">selinux</h5>
+
+<p><code class="highlighter-rouge">vi /etc/selinux/config</code>，设置：<code class="highlighter-rouge">SELINUX=disabled</code></p>
+
+<blockquote>
+  <p>selinux防火墙要彻底关闭，必须重启服务器</p>
+</blockquote>
+
+<h4 id="shell技巧">shell技巧</h4>
+
+<p><code class="highlighter-rouge">|</code>管道符，用于过滤</p>
+
+<p><code class="highlighter-rouge">tab</code>补全</p>
+
+<p><code class="highlighter-rouge">history</code>查看历史命令</p>
+
+<p><code class="highlighter-rouge">!vi</code>调用历史中离你最近的一次以vi开头的命令</p>
+
+<h5 id="帮助方法">帮助方法</h5>
+
+<p><code class="highlighter-rouge">ls --help</code>；<code class="highlighter-rouge">zip -h</code></p>
+
+<hr />
+
+<hr />
+
+<h3 id="linux系统启动rpm软件包和权限">Linux系统启动、RPM软件包和权限</h3>
+
+<h4 id="linux系统启动流程">Linux系统启动流程</h4>
+
+<ol>
+  <li>
+    <p>grub内核引导页面</p>
+  </li>
+  <li>
+    <p>去第一块硬盘的第一块分区读取系统内核文件</p>
+  </li>
+  <li>
+    <p>启动init进程</p>
+  </li>
+  <li>
+    <p>init去找自己的配置文件 <code class="highlighter-rouge">/etc/inittab</code></p>
+  </li>
+  <li>
+    <p>init启动了很多子进程</p>
+  </li>
+  <li>
+    <p>登录界面</p>
+  </li>
+</ol>
+
+<h5 id="读取-etcrcdrcsysinit脚本">读取 <code class="highlighter-rouge">/etc/rc.d/rc.sysinit</code>脚本</h5>
+
+<ol>
+  <li>
+    <p>读取系统主机名</p>
+  </li>
+  <li>
+    <p>识别、加载硬件驱动</p>
+  </li>
+  <li>
+    <p>读取selinux防火墙</p>
+  </li>
+  <li>
+    <p>设置系统字体</p>
+  </li>
+  <li>
+    <p>进入一个简单的小欢迎页面</p>
+  </li>
+  <li>
+    <p>设置系统闹钟</p>
+  </li>
+  <li>
+    <p>设置文件和目录权限</p>
+  </li>
+  <li>
+    <p>加载映射分区</p>
+  </li>
+</ol>
+
+<h5 id="读取-etcrcdrc脚本并传入一个运行级别">读取 <code class="highlighter-rouge">/etc/rc.d/rc</code>脚本并传入一个运行级别</h5>
+
+<p>rc 3 就进去读取 <code class="highlighter-rouge">/etc/rc.d/rc.3</code>中的进程，以S开头是要启动的程序，以K开头的是要关闭从程序</p>
+
+<h4 id="linux-安装软件rpmredhat-package-management">Linux 安装软件，RPM：redhat package management</h4>
+
+<p>查看系统中所有安装的RPM包：<code class="highlighter-rouge">rpm -qa</code></p>
+
+<p>查看RPM包中是否安装Apache：<code class="highlighter-rouge">rpm -qa |grep httpd*</code></p>
+
+<p>挂在光盘到系统的Media目录下：<code class="highlighter-rouge">mount /dev/cdrom /media</code></p>
+
+<p>安装RPM包：<code class="highlighter-rouge">rpm -ivh httpd-2.2.3-43.el5.centos.i386.rpm</code></p>
+
+<p>强制卸载RPM包：<code class="highlighter-rouge">rpm -e httpd-2.2.3-43.el5.centos --force --nodeps</code></p>
+
+<p>查看RPM安装了些什么：<code class="highlighter-rouge">rpm -qpl httpd-2.2.3-43.el5.centos.i386.rpm |more</code></p>
+
+<h5 id="yum工具来安装rpm软件包">yum工具来安装RPM软件包</h5>
+
+<h6 id="准备工作">准备工作</h6>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">cd /etc/yum.repos.d/</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">move CentOS-Base.repo CentOS-Base</code>(重命名操作)</p>
+  </li>
+</ol>
+
+<h6 id="配置yum光盘源配置文件">配置yum光盘源配置文件</h6>
+
+<p><code class="highlighter-rouge">vi CentOS-Media.repo</code>，设置：<code class="highlighter-rouge">baseurl=file:///media/(光盘挂载的目的地) gpgcheck=0(关闭gpg签名) enable=1(开启本光盘的yum源)</code></p>
+
+<h6 id="查看系统中已经挂在的分区">查看系统中已经挂在的分区</h6>
+
+<p><code class="highlighter-rouge">df</code>；<code class="highlighter-rouge">df -h</code>(将k单位换算成M和G)</p>
+
+<blockquote>
+  <p>如果光盘没有挂在，则需要挂载光盘：<code class="highlighter-rouge">mount /etc/cdrom /media</code></p>
+</blockquote>
+
+<p>让计算机重启后/dev/cdrom光盘自动挂载到/media下</p>
+
+<p><code class="highlighter-rouge">vi /etc/fstab</code>，加入一行：<code class="highlighter-rouge">/dev/cdrom/  /media  iso9660 defaults 0 0</code>，行的内容分别表示：硬件分区、挂载目录、文件系统、文件属性、读取顺序</p>
+
+<h6 id="yum查看已经安装的rpm包和yum源中的rpm包">yum查看已经安装的RPM包和yum源中的RPM包</h6>
+
+<p><code class="highlighter-rouge">yum list</code></p>
+
+<h6 id="yum工具安装rpm包">yum工具安装RPM包</h6>
+
+<p><code class="highlighter-rouge">yum -y install httpd*</code></p>
+
+<h6 id="yum工具卸载rpm包">yum工具卸载RPM包</h6>
+
+<p><code class="highlighter-rouge">yum -y remove httpd*</code></p>
+
+<blockquote>
+  <p>此命令谨慎使用，因为会卸载很多相关软件，建议使用：<code class="highlighter-rouge">rpm -e httpd-2.2.3-43.el5.centos --force --nodeps*</code></p>
+</blockquote>
+
+<h4 id="rpm包会安装三个文件">RPM包会安装三个文件</h4>
+
+<ol>
+  <li>
+    <p>应用程序：<code class="highlighter-rouge">/usr/sbin/httpd</code></p>
+  </li>
+  <li>
+    <p>配置文件：<code class="highlighter-rouge">/etc/httpd/conf/httpd.conf</code></p>
+  </li>
+  <li>
+    <p>服务脚本：<code class="highlighter-rouge">/etc/init.d/httpd</code></p>
+  </li>
+</ol>
+
+<h4 id="启动一个应用程序">启动一个应用程序</h4>
+
+<p><code class="highlighter-rouge">/etc/init.d/httpd</code></p>
+
+<p><code class="highlighter-rouge">service httpd start</code></p>
+
+<h4 id="用户对文件的操作权限">用户对文件的操作权限</h4>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">chmod</code>：权限分配</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">acl</code>：权限分配</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">sudo</code>：权限分配</p>
+  </li>
+</ol>
+
+<h5 id="如何查看一个用户对一个文件有什么权限">如何查看一个用户对一个文件有什么权限</h5>
+
+<p><code class="highlighter-rouge">ls -l</code></p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">r</code>：读(4)；<code class="highlighter-rouge">w</code>：写(2)；<code class="highlighter-rouge">x</code>：执行(1)</p>
+</blockquote>
+
+<blockquote>
+  <p>权限人群：<code class="highlighter-rouge">u</code>表示root用户；<code class="highlighter-rouge">g</code>root组内的其他用户；<code class="highlighter-rouge">o</code>表示其他用户；<code class="highlighter-rouge">a = u + g + o</code>表示所有人群</p>
+</blockquote>
+
+<p>Chmod权限分配</p>
+
+<p><code class="highlighter-rouge">chmod u+x,o+x rootfile</code>表示修改rootfile文件的权限，使root用户具有执行的权限，其他用户具有执行的权限</p>
+
+<p><code class="highlighter-rouge">chmod 747 rootfile</code>表示修改rootfile的权限，使root用户具有<code class="highlighter-rouge">7</code>权限，root组内的其他用户具有<code class="highlighter-rouge">4</code>权限，其他用户具有<code class="highlighter-rouge">7</code>权限</p>
+
+<blockquote>
+  <p>7=4+2+1，即7表示读写执行的权限，6=4+2，即6具有读和写的全息…；<code class="highlighter-rouge">4</code>表示读的权限；<code class="highlighter-rouge">2</code>表示写的权限；<code class="highlighter-rouge">1</code>表示执行的权限</p>
+</blockquote>
+
+<blockquote>
+  <p>如果对所有的用户(root用户、root组内的其他用户和其他用户)进行权限操作，使用数字；如果只是某一类用户进行权限操作，用字母<code class="highlighter-rouge">u+x</code>…</p>
+</blockquote>
+
+<h4 id="用户与组">用户与组</h4>
+
+<p>把用户加入到组中：<code class="highlighter-rouge">gpasswd -a user1 root</code></p>
+
+<p>把用户从组中删除：<code class="highlighter-rouge">gpasswd -d user1 root</code></p>
+
+<h4 id="acl权限分配">acl权限分配</h4>
+
+<p>设置：<code class="highlighter-rouge">setfacl -m u:user1:rwx rootdir</code></p>
+
+<p>查看：<code class="highlighter-rouge">getfacl -m u:user1:rx rootdir</code></p>
+
+<p>删除某一acl权限：<code class="highlighter-rouge">setfacl -x u:user1 rootdir</code></p>
+
+<p>删除所有的acl权限：<code class="highlighter-rouge">setfacl -b rootdir</code></p>
+
+<h4 id="sodo-分权-让一个人对一个应用程序有什么权限">sodo 分权-让一个人对一个应用程序有什么权限</h4>
+
+<p><code class="highlighter-rouge">visudo</code>，在打开的文件中设置：<code class="highlighter-rouge">user1 fmz(主机名默认是localhost)=/sbin/service httpd restart,/usr/sbin/useradd user4</code>或者<code class="highlighter-rouge">user1 localhost=/sbin/service httpd restart,/usr/sbin/useradd user2</code></p>
+
+<p>已经赋予权限的用户执行命令：<code class="highlighter-rouge">sudo /usr/sbin/useradd user2</code>，必须按照写出完整的命令格式，而且前面必须加 sudo</p>
+
+<blockquote>
+  <p>永久修改主机名主机的名称：<code class="highlighter-rouge">vi /etc/sysconfig/network</code>；临时修改主机名：<code class="highlighter-rouge">hostname server</code></p>
+</blockquote>
+
+<blockquote>
+  <p>查看主机名称：<code class="highlighter-rouge">hostname</code></p>
+</blockquote>
+
+<blockquote>
+  <p>查看命令所在的位置：<code class="highlighter-rouge">which ls</code></p>
+</blockquote>
+
+<blockquote>
+  <p>显示格式化时间：<code class="highlighter-rouge">date "+%Y-%m-%d %H:%M:%S"</code></p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h3 id="linux服务进程和任务计划">Linux服务进程和任务计划</h3>
+
+<h4 id="服务进程">服务进程</h4>
+
+<h5 id="进程管理">进程管理</h5>
+
+<p>查看进程：<code class="highlighter-rouge">ps -ef |grep httpd</code>；<code class="highlighter-rouge">pstree |grep httpd</code>；<code class="highlighter-rouge">pstree -p |grep httpd</code>(查看PID，即进程号)</p>
+
+<p>杀掉进程：<code class="highlighter-rouge">kill -9 pid</code>；<code class="highlighter-rouge">killall httpd</code>；<code class="highlighter-rouge">pkill httpd</code>(这个好用)</p>
+
+<p>查看端口：<code class="highlighter-rouge">netstat -tunpl |grep http</code>；<code class="highlighter-rouge">netstat -tunpl |grep 80</code></p>
+
+<h4 id="设置本机启动">设置本机启动</h4>
+
+<p><code class="highlighter-rouge">vi /etc/rc.d/rc.local</code>，设置添加：<code class="highlighter-rouge">service httpd start</code>，设置：<code class="highlighter-rouge">chkconfig --level 3 httpd on</code>。这样在开机之后Apache就自动启动了。</p>
+
+<h4 id="任务计划周期性的去执行一段命令">任务计划(周期性的去执行一段命令)</h4>
+
+<p>编辑任务计划：<code class="highlighter-rouge">crontab -e</code></p>
+
+<p>查看任务计划：<code class="highlighter-rouge">crontab -l</code></p>
+
+<p>删除任务计划：<code class="highlighter-rouge">crontab -r</code></p>
+
+<p>计划任务模板：<code class="highlighter-rouge">*/2 * * * * /bin/echo "fmzfmzfmz" &gt;&gt; /mnt/file</code>表示每个两分钟向file文件中追加内容”fmzfmzfmz”</p>
+
+<blockquote>
+  <p>五颗星分别代表：分 时 日 月 周</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h3 id="安装java180apache229tomcat900mysql-server--mysql">安装Java1.8.0、Apache2.2.9、Tomcat9.0.0、mysql-server &amp; mysql</h3>
+
+<h4 id="安装java180">安装Java1.8.0</h4>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">wget http://download.oracle.com/otn-pub/java/jdk/8u65-b17/jdk-8u65-linux-i586.tar.gz</code>，从网络上下载Java的最新版本</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">mv jdk-8u65-linux-i586.tar.gz /usr/local/java</code>，将压缩文件剪切到指定的文件夹（方便管理）</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">tar zxf jdk-8u65-linux-i586.tar.gz</code>，强压缩文件解压到当前目录,这里的z参数可以省略，另外前面的<code class="highlighter-rouge">-</code>也可以省略，这个操作需要管理员的权限</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">alternatives --install /usr/bin/java jave /usr/local/java/jdk1.8.0_65/bin/java 2</code>，这里的数字<code class="highlighter-rouge">2</code>表示优先级，0表示第一优先级，其他数字一次类推。将安装的执行文件java创建到符号链接/usr/bin/java中</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">alternatives --config java</code>，指定/usr/bin/java中链接的java版本</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>symbolic link是符号链接，一个符号链接可以指向一个执行程序，也可以指向另外一个符号链接，具有很大的灵活性，这也是与快捷方式不同的地方</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">which java</code>只能够查看这个软链接的地址，而不能查看真正查看执行程序所在的位置，如果想要定位执行程序所在的位置，需要：<code class="highlighter-rouge">readlink -p $(which java)</code>，这里<code class="highlighter-rouge">-p</code>这里的意思是递归所有的软链接，如果不加此参数只能指向第一个软链接</p>
+</blockquote>
+
+<blockquote>
+  <p>如果想要使用<code class="highlighter-rouge">alternatives --install</code>来控制版本，同时想要创建PATH内的软链接，则需要：<code class="highlighter-rouge">ln -s /usr/local/java/jdk1.8.0_65/bin/jar jar</code>，意思是：”在当前目录下创建一个名字为jar的软链接，这个软链接指向/usr/local/jdk1.8.0_65/bin/jar”；然后再使用”alternatives”命令安装：<code class="highlighter-rouge">alternatives --install /usr/bin/jar jar /usr/local/jdk1.8.0_65/bin/jar 2</code>即可</p>
+</blockquote>
+
+<h4 id="安装apache229用gcc编译安装">安装Apache2.2.9(用gcc编译安装)</h4>
+
+<ol>
+  <li>
+    <p>将文件下载，移动到指定的文件夹，并解压</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">cd 解压后的目录</code>，在解压的目录中进行操作</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">./configure --prefix=/usr/local/apache2/ --sysconfdir=/usr/local/apache2/etc/ --with-included-apr --enable-so --enable-deflate=shared --enable-expires=shared --enable-rewrite=shared</code>，作用是制作编译地图，指定文件要安装的位置和配置文件的放置位置，以及其他一些问题</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">make</code>，第3步完成之后，如果成功，则会生成一个地图，也就是Make文件，第一个不完成的前提是一定要有gcc编译器、</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">make install</code>，第4步完成，在没有报错的情况下，可以进行安装。安装完成后就可以在制定的目录下的bin目录中找到<code class="highlighter-rouge">apachectl</code>这个就是执行程序，然后可以创建软链接</p>
+  </li>
+</ol>
+
+<h4 id="安装tomcat900">安装Tomcat9.0.0</h4>
+
+<ol>
+  <li>
+    <p>从官方现在最新的安装包，从Binary Distribution中下载<code class="highlighter-rouge">tar.gz</code>，解压到制定的问价中</p>
+  </li>
+  <li>
+    <p>设置Java的家目录：<code class="highlighter-rouge">vi /root/.bash_profile</code>，在export PATH下面添加：<code class="highlighter-rouge">export JAVA_HOME=/usr/local/java/jdk1.8.0_65</code></p>
+  </li>
+  <li>
+    <p>设置Tomcat的家目录：<code class="highlighter-rouge">vi /root/.bash_profile</code>,在export PATH下面添加：<code class="highlighter-rouge">export CATALINA_HOME=/usr/local/tomcat9/apache-tomcat-9.0.0</code>，可以通过<code class="highlighter-rouge">env</code>查看系统的环境变量，可以通过<code class="highlighter-rouge">echo $JAVA_HOME</code>来查找单一的环境变量；如果想要定义的环境对所有的用户都生效，需要在<code class="highlighter-rouge">/etc/profile</code>文件中添加上述信息</p>
+  </li>
+  <li>
+    <p>定义symbolic link</p>
+  </li>
+</ol>
+
+<h4 id="用yum源安装mysql-server-and-mysql">用yum源安装mysql-server and mysql</h4>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">yum list |grep mysql</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">yum -y install mysql.i386</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">yum -y install mysql-server.i386</code>，一定要安装mysql-server之后，MySQL才会启动，没有服务怎么启动呢？</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">service mysqld start</code>，启动mysql-server服务</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">mysql -u root</code>，启动mysql，初次启动，没有密码</p>
+  </li>
+  <li>
+    <p>进入MySQL后，为MySQL的root用户设置密码：<code class="highlighter-rouge">use mysql ;</code>  <code class="highlighter-rouge">update user set password=PASSWORD("your_new_password") where user="root" ;</code>  <code class="highlighter-rouge">flush privileges ;</code>  <code class="highlighter-rouge">quit ;</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">service mysqld stop</code>，之后重新启动mysql-server，然后 <code class="highlighter-rouge">mysql -u root -p</code>进入MySQL(命令敲击后，会让你输入密码)</p>
+  </li>
+</ol>
+
+<hr />
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - javaweb 开发基础篇之内置对象</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/08/07/javaweb-%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%AF%87%E4%B9%8B%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  August 07, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">javaweb 开发基础篇之内置对象</h1>
+
+<div id="post">
+  <h2 id="目录">目录</h2>
+
+<ul>
+  <li>
+    <p><a href="#1">1 JSP内置对象</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#1.1">1.1 JSP的9中内置对象</a></p>
+      </li>
+      <li>
+        <p><a href="#1.2">1.2 四种属性范围</a></p>
+
+        <ul>
+          <li>
+            <p><a href="#1.2.1">1.2.1 age属性范围(pageContext)</a></p>
+          </li>
+          <li>
+            <p><a href="#1.2.2">1.2.2 request 属性</a></p>
+          </li>
+          <li>
+            <p><a href="#1.2.3">1.2.3 session 属性</a></p>
+          </li>
+          <li>
+            <p><a href="#1.2.4">1.2.4 application属性</a></p>
+          </li>
+          <li>
+            <p><a href="#1.2.5">1.2.5 深入研究page属性范围</a></p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="#1.3">1.3 request 对象</a></p>
+
+        <ul>
+          <li>
+            <p><a href="#1.3.1">1.3.1 乱码处理</a></p>
+          </li>
+          <li>
+            <p><a href="#1.3.2">1.3.2 接受请求参数</a></p>
+
+            <ul>
+              <li><a href="#1.3.2.1">1.3.2.1 URL地址重写</a></li>
+            </ul>
+          </li>
+          <li>
+            <p><a href="#1.3.3">1.3.3 显示全部的头信息</a></p>
+          </li>
+          <li>
+            <p><a href="#1.3.4">1.3.4 角色验证</a></p>
+
+            <ul>
+              <li>
+                <p><a href="#1.3.4.1">1.3.4.1 修改conf\tomcat-user.xml文件，增加两个新用户</a></p>
+              </li>
+              <li>
+                <p><a href="#1.3.4.2">1.3.4.2 配置虚拟文件中的WEB-INF\web.xml，增加以下代码</a></p>
+              </li>
+              <li>
+                <p><a href="#1.3.4.3">1.3.4.3 进行安全角色验证-security.jsp</a></p>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><a href="#1.3.5">1.3.5 其他操作</a></p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="#1.4">1.4 response对象</a></p>
+
+        <ul>
+          <li>
+            <p><a href="#1.4.1">1.4.1 设置头信息</a></p>
+          </li>
+          <li>
+            <p><a href="#1.4.2">1.4.2 页面跳转</a></p>
+          </li>
+          <li>
+            <p><a href="#1.4.3">1.4.3 客户端跳转和服务器端跳转的区别</a></p>
+          </li>
+          <li>
+            <p><a href="#1.4.4">1.4.4 操作CooKie</a></p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="#1.5">1.5 session对象</a></p>
+
+        <ul>
+          <li>
+            <p><a href="#1.5.1">1.5.1 取得session ID</a></p>
+          </li>
+          <li>
+            <p><a href="#1.5.2">1.5.2 重启服务器之后继续使用session</a></p>
+          </li>
+          <li>
+            <p><a href="#1.5.3">1.5.3 登录及注销</a></p>
+          </li>
+          <li>
+            <p><a href="#1.5.4">1.5.4 在web开发中一共存在4种会话跟踪技术</a></p>
+          </li>
+          <li>
+            <p><a href="#1.5.5">1.5.5 判断新用户(isNew())</a></p>
+          </li>
+          <li>
+            <p><a href="#1.5.6">1.5.6 取得用户的操作时间(getCreationTime()、getLastAccessedTime())</a></p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="#1.6">1.6 application对象</a></p>
+
+        <ul>
+          <li>
+            <p><a href="#1.6.1">1.6.1 取得虚拟目录对应的绝对路径</a></p>
+          </li>
+          <li>
+            <p><a href="#1.6.2">1.6.2 简单的文件操作</a></p>
+          </li>
+          <li>
+            <p><a href="#1.6.3">1.6.3 网站计数器程序(范例讲解)</a></p>
+          </li>
+          <li>
+            <p><a href="#1.6.4">1.6.4 查看application范围的属性</a></p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="#1.7">1.7 web安全性及config对象</a></p>
+
+        <ul>
+          <li><a href="#1.7.1">1.7.1 config对象</a></li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="#1.8">1.8 out对象</a></p>
+      </li>
+      <li>
+        <p><a href="#1.9">1.9 pageContext对象</a></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 JSP内置对象</h2>
+
+<p>在JSP中为了简化用户开发，提供了9中内置对象，这些内置对象将由容器为用户实例化，用户直接使用即可，而不必要像java中那样用new关键字来实例化后才能使用</p>
+
+<h3 id="1.1">1.1 JSP的9中内置对象</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>NO.</td>
+      <td>内置对象</td>
+      <td>类型</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>pageContext</td>
+      <td>javax.servlet.jsp.PageContext</td>
+      <td>JSP的页面容器</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>requset</td>
+      <td>javax.servlet.http.HttpServletRequest</td>
+      <td>得到用户的请求信息</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>response</td>
+      <td>javax.servlet.http.HttpservletResponse</td>
+      <td>服务器向客户端的回应信息</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>session</td>
+      <td>javax.servlet.http.HttpservletSession</td>
+      <td>用来保存每一个用户的信息</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>application</td>
+      <td>javax.servlet.ServletContext</td>
+      <td>表示所用用户的共享信息</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>config</td>
+      <td>javax.servlet.ServletConfig</td>
+      <td>服务器配置，可以取得初始化参数</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>out</td>
+      <td>javax.servlet.jsp.JspWriter</td>
+      <td>页面输出</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>page</td>
+      <td>java.lang.Object</td>
+      <td>从该页面中表示出来的一个Servlet实例</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>excepion</td>
+      <td>java.lang.Throwable</td>
+      <td>表示JSP页面所发生的异常，在错误页中才起作用</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="1.2">1.2 四种属性范围</h3>
+
+<blockquote>
+  <p>所谓的属性的保存范围是指：一个内置的对象可以在多少个页面中保存并继续使用</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">page</code>: 只在一个页面中保存属性，跳转之后无效</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">request</code>: 只在一次请求中保存，服务器跳转之后依然有效</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">session</code>: 在一次会话范围内，无论何种跳转都可以使用，但是新的浏览器打开之后无法使用</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">application</code>: 在整个服务器中保存，所有用户都可以使用</p>
+  </li>
+</ol>
+
+<h4 id="1.2.1">1.2.1 age属性范围(pageContext)</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">name</span><span class="err">","</span><span class="na">fmz</span><span class="err">")</span> <span class="err">;</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">birthday</span><span class="err">",</span><span class="na">new</span> <span class="na">Date</span><span class="err">())</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">String</span> <span class="na">name =</span><span class="err"> </span><span class="s">(String)pageContext.getAttribute("name")</span> <span class="err">;</span>
+		<span class="na">Date</span> <span class="na">birthday =</span><span class="err"> </span><span class="s">(Date)pageContext.getAttribute("birthday")</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;center&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>姓名：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">name</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>生日：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">birthday</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>可以取得本页内的属性</p>
+</blockquote>
+
+<p>跳转页</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">name</span><span class="err">","</span><span class="na">fmz</span><span class="err">")</span> <span class="err">;</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">birthday</span><span class="err">",</span><span class="na">new</span> <span class="na">Date</span><span class="err">())</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;jsp:forward</span> <span class="na">page=</span><span class="s">"page_scope03.jsp"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>所跳转到页</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">String</span> <span class="na">name =</span><span class="err"> </span><span class="s">(String)pageContext.getAttribute("name")</span> <span class="err">;</span>
+		<span class="na">Date</span> <span class="na">birthday =</span><span class="err"> </span><span class="s">(Date)pageContext.getAttribute("birthday")</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;center&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>姓名：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">name</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>生日：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">birthday</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>跳转之后无法获得跳转页的属性，属性内容只能从当前页获取</p>
+</blockquote>
+
+<h4 id="1.2.2">1.2.2 request 属性</h4>
+
+<blockquote>
+  <p>request属性表示在服务器跳转之后，所有设置的内容依然会保留下来，但是客户端的跳转，设置的内容在第二次请求时已经丢失，无法获取</p>
+</blockquote>
+
+<blockquote>
+  <p>request表示客户端的请求，正常情况下，一次请求服务器只会给予一次回应，如果是服务器端跳转，地址栏没有发生改变，也就是相当回应一次了；而如果地址栏发生了改变，就相当于发出了第二次请求，第一次请求的内容已经消失，所以无法取得。属性内容保存在每次请求当中，请求回应后即消失。</p>
+</blockquote>
+
+<h4 id="1.2.3">1.2.3 session 属性</h4>
+
+<blockquote>
+  <p>session 属性可以取得服务器端和客户端的跳转</p>
+</blockquote>
+
+<blockquote>
+  <p>实际上，每一个浏览器连接到服务器之后，都表示各自的session，表示每一位上网者有自己的属性，所以新的浏览器打开之后，无法取得其他session设置的属性，属性保存在每一个连接服务器的浏览器上，浏览器关闭即消失</p>
+</blockquote>
+
+<h4 id="1.2.4">1.2.4 application属性</h4>
+
+<blockquote>
+  <p>application设置的属性可以让每一个用户(session)都看得见，这样的属性保存在服务器上。</p>
+</blockquote>
+
+<blockquote>
+  <p>application范围的属性设置过多会影响服务器的性能</p>
+</blockquote>
+
+<blockquote>
+  <p>由于属性是保存在服务器当中的，所以当服务器重启的时候，之前设置的属性就全部消失了</p>
+</blockquote>
+
+<h4 id="1.2.5">1.2.5 深入研究page属性范围</h4>
+
+<p><code class="highlighter-rouge">pageContext</code>对象可以任意范围的属性，通过方法<code class="highlighter-rouge">pageContext.setAttribute(String name,Object value,int scope)</code>,而且scope的内容可以是<code class="highlighter-rouge">PAGE_SCOPE、REQUEST_SCOPE、SESSION_SCOPE、APPLICATION_SCOPE</code>四中类型</p>
+
+<h3 id="1.3">1.3 request 对象</h3>
+
+<blockquote>
+  <p>request对象的主要作用是接受客户端发送而来的信息，如请求是参数、发送的头信息等都属于客户端发送来的信息。request是javax.servlet.http.HttpServletRequest接口的实例化对象。</p>
+</blockquote>
+
+<blockquote>
+  <p>接口javax.servlet.http.HttpServletRequest是javax.servlet.ServletRequest的子接口,但是javax.servlet.ServletRequest接口中只有一个接口，为什么不将二者合为一个接口？这样的设计主要是为了以后扩展应用，虽然现在的java web只支持HTTP协议，但是如果以后要是支持了新的协议，则直接继承公共接口就可以了</p>
+</blockquote>
+
+<p>request内置对象的常用方法</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>NO.</td>
+      <td>方法</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>public String getParameter(String name)</td>
+      <td>接收客户端发送的请求参数内容</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>public String[] getParameterValues(String name)</td>
+      <td>取得客户端发送的一组请求参数的内容</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>public Enumeration getParameterNames()</td>
+      <td>取得全都请求参数的名称</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>public String getRemoteAddr()</td>
+      <td>取得客户端IP地址</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>void setCharacterEncoding(String env) throws UnsupportedEncodingException</td>
+      <td>设置统一请求编码</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>public boolean is UserInrole(String role)</td>
+      <td>进行用户身份验证</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>public HttpSession getSession()</td>
+      <td>取得当前的session对象</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>public StringBuffer gerRequestURL()</td>
+      <td>返回正在请求的路径</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>public Enumeration getHeaderNames()</td>
+      <td>取得全部头信息名称</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>public String getHeader(String name)</td>
+      <td>根据名称取得头信息的内容</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>public String getMethod()</td>
+      <td>取得用户的提交方式</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>public String getServletPath()</td>
+      <td>取得访问路径</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>public String getContextPath()</td>
+      <td>取得上下文资源路径</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="1.3.1">1.3.1 乱码处理</h4>
+
+<p>可以直接通过<code class="highlighter-rouge">request.setCharacterEncoding("编码")</code>来进行统一编码设置</p>
+
+<p>示例代码</p>
+
+<p>表单文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"GBK"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"request_demo01.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			请输入内容：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"info"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>接收表单参数文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%@ page contentType="text/html" pageEncoding="GBK"%&gt;
+&lt;center&gt;
+	&lt;%
+		request.setCharacterEncoding("GBK") ;
+		String info = request.getParameter("info") ;
+	%&gt;
+	&lt;h2&gt;&lt;%=info%&gt;&lt;/h2&gt;
+&lt;/center&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意：当设置统一格式为utf-8时，浏览器接收参数产生乱码；此问题没有解决</p>
+</blockquote>
+
+<blockquote>
+  <p>可以统一设置为gbk编码，则不会产生乱码，但是注意，设置为gbk编码时，文件的编码方式一定要设置成ANSI编码格式</p>
+</blockquote>
+
+<h4 id="1.3.2">1.3.2 接受请求参数</h4>
+
+<blockquote>
+  <p>单一参数的接收可以通过<code class="highlighter-rouge">getParameter()</code>，而一组参数的接收需要通过<code class="highlighter-rouge">getParameterValues()</code>完成。在表单控件中，像文本框(text)、单选框(radio)、密码框(password)、隐藏域(hidden)等，参数的名称只有一个，不会重复，一般都通过getParameter()方法接收；而像复选框(checked)，一般参数名称都是重复的，是一组参数，只能通过getParamterValues()方法接收，如果使用getParameter()方法，则只会接受第一个内容。</p>
+</blockquote>
+
+<p>接收表单复选框参数示例</p>
+
+<p>表单代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"request_demo03.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"uname"</span><span class="nt">&gt;&lt;br&gt;</span>
+			兴趣：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"唱歌"</span><span class="nt">&gt;</span>唱歌
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"跳舞"</span><span class="nt">&gt;</span>跳舞
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"游泳"</span><span class="nt">&gt;</span>游泳
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"上网"</span><span class="nt">&gt;</span>上网
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"编程"</span><span class="nt">&gt;</span>编程
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"id"</span> <span class="na">value=</span><span class="s">"fmz"</span><span class="nt">&gt;&lt;br&gt;</span>
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>接收参数代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">id =</span><span class="err"> </span><span class="s">request.getParameter("id")</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">name =</span><span class="err"> </span><span class="s">request.getParameter("uname")</span> <span class="err">;</span>
+			<span class="na">String</span><span class="err">[]</span> <span class="na">inst =</span><span class="err"> </span><span class="s">request.getParameterValues("inst")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>姓名：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">name</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>ID：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">id</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>兴趣：
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">inst</span> <span class="err">!=</span> <span class="na">null</span><span class="err">){</span>
+				<span class="na">for</span><span class="err">(</span><span class="na">int</span> <span class="na">i=</span><span class="s">0;i&lt;inst.length;i++){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;</span><span class="err">%=</span><span class="na">inst</span><span class="err">[</span><span class="na">i</span><span class="err">]%</span><span class="nt">&gt;</span>，
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>在WEB开发中，所有的参数不一定通过表单传递过来，也可以通过地址重写的方式进行传递</p>
+
+<h5 id="1.3.2.1">1.3.2.1 URL地址重写</h5>
+
+<p><code class="highlighter-rouge">动态页面地址?参数名称1=参数内容1&amp;参数名称2=参数内容2&amp;...</code></p>
+
+<blockquote>
+  <p>多个参数之间要用&amp;隔开</p>
+</blockquote>
+
+<blockquote>
+  <p>在表单上有两种提交方式，method：post OR get 两种，使用哪种提交方式好呢？若使用get提交方式，提交的内容会显示在地址栏中，如提价的内容为图片等较大的信息，则会受到地址栏容量的限制(地址栏最大的容量为4~5K),而使用post方式提价，则不会出现这种情况。</p>
+</blockquote>
+
+<p>request内置对象还有一个灵活的方法：<code class="highlighter-rouge">getParameterNames()</code>，这个方法可以返回所有请求参数的名称，此方法的返回类型是<code class="highlighter-rouge">Enumeration</code>，所以要使用<code class="highlighter-rouge">hasMoreElements()</code>方法判断是否有内容，以及使用<code class="highlighter-rouge">nextElement()</code>方法进行输出</p>
+
+<p>通过getParameterNames()方法进行参数输出示例</p>
+
+<p>要输出的表单文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"request_demo05.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"uname"</span><span class="nt">&gt;&lt;br&gt;</span>
+			性别：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"男"</span> <span class="na">checked</span><span class="nt">&gt;</span>男
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"女"</span><span class="nt">&gt;</span>女<span class="nt">&lt;br&gt;</span>
+			城市：<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"city"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"北京"</span><span class="nt">&gt;</span>北京<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"上海"</span><span class="nt">&gt;</span>上海<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"广州"</span><span class="nt">&gt;</span>广州<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"天津"</span><span class="nt">&gt;</span>天津<span class="nt">&lt;/option&gt;</span>
+				  <span class="nt">&lt;/select&gt;&lt;br&gt;</span>
+			兴趣：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"_inst"</span> <span class="na">value=</span><span class="s">"唱歌"</span><span class="nt">&gt;</span>唱歌
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"_inst"</span> <span class="na">value=</span><span class="s">"跳舞"</span><span class="nt">&gt;</span>跳舞
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"_inst"</span> <span class="na">value=</span><span class="s">"游泳"</span><span class="nt">&gt;</span>游泳
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"_inst"</span> <span class="na">value=</span><span class="s">"上网"</span><span class="nt">&gt;</span>上网
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"_inst"</span> <span class="na">value=</span><span class="s">"编程"</span><span class="nt">&gt;</span>编程
+				  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"id"</span> <span class="na">value=</span><span class="s">"fmz"</span><span class="nt">&gt;&lt;br&gt;</span>
+			自我介绍：<span class="nt">&lt;textarea</span> <span class="na">cols=</span><span class="s">"30"</span> <span class="na">rows=</span><span class="s">"3"</span> <span class="na">name=</span><span class="s">"note"</span><span class="nt">&gt;&lt;/textarea&gt;&lt;br&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"id"</span> <span class="na">value=</span><span class="s">"fmz"</span><span class="nt">&gt;</span>
+		    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+		    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>jsp文件输出表单信息-<code class="highlighter-rouge">Enumeration</code>输出</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+			<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td&gt;</span>参数名称<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>参数内容<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Enumeration</span> <span class="na">enu =</span><span class="err"> </span><span class="s">request.getParameterNames()</span> <span class="err">;</span>
+			<span class="na">while</span><span class="err">(</span><span class="na">enu</span><span class="err">.</span><span class="na">hasMoreElements</span><span class="err">()){</span>
+				<span class="na">String</span> <span class="na">paramName =</span><span class="err"> </span><span class="s">(String)enu.nextElement()</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">paramName</span><span class="err">%</span><span class="nt">&gt;&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="na">if</span><span class="err">(</span><span class="na">paramName</span><span class="err">.</span><span class="na">startsWith</span><span class="err">("</span><span class="na">_</span><span class="err">")){</span>
+					<span class="na">String</span><span class="err">[]</span> <span class="na">paramValue =</span><span class="err"> </span><span class="s">request.getParameterValues(paramName)</span> <span class="err">;</span>
+					<span class="na">for</span><span class="err">(</span><span class="na">int</span> <span class="na">i=</span><span class="s">0;i&lt;paramValue.length;i++){</span>
+					
+		<span class="err">%</span><span class="nt">&gt;</span>
+							<span class="nt">&lt;</span><span class="err">%=</span><span class="na">paramValue</span><span class="err">[</span><span class="na">i</span><span class="err">]%</span><span class="nt">&gt;</span>、
+		<span class="nt">&lt;</span><span class="err">%</span>
+					<span class="err">}</span>
+				<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+					<span class="na">String</span> <span class="na">paramValue =</span><span class="err"> </span><span class="s">request.getParameter(paramName)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;</span><span class="err">%=</span><span class="na">paramValue</span><span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/table&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>此种方式适合表单会动态变化的情况，在一般的开发中，以上的程序并不多见，但是在进行购物车程序开发时，本段代码就非常有用了。</p>
+</blockquote>
+
+<h4 id="1.3.3">1.3.3 显示全部的头信息</h4>
+
+<blockquote>
+  <p>java的web开发使用的是http协议，主要的操作是基于请求和回应，但是请求和回应的同时也会包含一些其他信息(如客户端的IP、Cookie、语言等)，这些信息就称为头信息。</p>
+</blockquote>
+
+<p>取得头信息名称的方法是：<code class="highlighter-rouge">getHeaderNames()</code>方法；取得头信息内容的方法是：<code class="highlighter-rouge">getHeader()</code></p>
+
+<p>取得头信息名称及内容的代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Enumeration</span> <span class="na">enu =</span><span class="err"> </span><span class="s">request.getHeaderNames()</span> <span class="err">;</span>
+			<span class="na">while</span><span class="err">(</span><span class="na">enu</span><span class="err">.</span><span class="na">hasMoreElements</span><span class="err">()){</span>
+				<span class="na">String</span> <span class="na">headerName =</span><span class="err"> </span><span class="s">(String)enu.nextElement()</span> <span class="err">;</span>
+				<span class="na">String</span> <span class="na">headerValue =</span><span class="err"> </span><span class="s">(String)request.getHeader(headerName)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h5&gt;&lt;</span><span class="err">%=</span><span class="na">headerName</span><span class="err">%</span><span class="nt">&gt;</span>--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">headerValue</span><span class="err">%</span><span class="nt">&gt;&lt;/h5&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="1.3.4">1.3.4 角色验证</h4>
+
+<p>如果某些JSP页面需要输入特定的管理员账户才能访问，那么就需要进行角色验证。进行角色验证必须使用request内置对象中的<code class="highlighter-rouge">isUserInRole()</code>方法完成，且必须完成以下操作。</p>
+
+<h5 id="1.3.4.1">1.3.4.1 修改conf\tomcat-user.xml文件，增加两个新用户</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;user username="fmz" password="799520" roles="admin"/&gt;
+&lt;user username="cll" password="799520" roles="fmzuser"/&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>第一个用户的角色是管理员身份，第二个是一个简单的fmz用户</p>
+</blockquote>
+
+<h5 id="1.3.4.2">1.3.4.2 配置虚拟文件中的WEB-INF\web.xml，增加以下代码</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;security-constraint&gt;
+	&lt;web-resource-collection&gt;	
+		&lt;web-resouce-name&gt;RegisteredUsers&lt;/web-resouce-name&gt;
+		&lt;url-pattern&gt;/scope_demo/security.jsp
+		&lt;/url-pattern&gt;
+	&lt;/web-resource-collection&gt;	
+	&lt;auth-constraint&gt;
+		&lt;role-name&gt;fmzuser&lt;/role-name&gt;
+		&lt;role-name&gt;admin&lt;/role-name&gt;
+	&lt;/auth-constraint&gt;
+&lt;/security-constraint&gt;
+&lt;login-config&gt;
+	&lt;auth-method&gt;BASIC&lt;/auth-method&gt;
+	&lt;realm-name&gt;Registered Users&lt;/realm-name&gt;
+&lt;/login-config&gt;
+&lt;security-role&gt;
+	&lt;role-name&gt;fmzuser&lt;/role-name&gt;
+&lt;/security-role&gt;
+&lt;security-role&gt;
+	&lt;role-name&gt;admin&lt;/role-name&gt;
+&lt;/security-role&gt;
+</code></pre></div></div>
+
+<h5 id="1.3.4.3">1.3.4.3 进行安全角色验证-security.jsp</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">isUserInRole</span><span class="err">("</span><span class="na">admin</span><span class="err">")){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h2&gt;</span>欢迎您的光临！！！<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">isUserInRole</span><span class="err">("</span><span class="na">fmzuser</span><span class="err">")){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h2&gt;</span>欢迎fmzuser的光临！！！<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="1.3.5">1.3.5 其他操作</h4>
+
+<p>在request对象中还可以访问客户端的IP地址、访问路径信息、提价的方式等</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">method =</span><span class="err"> </span><span class="s">request.getMethod()</span> <span class="err">;</span>
+			<span class="na">String</span>  <span class="na">ip =</span><span class="err"> </span><span class="s">request.getRemoteAddr()</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">path =</span><span class="err"> </span><span class="s">request.getServletPath()</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">contextPath =</span><span class="err"> </span><span class="s">request.getContextPath()</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>请求方式--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">method</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>IP地址--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">ip</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>访问路径--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">path</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>上下文名称--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">contextPath</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>输出结果为</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>请求方式--&gt;GET
+IP地址--&gt;0:0:0:0:0:0:0:1
+访问路径--&gt;/scope_demo/request_demo07.jsp
+上下文名称--&gt;/fmz
+</code></pre></div></div>
+
+<blockquote>
+  <p>ip地址输出的为ipv6的地址，目前还没有解决这个问题。</p>
+</blockquote>
+
+<blockquote>
+  <p>request内置对象在实际的开发中使用最多，而且当服务器端想得到客户端信息时就会使用request对象完成。</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h3 id="1.4">1.4 response对象</h3>
+
+<blockquote>
+  <p>response的主要是对客户端的请求进行回应，将web服务器处理后的结果发给客户端，同request对象一样，response也也有一个父接口ServletResponse，并且此接口也只有一个子接口HttpServletResponse.</p>
+</blockquote>
+
+<p>response对象的常用方法</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>No.</td>
+      <td>方法</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>public void addCookie(Cookie cookie)</td>
+      <td>向客户端增加Cookie</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>public void setHeader(String name,String value)</td>
+      <td>设置回应头信息</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>public void sendRedirect(String location) throws IOException</td>
+      <td>页面跳转</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="1.4.1">1.4.1 设置头信息</h4>
+
+<p>定时刷新的头信息</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%!</span>
+			<span class="na">int</span> <span class="na">count =</span><span class="err"> </span><span class="s">0</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">setHeader</span><span class="err">("</span><span class="na">refresh</span><span class="err">","</span><span class="na">2</span><span class="err">")</span> <span class="err">;//设置两秒刷新一次</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>您已经访问了<span class="nt">&lt;</span><span class="err">%=++</span><span class="na">count</span><span class="err">%</span><span class="nt">&gt;</span>次！<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>设置3秒后跳转到某个页面</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">setHeader</span><span class="err">("</span><span class="na">refresh</span><span class="err">","</span><span class="na">3</span><span class="err">;</span><span class="na">URL=</span><span class="s">hello.html")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>页面将在三秒后跳转，如果没有跳转，请点<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"hello.html"</span><span class="nt">&gt;</span>这里<span class="nt">&lt;/a&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>如果将上述代码的跳转时间改为0，表示无条件跳转</p>
+</blockquote>
+
+<blockquote>
+  <p>定时跳转的时候，地址栏发生了改变，所以这种跳转称为客户端跳转。</p>
+</blockquote>
+
+<p>上述的跳转操作，HTML本身也能够实现</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="na">http-equiv=</span><span class="s">"refresh"</span> <span class="na">content=</span><span class="s">"3;url=hello.html"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>页面将在三秒后跳转，如果没有跳转，请点<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"hello.html"</span><span class="nt">&gt;</span>这里<span class="nt">&lt;/a&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>当网页为静态网页时，只需要从文件系统中读取文件，没有JSP代码，这时候可以用HTML的方式头信息跳转，当动态页面时，要用response内置对象进行页面的头信息跳转操作。</p>
+</blockquote>
+
+<h4 id="1.4.2">1.4.2 页面跳转</h4>
+
+<p>在JSP中除了使用头信息进行页面跳转操作之外，还可以使用response对象的sendRedirect()方法直接完成页面的跳转</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">sendRedirect</span><span class="err">("</span><span class="na">hello</span><span class="err">.</span><span class="na">html</span><span class="err">")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>这种跳转方式也属于客户端跳转</p>
+</blockquote>
+
+<h4 id="1.4.3">1.4.3 客户端跳转和服务器端跳转的区别</h4>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">&lt;jsp:forward&gt;</code>属于服务器端跳转，<code class="highlighter-rouge">response.sendRedirect()</code>属于客户端跳转，前者地址栏不会发生改变，后者地址栏会发生改变。</p>
+  </li>
+  <li>
+    <p>在使用request属性范围时，只有服务器端的跳转才能够将request属性保存到跳转页，如果是客户端跳转，则无法进行属性的传递。</p>
+  </li>
+  <li>
+    <p>如果是服务器端的跳转，则执行到跳转句会立刻进行跳转；如果使用的是客户端跳转，则在整个页面执行完之后才执行跳转。</p>
+  </li>
+</ol>
+
+<p>验证代码</p>
+
+<p>jsp跳转</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">System</span><span class="err">.</span><span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">("==================跳转之前=================")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;jsp:forward</span> <span class="na">page=</span><span class="s">"hello.html"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">System</span><span class="err">.</span><span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">("==================跳转之后=================")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>response内置对象跳转</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">System</span><span class="err">.</span><span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">("==================跳转之前=================")</span> <span class="err">;</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">sendRedirect</span><span class="err">("</span><span class="na">hello</span><span class="err">.</span><span class="na">html</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">System</span><span class="err">.</span><span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">("==================跳转之后=================")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>在以后的代码开发中，若使用了JDBC操作，一定要在<jsp:forward>语句执行之前关闭数据库的连接，否则数据库再也无法关闭，当达到某个程度时会“数据库连接已经达到最大异常”，这是只用重启服务器了。</jsp:forward></p>
+</blockquote>
+
+<blockquote>
+  <p>使用<jsp:forward>方便进行参数的传递，如果使用response内置对象跳转，只能通过地址重写的方式进行参数的传递。</jsp:forward></p>
+</blockquote>
+
+<h4 id="1.4.4">1.4.4 操作CooKie</h4>
+
+<blockquote>
+  <p>Cookie是浏览器所提供的一种技术，这种技术让服务器端的程序将一些只需要保存在客户端，或者在客户端进行处理的数据，放在本身使用的计算机中，不需通过网络的传输，因而提高了网页处理的效率，而且也减小了服务器端的负载。但是由于服务器端保存在客户端的信息，所以其安全性也很差。</p>
+</blockquote>
+
+<p>Cookie定义的常用方法</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>NO.</td>
+      <td>方法</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>public Cookie(String name,String value)</td>
+      <td>实例化Cookie对象，同时设置名称和内容</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>public String getName()</td>
+      <td>取得Cookie的名称</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>public String getValue()</td>
+      <td>取得Cookie的内容</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>public void setMaxAge()</td>
+      <td>设置Cookie的保存时间，以秒为单位</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>所有的Cookie都是由服务器端设置到客户端上去的，所以要向客户端增加Cookie，必须使用response对象的方法：<code class="highlighter-rouge">public void addCookie(Cookie cookie)</code></p>
+
+<p>向客户端增加Cookie</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Cookie</span> <span class="na">c1 =</span><span class="err"> </span><span class="s">new</span> <span class="na">Cookie</span><span class="err">("</span><span class="na">fmz</span><span class="err">","</span><span class="na">fengmengzhao</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">Cookie</span> <span class="na">c2 =</span><span class="err"> </span><span class="s">new</span> <span class="na">Cookie</span><span class="err">("</span><span class="na">cll</span><span class="err">","</span><span class="na">chenliangliang</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">addCookie</span><span class="err">(</span><span class="na">c1</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">addCookie</span><span class="err">(</span><span class="na">c2</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>取得客户端Cookie(使用request对象)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Cookie</span><span class="err">[]</span> <span class="na">c =</span><span class="err"> </span><span class="s">request.getCookies()</span> <span class="err">;</span>
+			<span class="na">for</span><span class="err">(</span><span class="na">int</span> <span class="na">x=</span><span class="s">0;x&lt;c.length;x++){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h2&gt;&lt;</span><span class="err">%=</span><span class="na">c</span><span class="err">[</span><span class="na">x</span><span class="err">].</span><span class="na">getName</span><span class="err">()%</span><span class="nt">&gt;</span>--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">c</span><span class="err">[</span><span class="na">x</span><span class="err">].</span><span class="na">getValue</span><span class="err">()%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>在每一个客户端访问服务器时，服务器为了明确区分每一个客户端，都会自动设置一个JSESSIONID的Cookie，表示用户的唯一身份标识。</p>
+</blockquote>
+
+<p>实际上以上代码，Cookie默认是保存在浏览器上，当浏览器重新启动时，Cookie就不存在了。如果想要Cookie真正的保存在客户端上，必须使用<code class="highlighter-rouge">setMaxAge()</code>方法</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Cookie</span> <span class="na">c1 =</span><span class="err"> </span><span class="s">new</span> <span class="na">Cookie</span><span class="err">("</span><span class="na">fmz</span><span class="err">","</span><span class="na">fengmengzhao</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">Cookie</span> <span class="na">c2 =</span><span class="err"> </span><span class="s">new</span> <span class="na">Cookie</span><span class="err">("</span><span class="na">cll</span><span class="err">","</span><span class="na">chenliangliang</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">c1</span><span class="err">.</span><span class="na">setMaxAge</span><span class="err">(</span><span class="na">60</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">c2</span><span class="err">.</span><span class="na">setMaxAge</span><span class="err">(</span><span class="na">60</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">addCookie</span><span class="err">(</span><span class="na">c1</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">addCookie</span><span class="err">(</span><span class="na">c2</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Cookie 并不能无限制地保存信息，一个客户单最多只能保存300个Cookie。</p>
+</blockquote>
+
+<p>也可以通过设置头信息来设置Cookie</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%
+	response.setHeader("Set-Cookie","fmz=fengmengzhao") ;
+%&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>在web开发中，通过头信息来设置cookie并不常见，重点在response设置Cookie的操作上。</p>
+</blockquote>
+
+<h3 id="1.5">1.5 session对象</h3>
+
+<blockquote>
+  <p>session 是javax.servlet.http.HttpSession 接口的实例化对象，所以session只能应用在Http协议中</p>
+</blockquote>
+
+<p>httpSession接口的常用方法</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>NO.</td>
+      <td>方法</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>public String getId()</td>
+      <td>取得session ID</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>public long getCreationTime()</td>
+      <td>取得session创建时间</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>public long getLaseAccessedTime()</td>
+      <td>取得session最后一次操作时间</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>public boolean isNew()</td>
+      <td>判断是否为新的session(新用户)</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>public void invalidate()</td>
+      <td>让session实效</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>public Enumeration getAttributeNames()</td>
+      <td>取得全部属性的名称</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>有一些方法在doc文档中都标记有Deprecated进行声明，标明这些方法在JSP版本升级中都已经过时了。</p>
+</blockquote>
+
+<h4 id="1.5.1">1.5.1 取得session ID</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">id =</span><span class="err"> </span><span class="s">session.getId()</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>SESSION ID：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">id</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>SESSION 长度：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">id</span><span class="err">.</span><span class="na">length</span><span class="err">()%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>在使用session操作时，实际上使用了Cookie处理机制，即在客户端的Cookie中保存着每一个SESSION ID，这样用户每次在发送请求时，都会将此SESSION ID 发送到服务器端，服务器端依靠此SESSION ID区别每一个不同的客户端。</p>
+</blockquote>
+
+<p>对于每一个已经连接到服务器的用户，如果重启服务器，则这些用户再次发出请求实际上表示的都是一个新连接的用户，服务器会为每一个用户分配一个新的SESSION ID</p>
+
+<h4 id="1.5.2">1.5.2 重启服务器之后继续使用session</h4>
+
+<p>在server.xml文件中加入代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Context path="/fmz" docBase="D:\fmzwebDemo"&gt;
+	&lt;Manager className="org.apache.catelina.session.PersistentManager"&gt;
+		debug=0	saveOnRestart="true"
+		maxActiveSession="-1"	minIdleSwap="-1"
+		maxIdleSwap="-1"	maxIdleBackup="-1"									      
+		&lt;Store className="org.apache.catalina.session.FileStore" directory="d:\temp"/&gt;
+	&lt;/Manager&gt;
+&lt;/context&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>以上代码可以通过序列化操作将，session内容序列化后保存在临时文件中。</p>
+</blockquote>
+
+<h4 id="1.5.3">1.5.3 登录及注销</h4>
+
+<p>session实现用户登录及注销的功能思路：当用户登录成功后，设置一个session范围属性，然后在其他需要验证的页面中判断是否存在此session范围的属性，如果存在则表示已经是正常登陆过的合法用户；如果不存在，给出提示，并跳转到登录页重新登录</p>
+
+<p>表单及验证代码-login.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"login.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			用户名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"uname"</span><span class="nt">&gt;&lt;br&gt;</span>
+			密<span class="ni">&amp;nbsp;</span>码：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"upass"</span><span class="nt">&gt;&lt;br&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"登录"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">name =</span><span class="err"> </span><span class="s">request.getParameter("uname")</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">password =</span><span class="err"> </span><span class="s">request.getParameter("upass")</span> <span class="err">;</span>
+			<span class="na">if</span><span class="err">(!(</span><span class="na">name =</span><span class="s">=</span> <span class="na">null</span> <span class="err">||</span> <span class="na">password =</span><span class="s">=</span> <span class="na">null</span><span class="err">)){</span>
+				<span class="na">if</span><span class="err">(</span><span class="na">name</span><span class="err">.</span><span class="na">equals</span><span class="err">("</span><span class="na">fmz</span><span class="err">")</span> <span class="err">&amp;&amp;</span> <span class="na">password</span><span class="err">.</span><span class="na">equals</span><span class="err">("</span><span class="na">799520</span><span class="err">")){</span>
+					<span class="na">response</span><span class="err">.</span><span class="na">setHeader</span><span class="err">("</span><span class="na">refresh</span><span class="err">","</span><span class="na">2</span><span class="err">;</span><span class="na">URL=</span><span class="s">welcome.jsp")</span> <span class="err">;</span>
+					<span class="na">session</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">userid</span><span class="err">",</span><span class="na">name</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;h3&gt;</span>用户登录成功，两秒后跳转到欢迎页！<span class="nt">&lt;/h3&gt;</span>
+					<span class="nt">&lt;h3&gt;</span>如果没有跳转，请按<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"welcome.jsp"</span><span class="nt">&gt;</span>这里<span class="nt">&lt;/a&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;h3&gt;</span>错误的用户名或密码！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>欢迎页-welcome.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">userid =</span><span class="err"> </span><span class="s">(String)session.getAttribute("userid")</span> <span class="err">;</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">userid</span> <span class="err">!=</span> <span class="na">null</span><span class="err">){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>欢迎<span class="nt">&lt;</span><span class="err">%=</span><span class="na">userid</span><span class="err">%</span><span class="nt">&gt;</span>光临本系统，<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"logout.jsp"</span><span class="nt">&gt;</span>注销<span class="nt">&lt;/a&gt;</span>！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;h3&gt;</span>您已退出系统，请先进行系统的<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"login.jsp"</span><span class="nt">&gt;</span>登录<span class="nt">&lt;/a&gt;</span>！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>注销页-logout.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">response</span><span class="err">.</span><span class="na">setHeader</span><span class="err">("</span><span class="na">refresh</span><span class="err">","</span><span class="na">2</span><span class="err">;</span><span class="na">URL=</span><span class="s">login.jsp")</span> <span class="err">;</span>
+			<span class="na">session</span><span class="err">.</span><span class="na">invalidate</span><span class="err">()</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>您也成功退出本系统，两秒后跳转到首页！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>若系统没有跳转，请点<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"login.jsp"</span><span class="nt">&gt;</span>这里<span class="nt">&lt;/a&gt;</span>！<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="1.5.4">1.5.4 在web开发中一共存在4种会话跟踪技术</h4>
+
+<ol>
+  <li>
+    <p>通过session提供的方法保存</p>
+  </li>
+  <li>
+    <p>使用Cookie保存信息</p>
+  </li>
+  <li>
+    <p>通过表单的隐藏域保存信息</p>
+  </li>
+  <li>
+    <p>通过地址的重写方式保存信息</p>
+  </li>
+</ol>
+
+<h4 id="1.5.5">1.5.5 判断新用户(isNew())</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">session</span><span class="err">.</span><span class="na">isNew</span><span class="err">()){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h2&gt;</span>欢迎新用户光临！<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;h2&gt;</span>您是我们的老客户！<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="1.5.6">1.5.6 取得用户的操作时间(getCreationTime()、getLastAccessedTime())</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">long</span> <span class="na">start =</span><span class="err"> </span><span class="s">session.getCreationTime()</span> <span class="err">;</span>
+			<span class="na">long</span> <span class="na">end =</span><span class="err"> </span><span class="s">session.getLastAccessedTime()</span> <span class="err">;</span>
+			<span class="na">long</span> <span class="na">time =</span><span class="err"> </span><span class="s">(end</span> <span class="na">-</span> <span class="na">start</span><span class="err">)/</span><span class="na">1000</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>您已经在本站停留了<span class="nt">&lt;</span><span class="err">%=</span><span class="na">time</span><span class="err">%</span><span class="nt">&gt;</span>秒！<span class="nt">&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>方法<code class="highlighter-rouge">getCreationTime()</code>：用户第一次连接到服务器时，服务器会自动保留一个session的创建时间。</p>
+</blockquote>
+
+<h3 id="1.6">1.6 application对象</h3>
+
+<blockquote>
+  <p>application 是javax.servlet.ServletContext接口的实例化对象，表示整个Servlet的上下文</p>
+</blockquote>
+
+<p>application对象的主要方法</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>NO.</td>
+      <td>方法</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>String getRealPath(String path)</td>
+      <td>得到虚拟目录对应的绝对路径</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>public Enumeration getAttributeNames()</td>
+      <td>得到所有属性的名称</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>public String getContextPath()</td>
+      <td>取得当前的虚拟路径的名称</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="1.6.1">1.6.1 取得虚拟目录对应的绝对路径</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">path =</span><span class="err"> </span><span class="s">application.getRealPath("/")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>真实路径：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">path</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><code class="highlighter-rouge">\</code>是根目录的意思</p>
+</blockquote>
+
+<p>在web中还可以通过<code class="highlighter-rouge">this.getServletContext().getRealPath("/")</code>取得真实(绝对)路径</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">path =</span><span class="err"> </span><span class="s">this.getServletContext().getRealPath("/")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>真实路径：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">path</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>ServletCotext本身就表示真个容器，this是本容器的意思。</p>
+</blockquote>
+
+<blockquote>
+  <p>两种方法实现的功能是一样的，但是在开发中尽量使用getServletContext()方法获取绝对路径，这对以后程序的理解非常有帮助。</p>
+</blockquote>
+
+<h4 id="1.6.2">1.6.2 简单的文件操作</h4>
+
+<p>表达文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"input_content.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			输入文件名称：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"fileName"</span><span class="nt">&gt;&lt;br&gt;</span>
+			输入文件内容：<span class="nt">&lt;textarea</span> <span class="na">name=</span><span class="s">"fileContent"</span> <span class="na">rows=</span><span class="s">"3"</span> <span class="na">cols=</span><span class="s">"30"</span><span class="nt">&gt;&lt;/textarea&gt;&lt;br&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>将上述表单文件内容保存并输出</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.io.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">name =</span><span class="err"> </span><span class="s">request.getParameter("fileName")</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">content =</span><span class="err"> </span><span class="s">request.getParameter("fileContent")</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">filePath =</span><span class="err"> </span><span class="s">this.getServletContext().getRealPath("/")+"note"+File.separator+name</span> <span class="err">;</span>
+			<span class="na">File</span> <span class="na">file =</span><span class="err"> </span><span class="s">new</span> <span class="na">File</span><span class="err">(</span><span class="na">filePath</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">if</span><span class="err">(!</span><span class="na">file</span><span class="err">.</span><span class="na">getParentFile</span><span class="err">().</span><span class="na">exists</span><span class="err">()){</span>
+				<span class="na">file</span><span class="err">.</span><span class="na">getParentFile</span><span class="err">().</span><span class="na">mkdir</span><span class="err">()</span> <span class="err">;</span>
+			<span class="err">}</span>
+			<span class="na">PrintStream</span> <span class="na">ps =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+			<span class="na">ps =</span><span class="err"> </span><span class="s">new</span> <span class="na">PrintStream</span><span class="err">(</span><span class="na">new</span> <span class="na">FileOutputStream</span><span class="err">(</span><span class="na">file</span><span class="err">))</span> <span class="err">;</span>
+			<span class="na">ps</span><span class="err">.</span><span class="na">println</span><span class="err">(</span><span class="na">content</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">ps</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Scanner</span> <span class="na">scan =</span><span class="err"> </span><span class="s">new</span> <span class="na">Scanner</span><span class="err">(</span><span class="na">new</span> <span class="na">FileInputStream</span><span class="err">(</span><span class="na">file</span><span class="err">))</span> <span class="err">;</span>
+			<span class="na">scan</span><span class="err">.</span><span class="na">useDelimiter</span><span class="err">("\</span><span class="na">n</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">StringBuffer</span> <span class="na">buf =</span><span class="err"> </span><span class="s">new</span> <span class="na">StringBuffer</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">while</span><span class="err">(</span><span class="na">scan</span><span class="err">.</span><span class="na">hasNext</span><span class="err">()){</span>
+				<span class="na">buf</span><span class="err">.</span><span class="na">append</span><span class="err">(</span><span class="na">scan</span><span class="err">.</span><span class="na">next</span><span class="err">()).</span><span class="na">append</span><span class="err">("&lt;</span><span class="na">br</span><span class="nt">&gt;</span>") ;
+			}
+			scan.close() ;
+		%&gt;
+		<span class="nt">&lt;h2&gt;&lt;</span><span class="err">%=</span><span class="na">buf</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>上述内容通过PrintStream进行保存，又通过Scanner进行输出。</p>
+</blockquote>
+
+<blockquote>
+  <p>在HTML文件总通过<br />进行换行，所以要加上代码<code class="highlighter-rouge">&lt;br&gt;</code>才能按照正常的换行格式进行读取。</p>
+</blockquote>
+
+<h4 id="1.6.3">1.6.3 网站计数器程序(范例讲解)</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.io.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.math.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%!</span>
+			<span class="na">BigInteger</span> <span class="na">count =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%!</span>
+			<span class="na">public</span> <span class="na">BigInteger</span> <span class="na">load</span><span class="err">(</span><span class="na">File</span> <span class="na">file</span><span class="err">){</span>
+				<span class="na">BigInteger</span> <span class="na">count =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+				<span class="na">try</span><span class="err">{</span>
+					<span class="na">if</span><span class="err">(</span><span class="na">file</span><span class="err">.</span><span class="na">exists</span><span class="err">()){</span>
+						<span class="na">Scanner</span> <span class="na">scan =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+						<span class="na">scan =</span><span class="err"> </span><span class="s">new</span> <span class="na">Scanner</span><span class="err">(</span><span class="na">new</span> <span class="na">FileInputStream</span><span class="err">(</span><span class="na">file</span><span class="err">))</span> <span class="err">;</span>
+						<span class="na">if</span><span class="err">(</span><span class="na">scan</span><span class="err">.</span><span class="na">hasNext</span><span class="err">()){</span>
+							<span class="na">count =</span><span class="err"> </span><span class="s">new</span> <span class="na">BigInteger</span><span class="err">(</span><span class="na">scan</span><span class="err">.</span><span class="na">next</span><span class="err">())</span> <span class="err">;</span>
+						<span class="err">}</span>
+						<span class="na">scan</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+					<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+						<span class="na">count =</span><span class="err"> </span><span class="s">new</span> <span class="na">BigInteger</span><span class="err">("</span><span class="na">0</span><span class="err">")</span> <span class="err">;</span>
+						<span class="na">save</span><span class="err">(</span><span class="na">file</span><span class="err">,</span><span class="na">count</span><span class="err">)</span> <span class="err">;</span>
+					<span class="err">}</span>
+				<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+					<span class="na">e</span><span class="err">.</span><span class="na">printStackTrace</span><span class="err">()</span> <span class="err">;</span>
+				<span class="err">}</span>
+				<span class="na">return</span> <span class="na">count</span> <span class="err">;</span>
+			<span class="err">}</span>
+			<span class="na">public</span> <span class="na">void</span> <span class="na">save</span><span class="err">(</span><span class="na">File</span> <span class="na">file</span><span class="err">,</span><span class="na">BigInteger</span> <span class="na">count</span><span class="err">){</span>
+				<span class="na">try</span><span class="err">{</span>
+					<span class="na">PrintStream</span> <span class="na">ps =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+					<span class="na">ps =</span><span class="err"> </span><span class="s">new</span> <span class="na">PrintStream</span><span class="err">(</span><span class="na">new</span> <span class="na">FileOutputStream</span><span class="err">(</span><span class="na">file</span><span class="err">))</span> <span class="err">;</span>
+					<span class="na">ps</span><span class="err">.</span><span class="na">println</span><span class="err">(</span><span class="na">count</span><span class="err">)</span> <span class="err">;</span>
+					<span class="na">ps</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+				<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+					<span class="na">e</span><span class="err">.</span><span class="na">printStackTrace</span><span class="err">()</span> <span class="err">;</span>
+				<span class="err">}</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">fileName =</span><span class="err"> </span><span class="s">this.getServletContext().getRealPath("/")+"note"+File.separator+"count.txt"</span> <span class="err">;</span>
+			<span class="na">File</span> <span class="na">file =</span><span class="err"> </span><span class="s">new</span> <span class="na">File</span><span class="err">(</span><span class="na">fileName</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">session</span><span class="err">.</span><span class="na">isNew</span><span class="err">()){</span>
+				<span class="na">synchronized</span><span class="err">(</span><span class="na">this</span><span class="err">){//必须进行同步操作</span>
+					<span class="na">count =</span><span class="err"> </span><span class="s">load(file)</span> <span class="err">;</span>
+					<span class="na">count =</span><span class="err"> </span><span class="s">count.add(new</span> <span class="na">BigInteger</span><span class="err">("</span><span class="na">1</span><span class="err">"))</span> <span class="err">;//自增操作</span>
+					<span class="na">save</span><span class="err">(</span><span class="na">file</span><span class="err">,</span><span class="na">count</span><span class="err">)</span> <span class="err">;</span>
+				<span class="err">}</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>您是第<span class="nt">&lt;</span><span class="err">%=</span> <span class="na">count=</span><span class="s">=null?0:count</span> <span class="err">%</span><span class="nt">&gt;</span>位访客！<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>用字符串操作的代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.io.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.math.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%!</span>
+			<span class="na">String</span> <span class="na">count =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%!</span>
+			<span class="na">public</span> <span class="na">String</span> <span class="na">load</span><span class="err">(</span><span class="na">File</span> <span class="na">file</span><span class="err">){</span>
+				<span class="na">String</span> <span class="na">count =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+				<span class="na">try</span><span class="err">{</span>
+					<span class="na">if</span><span class="err">(</span><span class="na">file</span><span class="err">.</span><span class="na">exists</span><span class="err">()){</span>
+						<span class="na">Scanner</span> <span class="na">scan =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+						<span class="na">scan =</span><span class="err"> </span><span class="s">new</span> <span class="na">Scanner</span><span class="err">(</span><span class="na">new</span> <span class="na">FileInputStream</span><span class="err">(</span><span class="na">file</span><span class="err">))</span> <span class="err">;</span>
+						<span class="na">if</span><span class="err">(</span><span class="na">scan</span><span class="err">.</span><span class="na">hasNext</span><span class="err">()){</span>
+							<span class="na">count =</span><span class="err"> </span><span class="s">scan.next()</span> <span class="err">;</span>
+						<span class="err">}</span>
+						<span class="na">scan</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+					<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+						<span class="na">count =</span><span class="err"> </span><span class="s">"0"</span> <span class="err">;</span>
+						<span class="na">save</span><span class="err">(</span><span class="na">file</span><span class="err">,</span><span class="na">count</span><span class="err">)</span> <span class="err">;</span>
+					<span class="err">}</span>
+				<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+					<span class="na">e</span><span class="err">.</span><span class="na">printStackTrace</span><span class="err">()</span> <span class="err">;</span>
+				<span class="err">}</span>
+				<span class="na">return</span> <span class="na">count</span> <span class="err">;</span>
+			<span class="err">}</span>
+			<span class="na">public</span> <span class="na">void</span> <span class="na">save</span><span class="err">(</span><span class="na">File</span> <span class="na">file</span><span class="err">,</span><span class="na">String</span> <span class="na">count</span><span class="err">){</span>
+				<span class="na">try</span><span class="err">{</span>
+					<span class="na">PrintStream</span> <span class="na">ps =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+					<span class="na">ps =</span><span class="err"> </span><span class="s">new</span> <span class="na">PrintStream</span><span class="err">(</span><span class="na">new</span> <span class="na">FileOutputStream</span><span class="err">(</span><span class="na">file</span><span class="err">))</span> <span class="err">;</span>
+					<span class="na">ps</span><span class="err">.</span><span class="na">println</span><span class="err">(</span><span class="na">count</span><span class="err">)</span> <span class="err">;</span>
+					<span class="na">ps</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+				<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+					<span class="na">e</span><span class="err">.</span><span class="na">printStackTrace</span><span class="err">()</span> <span class="err">;</span>
+				<span class="err">}</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">fileName =</span><span class="err"> </span><span class="s">this.getServletContext().getRealPath("/")+"note"+File.separator+"count01.txt"</span> <span class="err">;</span>
+			<span class="na">File</span> <span class="na">file =</span><span class="err"> </span><span class="s">new</span> <span class="na">File</span><span class="err">(</span><span class="na">fileName</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">session</span><span class="err">.</span><span class="na">isNew</span><span class="err">()){</span>
+				<span class="na">synchronized</span><span class="err">(</span><span class="na">this</span><span class="err">){//必须进行同步操作</span>
+					<span class="na">count =</span><span class="err"> </span><span class="s">load(file)</span> <span class="err">;</span>
+					<span class="na">int</span> <span class="na">temp =</span><span class="err"> </span><span class="s">Integer.parseInt(count)</span> <span class="err">;</span>
+					<span class="na">temp</span><span class="err">++</span> <span class="err">;</span>
+					<span class="na">count =</span><span class="err"> </span><span class="s">String.valueOf(temp);//自增操作</span>
+					<span class="na">save</span><span class="err">(</span><span class="na">file</span><span class="err">,</span><span class="na">count</span><span class="err">)</span> <span class="err">;</span>
+				<span class="err">}</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>您是第<span class="nt">&lt;</span><span class="err">%=</span> <span class="na">count=</span><span class="s">=null?0:count</span> <span class="err">%</span><span class="nt">&gt;</span>位访客！<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>一定要勤于查看jdk文档，查找的过程就是进步的过程</p>
+</blockquote>
+
+<h4 id="1.6.4">1.6.4 查看application范围的属性</h4>
+
+<p>在application对象中，提供了<code class="highlighter-rouge">getAttributeNames()</code>方法，可以取得全部的属性名称</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Enumeration</span> <span class="na">enu =</span><span class="err"> </span><span class="s">application.getAttributeNames()</span> <span class="err">;</span>
+			<span class="na">while</span><span class="err">(</span><span class="na">enu</span><span class="err">.</span><span class="na">hasMoreElements</span><span class="err">()){</span>
+				<span class="na">String</span> <span class="na">name =</span><span class="err"> </span><span class="s">(String)enu.nextElement()</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h6&gt;&lt;</span><span class="err">%=</span><span class="na">name</span><span class="err">%</span><span class="nt">&gt;</span>--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">this</span><span class="err">.</span><span class="na">getServletContext</span><span class="err">().</span><span class="na">getAttribute</span><span class="err">(</span><span class="na">name</span><span class="err">)%</span><span class="nt">&gt;&lt;/h6&gt;</span>
+			//<span class="nt">&lt;h6&gt;&lt;</span><span class="err">%=</span><span class="na">name</span><span class="err">%</span><span class="nt">&gt;</span>--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">application</span><span class="err">.</span><span class="na">getAttribute</span><span class="err">(</span><span class="na">name</span><span class="err">)%</span><span class="nt">&gt;&lt;/h6&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="1.7">1.7 web安全性及config对象</h3>
+
+<p>虚拟目录中有一个WEB-INF文件夹，此文件夹用户无法访问到，一次将文件存放在这里是最安全的，但是无法访问，如果想要访问，则需要通过一个映射进行操作</p>
+
+<p>增加配置文件到WEB-INF\web.xml中</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;servlet&gt;
+	&lt;servlet-name&gt;temp&lt;/servlet-name&gt;
+	&lt;jsp-file&gt;/WEB-INF/hello.jsp&lt;/jsp-file&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+&lt;servlet-name&gt;temp&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/hello.fmz&lt;/url-pattern&gt;
+ &lt;/servlet-mapping&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>输入http://localhost/fmz/hello.fmz即可访问WEB-INF\hello.jsp文件</p>
+</blockquote>
+
+<blockquote>
+  <servlet-name>节点的主要作用是连接<servlet>和<servlet-mapping>，此节点的名称只在配置文件内部起作用，并且不能重复命名
+</servlet-mapping></servlet></servlet-name>
+</blockquote>
+
+<h4 id="1.7.1">1.7.1 config对象</h4>
+
+<blockquote>
+  <p>config对象是javax.servlet.ServletConfig接口的实例化对象，主要的功能是取得一些初始化的配置信息，</p>
+</blockquote>
+
+<p>常用方法</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>NO.</td>
+      <td>方法</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>public String getInitParameter(String name)</td>
+      <td>取得指定名称的初始化参数内容</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>public Enumeration getInitParameterNames()</td>
+      <td>取得全部初始化参数内容</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>所有的初始化参数必须在web.xml中配置，如果一个JSP文件想要取得初始化参数内容，一定要在web.xml文件中完成映射</p>
+
+<p>增加配置文件到WEB-INF\web.xml中</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;servlet&gt;
+	&lt;servlet-name&gt;dbint&lt;/servlet-name&gt;
+	&lt;jsp-file&gt;/WEB-INF/init.jsp&lt;/jsp-file&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;driver&lt;/param-name&gt;
+		&lt;param-value&gt;org.gjt.mm.mysql.Driver&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;url&lt;/param-name&gt;
+		&lt;param-value&gt;jdbc:mysql://localhost:3306/fmz&lt;/param-value&gt;
+	&lt;/init-param&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;dbint&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/config.fmz&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>映射文件配置后，需要重新启动服务器</p>
+</blockquote>
+
+<p>取得参数文件-WEB-INF\init.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Enumeration</span> <span class="na">enu =</span><span class="err"> </span><span class="s">config.getInitParameterNames()</span> <span class="err">;</span>
+			<span class="na">while</span><span class="err">(</span><span class="na">enu</span><span class="err">.</span><span class="na">hasMoreElements</span><span class="err">()){</span>
+				<span class="na">String</span> <span class="na">name =</span><span class="err"> </span><span class="s">(String)enu.nextElement()</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;center&gt;</span>
+					<span class="nt">&lt;h3&gt;&lt;</span><span class="err">%=</span><span class="na">name</span><span class="err">%</span><span class="nt">&gt;</span>--&gt;<span class="nt">&lt;</span><span class="err">%=</span><span class="na">config</span><span class="err">.</span><span class="na">getInitParameter</span><span class="err">(</span><span class="na">name</span><span class="err">)%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+				<span class="nt">&lt;/center&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>直接访问http://localhost/fmz/config.fmz即可取得初始化属性内容</p>
+</blockquote>
+
+<h3 id="1.8">1.8 out对象</h3>
+
+<blockquote>
+  <p>out对象是javax.servlet.jsp.JspWriter类的实例化对象，主要功能为完成页面的输出工作，在可发中很少使用。</p>
+</blockquote>
+
+<p>out对象取得缓冲区的大小</p>
+
+<p>&lt;%@ page contentType=”text/html” pageEncoding=”utf-8”%&gt;</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">int</span> <span class="na">buffer =</span><span class="err"> </span><span class="s">out.getBufferSize()</span> <span class="err">;</span>
+			<span class="na">int</span> <span class="na">available =</span><span class="err"> </span><span class="s">out.getRemaining()</span> <span class="err">;</span>
+			<span class="na">int</span> <span class="na">use =</span><span class="err"> </span><span class="s">buffer</span> <span class="na">-</span> <span class="na">available</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>缓冲区的大小：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">buffer</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>可用缓冲区的大小：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">available</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>正在使用缓冲区的大小：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">use</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="1.9">1.9 pageContext对象</h3>
+
+<blockquote>
+  <p>pageContext对象是javax.servlet.jsp.PageContext类的实例，</p>
+</blockquote>
+
+<p>pageContext对象的主要方法</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>NO.</td>
+      <td>方法</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>public abstract void forward(String relativeUrlPath)throws ServletException,IoException</td>
+      <td>页面跳转</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>public void include(String relativeUrlPath)throws ServletException,IoException</td>
+      <td>页面包含</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>public ServletConfig getServletConfig()</td>
+      <td>取得ServletConfig对象</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>public ServletContext getServletContext()</td>
+      <td>取得ServletContext对象</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>public ServletRequest getRequest()</td>
+      <td>取得ServletRequest对象</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>public HttpSession getSession()</td>
+      <td>取得HttpSession对象</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>示例代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">forward</span><span class="err">("</span><span class="na">pagecontext_forward_demo02</span><span class="err">.</span><span class="na">jsp</span><span class="err">?</span><span class="na">name=</span><span class="s">fmz")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>实现页面的跳转</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">name=</span><span class="err"> </span><span class="s">pageContext.getRequest().getParameter("name")</span> <span class="err">;</span>
+			<span class="na">String</span> <span class="na">realPath =</span><span class="err"> </span><span class="s">pageContext.getServletContext().getRealPath("/")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>name：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">name</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>realPath：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">realPath</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>实现接收参数和绝对路径的获取</p>
+</blockquote>
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

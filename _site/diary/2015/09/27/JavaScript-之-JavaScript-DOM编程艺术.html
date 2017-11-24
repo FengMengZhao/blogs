@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - JavaScript之JavaScript DOM编程艺术</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/09/27/JavaScript-%E4%B9%8B-JavaScript-DOM%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  September 27, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">JavaScript之JavaScript DOM编程艺术</h1>
+
+<div id="post">
+  <h2 id="目录">目录</h2>
+
+<ul>
+  <li>
+    <p><a href="#1">1 JavaScript简史</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#1.1">1.1 JavaScript起源</a></p>
+      </li>
+      <li>
+        <p><a href="#1.2">1.2 DOM</a></p>
+      </li>
+      <li>
+        <p><a href="#1.3">1.3 浏览器的战争</a></p>
+
+        <ul>
+          <li>
+            <p><a href="#1.3.1">1.3.1 DHTML</a></p>
+          </li>
+          <li>
+            <p><a href="#1.3.2">1.3.2 浏览器之间的冲突</a></p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="#1.4">1.4 制定标准</a></p>
+
+        <ul>
+          <li>
+            <p><a href="#1.4.1">1.4.1 浏览器以外的考虑</a></p>
+          </li>
+          <li>
+            <p><a href="#1.4.2">1.4.2 浏览器战争的结局</a></p>
+          </li>
+          <li>
+            <p><a href="#1.4.3">1.4.3 崭新的起点</a></p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#2">2 JavaScript语法</a></p>
+  </li>
+  <li>
+    <p><a href="#3">3 DOM</a></p>
+  </li>
+  <li>
+    <p><a href="#4">4 JavaScript图片库</a></p>
+  </li>
+  <li>
+    <p><a href="#5">5 最佳实践</a></p>
+  </li>
+  <li>
+    <p><a href="#6">6 动态创建标记</a></p>
+  </li>
+  <li>
+    <p><a href="#7">7 充实文档内容</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 JavaScript简史</h2>
+
+<h3 id="1.1">1.1 JavaScript起源</h3>
+
+<p>  JavaScript是Netspace公司和Sun公司合作可发的，是一种脚本语言，只能通过浏览器完成一些操作而不能向普通意义上的程序那样独立运行，需要web浏览器进行解释执行。</p>
+
+<h3 id="1.2">1.2 DOM</h3>
+
+<p>  DOM是对文档的内容进行抽象和概念化的方法。</p>
+
+<h3 id="1.3">1.3 浏览器的战争</h3>
+
+<h4 id="1.3.1">1.3.1 DHTML</h4>
+
+<p>  DHTMl是Dynamic HTML 的简称，是描述HTML、CSS和JavaScript技术组合的术语。</p>
+
+<blockquote>
+  <p>利用HTML将网页标记成各种元素，利用CSS设置元素样式和它们显示的位置，利用JavaScript实时的操控页面和改变样式。</p>
+</blockquote>
+
+<h4 id="1.3.2">1.3.2 浏览器之间的冲突</h4>
+
+<p>  DHTML打开了一个充满机会的全新世界，但是要想进入其中的人们却发现这是一个充满苦难的世界。</p>
+
+<h3 id="1.4">1.4 制定标准</h3>
+
+<p>  w3c推出了标准化的DOM，1998年10月完成了DOM Level 1 。</p>
+
+<p>  w3c推出的的DOM可以让任何一种程序设计语言对使用任何一种标记语言编写出来的任何一份文档进行操控</p>
+
+<h4 id="1.4.1">1.4.1 浏览器以外的考虑</h4>
+
+<p>  DOM是一种API(应用编程接口)，简单地说API就是取得各方共同认可的基本约定。</p>
+
+<p>  w3c对DOM的定义：一个与系统平台和程序语言无关的接口，程序和脚本可以通过这个接口动态访问和修改文档的内容、结构和样式。</p>
+
+<h4 id="1.4.2">1.4.2 浏览器战争的结局</h4>
+
+<p>  微软战胜了Netscape，只是因为所有装有Windows的人都预装了微软的DOM，这时候<a href="http://webstandards.org" title="web标准计划">WebSP(Web Standard Project,web标准计划)</a>的小组应运而生。</p>
+
+<h4 id="1.4.3">1.4.3 崭新的起点</h4>
+
+<p>  <a href="http://webkit.org" title="WebKit">WebKit</a>是Safari和Chrome浏览器采用的一种开源web浏览器引擎，Firefox浏览器的核心是<a href="https://developers.mozilla.org/en/Gecko" title="火狐浏览器的核心">Gecko</a>，这些在推荐微软的核心Trident逐步向web靠近的过程中起到特别积极的作用。</p>
+
+<hr />
+
+<hr />
+
+<h2 id="2">2 JavaScript语法</h2>
+
+<h3 id="2.1">2.1 准备工作</h3>
+
+<p>  引入*.js文件的方式</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+	<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"*.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>	
+</code></pre></div></div>
+
+<p>  或者</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+	<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"*.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>	
+</code></pre></div></div>
+
+<blockquote>
+  <p>这样能使浏览器更快的加载页面。</p>
+</blockquote>
+
+<h3 id="2.2">2.2 语法</h3>
+
+<h4 id="2.2.1">2.2.1 语句(statement)</h4>
+
+<p>  建议每一条JavaScript statement 面加上一个 ; 这是一种良好的编程习惯</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>first statement ;
+second statement ;
+</code></pre></div></div>
+
+<h4 id="2.2.2">2.2.2 注释(comment)</h4>
+
+<p>  用 <code class="highlighter-rouge">//</code> 注释单行，用 <code class="highlighter-rouge">/*    */</code> 注释多行，还可以用 <code class="highlighter-rouge">&lt;!--   --&gt;</code> 注释</p>
+
+<h4 id="2.2.3">2.2.3 变量(variable)</h4>
+
+<p>  把值存入变量叫做赋值(assignment)</p>
+
+<p>  在JavaScript语言中，变量和其他语法元素的名字都是区分字母大小写的，变量不必事先声明，但是为了良好的编程习惯，变量前面加上 <code class="highlighter-rouge">var</code>，变量允许字母、数字、下划线和美元符号，但是第一个字符不允许是数字，变量中可以适当的加入下划线，亦可以用驼峰模式(camel case)，首字母小写，其他单词首字母大写，驼峰格式是函数名、方法名和对象属性名命名的首选格式。</p>
+
+<h4 id="2.2.4">2.2.4 数据类型</h4>
+
+<p>  在其他语言的要求中在声明变量的同时还必须同事声明变量的类型，称之为类型声明(typing)，必须明确类型声明的语言称为强类型语言(Strong typed)，JavaScript是一种弱类型(weakly typed)语言，这意味着程序员可以在任何阶段改变变量的数据类型。</p>
+
+<blockquote>
+  <p>以下语句在JavaScript中是完全正确的：<code class="highlighter-rouge">var age = "thirty; age = 30"</code>，也就是说JavaScript并不在意age是一个字符串还是一个数字。</p>
+</blockquote>
+
+<p>  1. 字符串，字符串可以用单引号或者双引号，根据需求，如果字符串中含有双引号，就把整个字符串放在单引号中；如果字符串中含有单引号，就把整个字符串放在双引号之中；根据适当的情况可以进行单引号或者双引号的转移操作；注意在整个js文件中使用一种风格的字符串操作。</p>
+
+<p>  2. 数值，不区分整数或者浮点数，直接赋值即可。</p>
+
+<p>  3. Boolean值。</p>
+
+<blockquote>
+  <p>字符串、数值和布尔值是标量(scalar)</p>
+</blockquote>
+
+<h4 id="2.2.5">2.2.5 数组</h4>
+
+<p>  标量意味着在任意的时刻只能有一个值，如果想要储存一组值，就需要使用数组(Array)，例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var beatles = Array(4) ;
+beatles[0] = "John"
+beatles[1] = "Paul"
+beatles[2] = "George"
+beatles[3] = "Ringo"
+</code></pre></div></div>
+
+<p>  或者</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var beatles = Array("John","Paul","George","Ringo") ;
+</code></pre></div></div>
+
+<blockquote>
+  <p>JavaScript中数组声明可以不必给出数组的大小：<code class="highlighter-rouge">var beatles = Array() ;</code></p>
+</blockquote>
+
+<p>  关联数组，示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var lennon = Array() ;
+lennon["name"] = "John" ;
+lennon["year"] = 1940 ;
+lennon["living"] = false ;
+</code></pre></div></div>
+
+<blockquote>
+  <p>这是一种关联数组，不推荐使用</p>
+</blockquote>
+
+<h4 id="2.2.6">2.2.6 对象</h4>
+
+<p>  与数组类似，对象也是使用一个名字表示一组值，对象中的每一个值都是对象的一个属性，示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var lennon = Object() ;
+lennon.name = "John" ;
+lennon.year = 1940 ;
+lennon.living = false ;
+</code></pre></div></div>
+
+<p>  对象赋值还可以写成这样：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var lennon = {name:"John",year:1940,living:false} ;
+</code></pre></div></div>
+
+<blockquote>
+  <p>用多想来代替传统数组的做法意味着可以通过元素的名字而不是下标数字来引用他们，大大提高了脚本的可读性。</p>
+</blockquote>
+
+<blockquote>
+  <p>对象的声明可以直接用<code class="highlighter-rouge">{}</code>例如：<code class="highlighter-rouge">var lennon = {}</code>，表示lennon是一个对象。</p>
+</blockquote>
+
+<h3 id="2.3">2.3 操作(operation)</h3>
+
+<p>  同java语言</p>
+
+<h3 id="2.4">2.4 条件语句</h3>
+
+<p>  同java语言</p>
+
+<h3 id="2.2">2.5 循环语句 </h3>
+
+<p>  同java语言</p>
+
+<h3 id="2.6">2.6 函数</h3>
+
+<p>  如果需要多次使用同一个代码，可以把它们封装成一个函数，函数就是一组允许在你的代码中随时调用的语句，事实上每一个函数都是一个短小的脚本。</p>
+
+<blockquote>
+  <p>函数的作用除了重复代码随时调用之外，函数真正威力在于把不同的数据传递给他们，他们将使用这些数据完成预定的操作，传递给函数的数据称之为参数(argument)。</p>
+</blockquote>
+
+<blockquote>
+  <p>函数真正价值体现在，我们可以把他作为一个数据类型来使用，可以把函数调用的结果赋值给一个变量。</p>
+</blockquote>
+
+<blockquote>
+  <p>命名规范，在命名变量时建议用下划线区分，在命名函数时用大小写的驼峰命名法。</p>
+</blockquote>
+
+<p>  变量的作用域(scope)</p>
+
+<p>  全局变量(global variable)，局部变量(local variable)</p>
+
+<blockquote>
+  <p>如果在某个函数中使用了var，那么这个变量就被视为一种局部变量，只存在于函数的上下文之中；反之，如果没有var，这个变量就会被视为全局变量，如果脚本中存在同名的全局变量，这个函数就会改变这个全局变量的值。</p>
+</blockquote>
+
+<h3 id="2.7">2.7 对象</h3>
+
+<p>  对象是一种非常特殊的数据类型，是包含数据的集合。对象中的数据可以通过两种形式访问，属性(property)和方法(method)，属性是隶属于某个特定对象的变量，方法是只有某个特定的对象才能调用的函数。对象就是属性和方法组合在一起构成的数据实体。</p>
+
+<h4 id="2.7.1">2.7.1 内建对象</h4>
+
+<p>  例如Array、Math、Date都是JavaScript的内建对象。</p>
+
+<h4 id="2.7.2">2.7.2 宿主对象</h4>
+
+<p>  JavaScript脚本语言还可以使用一些已经预定好的其他对象，这些对象不是由JavaScript语言本身而是由它的运行环境提供的。具体到web应用，这个环境就是浏览器，由浏览器提供的预定对象被称为宿主对象(host object)。宿主对象包括Form、Image、Element等。另外一个对象网页的任何一个元素的信息，它就是document对象。</p>
+
+<hr />
+
+<hr />
+
+<h2 id="3">3 DOM</h2>
+
+<h3 id="3.1">3.1 DOM中的D</h3>
+
+<p>  当创建一个网页并把它加载到web浏览器的时候，DOM就在幕后悄然而生了，它把你编写的网页文档转化为一个文档对象。</p>
+
+<h3 id="3.2">3.2 DOM中的O</h3>
+
+<p>  在JavaScript最初的版本中，对编写脚本语言非常重要的一些宿主对象已经可以使用了，最基础的是window对象。</p>
+
+<h3 id="3.3">3.3 DOM中的M</h3>
+
+<p>  M代表Model或者说是Map，含义是某种事物的表现形式。</p>
+
+<p>  DOM把一份文档表示成一棵树，一颗家谱树(parent,child,sibling)。</p>
+
+<h3 id="3.3">3.4 节点</h3>
+
+<p>  节点 Node ，是网络术语，表示网络中的一个连接点。一个网络就是由一个节点构成的集合。</p>
+
+<h4 id="3.4.1">3.4.1 元素节点</h4>
+
+<p>  DOM的原子是元素节点(element node)</p>
+
+<h4 id="3.4.2">3.4.2 文本节点</h4>
+
+<p>  元素节点只是节点类型的一种，如果文档只是由元素节点构成，它将只是一个结构。</p>
+
+<h4 id="3.4.3">3.4.3 属性节点</h4>
+
+<p>  属性节点是用来对元素作出更具体的描述。</p>
+
+<h4 id="3.4.4">3.4.4 CSS</h4>
+
+<p>  DOM并不是与网页结构打交道的唯一技术，我们还可用CSS告诉浏览器如何显示一份文档的的内容</p>
+
+<p>  继承(inheritance)是CSS技术的一个强大功能，类似于DOM，CSS把文档内容视为一个节点树。节点树各个元素将继承父元素的样式属性。</p>
+
+<p>  为了将某一个元素或者几个元素同其他元素区分开来，需要用class属性或者id属性。</p>
+
+<p>  1. class属性，在样式表中可以用<code class="highlighter-rouge">.class属性{}</code>定义CSS内容，当然还可以指定特定类型的元素属性：<code class="highlighter-rouge">h2.class属性{}</code>。</p>
+
+<p>  2. id属性，用途是给网页里的某个元素加上独一无二的标识符，用<code class="highlighter-rouge">#id属性{}</code>定义CSS内容，还可以为包含该特定元素里的其他元素定义样式：<code class="highlighter-rouge">#id属性 li{}</code></p>
+
+<h4 id="3.4.5">3.4.5 获取元素</h4>
+
+<p>  1. <code class="highlighter-rouge">document.getElementById()</code>，返回一个对象，事实上文档中的每一个元素都是一个对象。</p>
+
+<p>  2. <code class="highlighter-rouge">document.getElementByTagName()</code>，返回一个对象数组</p>
+
+<p>  3. <code class="highlighter-rouge">document.getElementByClassName()</code>，返回一个对象数组</p>
+
+<p>  示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lan=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>What to buy?<span class="nt">&lt;/h1&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">title=</span><span class="s">"a gentle reminder"</span><span class="nt">&gt;</span>Do not forget to buy this stuff.<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"purchases"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;li&gt;</span>A tin of beans<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"sal"</span><span class="nt">&gt;</span>Cheese<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"sal important"</span><span class="nt">&gt;</span>Milk<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;/ul&gt;</span>
+		<span class="nt">&lt;script&gt;</span>
+			<span class="c1">//alert(typeof document.getElementById("purchases")) ;</span>
+			<span class="c1">//alert(document.getElementsByTagName("li").length) ;</span>
+			<span class="c1">//alert(document.getElementById("purchases").getElementsByTagName("*").length) ;</span>
+			<span class="c1">//alert(document.getElementsByClassName("important sal").length) ;</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"purchases"</span><span class="p">),</span><span class="s2">"important sal"</span><span class="p">).</span><span class="nx">length</span><span class="p">)</span> <span class="p">;</span>
+			<span class="kd">function</span> <span class="nx">getElementsByClassName</span><span class="p">(</span><span class="nx">node</span> <span class="nx">classname</span><span class="p">){</span>
+				<span class="k">if</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">getElemnetsByClassName</span><span class="p">){</span>
+					<span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="nx">classname</span><span class="p">)</span> <span class="p">;</span>
+				<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+					<span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">()</span> <span class="p">;</span>
+					<span class="kd">var</span> <span class="nx">elems</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"*"</span><span class="p">)</span> <span class="p">;</span>
+					<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">elems</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+						<span class="k">if</span><span class="p">(</span><span class="nx">elems</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">classname</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+							<span class="nx">results</span><span class="p">[</span><span class="nx">results</span><span class="p">.</span><span class="nx">length</span><span class="p">]</span> <span class="o">=</span> <span class="nx">elems</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">;</span>
+						<span class="p">}</span>
+					<span class="p">}</span>
+					<span class="k">return</span> <span class="nx">results</span> <span class="p">;</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>一份文档就是一颗节点树。</p>
+</blockquote>
+
+<blockquote>
+  <p>节点分为不同的类型，元素节点、属性节点和文本节点。</p>
+</blockquote>
+
+<blockquote>
+  <p>getElementById返回一个对象，该对象对应着文档里的一个特定的元素节点。</p>
+</blockquote>
+
+<blockquote>
+  <p>getElementsByTagName和getElementsByClassName将返回一个对象数组，他们对应着文档里面的一组特定的元素节点。</p>
+</blockquote>
+
+<blockquote>
+  <p>每个节点都是一个对象。</p>
+</blockquote>
+
+<h3 id="3.5">3.5 获取和设置元素</h3>
+
+<h4 id="3.5.1">3.5.1 getAttribute</h4>
+
+<p>  示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lan=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>What to buy?<span class="nt">&lt;/h1&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">title=</span><span class="s">"a gentle reminder"</span><span class="nt">&gt;</span>Do not forget to buy this stuff.<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"purchases"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;li&gt;</span>A tin of beans<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"sal"</span><span class="nt">&gt;</span>Cheese<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"sal important"</span><span class="nt">&gt;</span>Milk<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;/ul&gt;</span>
+		<span class="nt">&lt;script&gt;</span>
+			<span class="kd">var</span> <span class="nx">paras</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"p"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="nx">paras</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"title"</span><span class="p">))</span> <span class="p">;</span>
+			<span class="kd">var</span> <span class="nx">lan</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"html"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="nx">lan</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"lan"</span><span class="p">))</span> <span class="p">;</span>
+			<span class="kd">var</span> <span class="nx">para</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"p"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">para</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+				<span class="kd">var</span> <span class="nx">title_text</span> <span class="o">=</span> <span class="nx">para</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"title"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="k">if</span><span class="p">(</span><span class="nx">title_text</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">){</span><span class="c1">//通过一个判断，避免输出内容为空</span>
+					<span class="nx">alert</span><span class="p">(</span><span class="nx">title_text</span><span class="p">)</span> <span class="p">;</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+			<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">para</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+				<span class="kd">var</span> <span class="nx">title_text</span> <span class="o">=</span> <span class="nx">para</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"title"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="k">if</span><span class="p">(</span><span class="nx">title_text</span><span class="p">){</span><span class="c1">//更加简洁且贴近生活的判断</span>
+					<span class="nx">alert</span><span class="p">(</span><span class="nx">title_text</span><span class="p">)</span> <span class="p">;</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="3.5.2">3.5.2 setAttribute</h4>
+
+<p>  示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lan=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>What to buy?<span class="nt">&lt;/h1&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">title=</span><span class="s">"a gentle reminder"</span><span class="nt">&gt;</span>Do not forget to buy this stuff.<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"purchases"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;li&gt;</span>A tin of beans<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"sal"</span><span class="nt">&gt;</span>Cheese<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"sal important"</span><span class="nt">&gt;</span>Milk<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;/ul&gt;</span>
+		<span class="nt">&lt;script&gt;</span>
+			<span class="kd">var</span> <span class="nx">shopping</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"purchases"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="nx">shopping</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"title"</span><span class="p">))</span> <span class="p">;</span>
+			<span class="nx">shopping</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"a list of goods"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="nx">shopping</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"title"</span><span class="p">))</span> <span class="p">;</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="4">4 JavaScript图片库</h2>
+
+<h3 id="4.1">4.1 标记</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Images Gallery<span class="nt">&lt;/title&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h1&gt;</span>Images<span class="nt">&lt;/h1&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/1.jpg"</span> <span class="na">title=</span><span class="s">"pic1"</span><span class="nt">&gt;</span>图片1<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/2.jpg"</span> <span class="na">title=</span><span class="s">"pic2"</span><span class="nt">&gt;</span>图片2<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/3.jpg"</span> <span class="na">title=</span><span class="s">"pic3"</span><span class="nt">&gt;</span>图片3<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/4.jpg"</span> <span class="na">title=</span><span class="s">"pic4"</span><span class="nt">&gt;</span>图片4<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+	<span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">"placeholder"</span> <span class="na">src=</span><span class="s">"images/placeholder.jpg"</span> <span class="na">alt=</span><span class="s">"my image gallery"</span><span class="nt">/&gt;</span>
+ <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="4.2">4.2 JavaScript</h3>
+
+<p>  js文件-showPic.js</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function showPic(whichpic){
+	var source = whichpic.getAttribute("href") ;
+	var palceholder = document.getElementById("placehoder") ;
+	placeholder.setAttribute("src",source) ;
+}
+</code></pre></div></div>
+
+<p>  修改后标记文件-gallery.html</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Images Gallery<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/showPic.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h1&gt;</span>Images<span class="nt">&lt;/h1&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/1.jpg"</span> <span class="na">title=</span><span class="s">"pic1"</span> <span class="na">onclick=</span><span class="s">"showPic(this); return false ;"</span><span class="nt">&gt;</span>图片1<span class="nt">&lt;/a&gt;</span>	return false ;表示点击这个链接没有被点击
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/2.jpg"</span> <span class="na">title=</span><span class="s">"pic2"</span> <span class="na">onclick=</span><span class="s">"showPic(this); return false ;"</span><span class="nt">&gt;</span>图片2<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/3.jpg"</span> <span class="na">title=</span><span class="s">"pic3"</span> <span class="na">onclick=</span><span class="s">"showPic(this); return false ;"</span><span class="nt">&gt;</span>图片3<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/4.jpg"</span> <span class="na">title=</span><span class="s">"pic4"</span> <span class="na">onclick=</span><span class="s">"showPic(this); return false ;"</span><span class="nt">&gt;</span>图片4<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+	<span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">"placeholder"</span> <span class="na">src=</span><span class="s">"images/placeholder.jpg"</span> <span class="na">alt=</span><span class="s">"my image gallery"</span><span class="nt">/&gt;</span>
+ <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>在给某个元素添加事件处理函数之后，一旦事件发生，相应的JavaScript代码就会得到执行，被调用的JavaScript代码可以返回一个值，这个值将会被传递给那个事件处理的函数。如果返回turn，则表示被点击了；如果返回false，表示没有被点击。</p>
+</blockquote>
+
+<h3 id="4.3">4.3 对这个函数进行扩展</h3>
+
+<h4 id="4.3.1">4.3.1 childNodes属性</h4>
+
+<p>  js代码：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function countBodyChildren(){
+	var body_element = document.getElementsByTagName("body")[0] ;
+	alert(body_element.childNodes.length) ;
+	alert(body_element.nodeType) ;
+}
+</code></pre></div></div>
+
+<h4 id="4.3.2">4.3.2 nodeType属性</h4>
+
+<p>  元素节点的nodeType属性值为1。</p>
+
+<p>  属性节点的nodeType属性值为2。</p>
+
+<p>  文本节点的nodeType属性值为3。</p>
+
+<h4 id="4.3.3">4.3.3 在标记中增加一段描述</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Images Gallery<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/showPic.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h1&gt;</span>Images<span class="nt">&lt;/h1&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/1.jpg"</span> <span class="na">title=</span><span class="s">"pic1"</span> <span class="na">onclick=</span><span class="s">"showPic(this); return false ;"</span><span class="nt">&gt;</span>图片1<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/2.jpg"</span> <span class="na">title=</span><span class="s">"pic2"</span> <span class="na">onclick=</span><span class="s">"showPic(this); return false ;"</span><span class="nt">&gt;</span>图片2<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/3.jpg"</span> <span class="na">title=</span><span class="s">"pic3"</span> <span class="na">onclick=</span><span class="s">"showPic(this); return false ;"</span><span class="nt">&gt;</span>图片3<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"images/4.jpg"</span> <span class="na">title=</span><span class="s">"pic4"</span> <span class="na">onclick=</span><span class="s">"showPic(this); return false ;"</span><span class="nt">&gt;</span>图片4<span class="nt">&lt;/a&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+	<span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">"placeholder"</span> <span class="na">src=</span><span class="s">"images/placeholder.jpg"</span> <span class="na">alt=</span><span class="s">"my image gallery"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"description"</span><span class="nt">&gt;</span>Choose an image.<span class="nt">&lt;/p&gt;</span>
+ <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="4.3.4">4.3.4 用JavaScript改变这段描述</h4>
+
+<p>  js代码：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function showPic(whichpic){
+	var source = whichpic.getAttribute("href") ;
+	var palceholder = document.getElementById("placehoder") ;
+	placeholder.setAttribute("src",source) ;
+	var text = whichpic.getAttribute("title") ;
+	var description = document.getElementById("description") ;
+	description.firstChild.nodeValue = text ;
+} &gt;这样就可以完成改变文本的效果了。
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="5">5 最佳实践</h2>
+
+<h3 id="5.1">5.1 平稳退化和渐进增强</h3>
+
+<p>  所谓的平稳退化(graceful degradation)是指：虽然某些功能无法使用，但是基本的操作仍然能够顺利完成。</p>
+
+<p>  所谓的渐进增强是指：用一些额外的信息层取包裹原始的数据。</p>
+
+<blockquote>
+  <p>CSS负责提供表示的信息，JavaScript负责提供关于行为的信息。</p>
+</blockquote>
+
+<h3 id="5.2">5.2 分离JavaScript</h3>
+
+<p>  1. 把文档中的所有链接放在一个数组中。</p>
+
+<p>  2. 遍历数组。</p>
+
+<p>  3. 如果某个链接的class属性等于popup，就表示这个链接在被点击时应该调用popUp()函数。</p>
+
+<p>  示例：</p>
+
+<p>  js文件-onclick.js</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.onload = preparelinks ;
+function preparelinks(){
+	var links = document.getElementsByTagName("a") ;
+	for(var i=0;i&lt;links.length;i++){
+		if(links[i].getAttribute("class") == "popup"){
+			links[i].onclick = function(){
+				popUp(this.getAttribute("href")) ;
+				return false ;
+			}
+		}
+	}
+}
+function popUp(winURL){
+	window.open(winURL,"popup","width=320,height=480") ;
+}
+</code></pre></div></div>
+
+<p>  html文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/onclick.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://fengmengzhao.github.io"</span> <span class="na">class=</span><span class="s">"popup"</span><span class="nt">&gt;</span>fmz blog<span class="nt">&lt;/a&gt;</span>	实现JavaScript代码与html代码的完全分析，向CSS学习的
+ <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="5.3">5.3 向后兼容</h3>
+
+<p>  加入语句：<code class="highlighter-rouge">if(! document.getElementsByTagName) return false ;</code></p>
+
+<p>  示例，上面的js代码可以改为：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.onload function(){
+	if(! document.getElementsByTagName) return false ;
+	var links = document.getElementsByTagName("a") ;
+	for(var i=0;i&lt;links.length;i++){
+		if(links[i].getAttribute("class") == "popup"){
+			links[i].onclick = function(){
+				popUp(this.getAttribute("href")) ;
+				return false ;
+			}
+		}
+	}
+}
+function popUp(winURL){
+	window.open(winURL,"popup","width=320,height=480") ;
+}
+</code></pre></div></div>
+
+<blockquote>
+  <p>这样就能解决“古老的”浏览器不会因为js脚本代码而出现问题，使脚本语言具有良好的向后兼容性。</p>
+</blockquote>
+
+<h3 id="5.4">5.4 性能的考虑</h3>
+
+<h4 id="5.4.1">5.4.1 尽量少访问DOM和尽量减少标记</h4>
+
+<p>  下面的代码:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(document.getElementsByTagName("a").length &gt; 0){
+	var links = document.getElementsByTagName("a") ;
+	for(var i=0;i&lt;links.length;i++){
+		//对每一个链接点处理
+	}
+}
+</code></pre></div></div>
+
+<blockquote>
+  <p>对整个DOM树遍历了两次</p>
+</blockquote>
+
+<p>  可以优化为如下代码：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var links = var links = document.getElementsByTagName("a") ;
+if(links.length &gt; 0){
+	for(var i=0;i&lt;links.length;i++){
+		//对每一个链接点处理
+	}
+}
+</code></pre></div></div>
+
+<blockquote>
+  <p>对DOM树只遍历一次</p>
+</blockquote>
+
+<blockquote>
+  <p>尽量减少文档中标记的数量，过多的元素只会增加DOM树的规模，进而增加遍历DOM树查找特定元素的时间。</p>
+</blockquote>
+
+<h4 id="5.4.2">5.4.2 合并放置脚本</h4>
+
+<p>  尽量将脚本函数放置在一个脚本文件中。</p>
+
+<p>  建议将脚本标签放在文档的末尾，body标记之前。</p>
+
+<h4 id="5.4.3">5.4.3 压缩脚本</h4>
+
+<p>  应有有两个js的版本，一个是工作副本，另外一个是精简版本，用于放在站点上</p>
+
+<p>  推荐有代表性的代码压缩工具</p>
+
+<p>  1. <a href="http://http://www.crockford.com/javascript/jsmin.html" title="JSMin">Douglas Crockford 的JSMin</a></p>
+
+<p>  2. <a href="http://yui.github.io/yuicompressor/" title="雅虎的 YUI Compressor">雅虎的 YUI Compressor</a></p>
+
+<p>  3. <a href="http://closure-compiler.appspot.com/home" title="谷歌的 Closure Compiler">谷歌的 Closure Compiler</a></p>
+
+<hr />
+
+<hr />
+
+<h2 id="6">6 动态创建标记</h2>
+
+<p>  把结构、行为和样式分开永远是一个好主意，只要有可能就应该用外部的CSS文件代替font标签去设定和管理网页的样式信息，最好用外部的JavaScript文件去控制网页的行为，而文档的结果是由标记完成构建的。</p>
+
+<h3 id="6.1">6.1 InnerHTML属性</h3>
+
+<p>  示例：</p>
+
+<p>  js文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.onload = function(){
+	var testdiv = document.getElementById("testdiv") ;
+	testdiv.innerHTML = "&lt;p&gt;This is &lt;em&gt;fmz&lt;/em&gt; content.&lt;/p&gt;"
+}
+</code></pre></div></div>
+
+<p>  HTML文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/example.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"testdiv"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;p&gt;</span>This is <span class="nt">&lt;em&gt;</span>my<span class="nt">&lt;/em&gt;</span> content.<span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>能够完成对原有代码的替换。</p>
+</blockquote>
+
+<h3 id="6.2">6.2 DOM方法</h3>
+
+<h4 id="6.2.1">6.2.1 createElement方法</h4>
+
+<p>  示例</p>
+
+<p>  js文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.onload = function(){
+	var testdiv = document.getElementById("testdiv") ;
+	var p = document.createElement("p") ;
+	var em = document.createElement("em") ;
+	var p_text1 = document.createTextNode("This is ") ;
+	var em_text = document.createTextNode("my") ;
+	var p_text2 = document.createTextNode(" content.") ;
+
+	testdiv.appendChild(p) ;
+	p.appendChild(p_text1) ;
+	p.appendChild(em) ;
+	em.appendChild(em_text) ;
+	p.appendChild(p_text2) ;
+}
+</code></pre></div></div>
+
+<p>  html文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/dom_example01.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"testdiv"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="6.3">6.3 Ajax</h3>
+
+<p>  2005年，Adaptive Path公司的Jesse James Garrete发明了Ajax这个词，用于概括异步加载页面内容的技术。Ajax的主要优势是对页面的请求以异步的方式发送到服务器，而服务器不会以整个页面来回应请求，与此同时用户还能继续浏览页面并与页面进行交互。</p>
+
+<h4 id="6.3.1">6.3.1 XMLHttpRequest</h4>
+
+<p>  Ajax的核心就是XMLHttpRequest对象，这个对象充当浏览器中的脚本(客户端)与服务器之间的中间人的角色。以往的请求都是由浏览器发出，而JavaScript可以通过这个对象自己发送请求，同时自己处理响应。</p>
+
+<h4 id="6.3.2">6.3.2 Hijax</h4>
+
+<p>  Ajax主要依赖于后台服务器，实际上是服务端的脚本语言完成了绝大部分的工作。XMLHttpRequest作为浏览器与服务器之间的中间人，它只是负责传递请求和响应。如果中间人被禁止了，浏览器和服务器之间的请求和响应应该继续完成而不是中断，只不过花的时间可能会长一点。</p>
+
+<p>  js代码-addLoadEvent.js</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function addLoadEvent(func){
+	var oldonload = window.onload ;
+	if(typeof window.onload != 'function'){
+		window.onload = func ;
+	}else{
+		window.onload = function(){
+			oldonload() ;
+			func() ;
+		}
+	}
+}
+</code></pre></div></div>
+
+<p>  js代码-getHTTPObject.js</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function getHTTPObject(){
+	if(typeof XMLHttpRequest == "undefined"){
+		XMLHttpRequest = function(){
+			try{ return new  ActiveXObject("Msxml2.XMLHTTP.6.0"); }
+				catch(e){}
+			try{ return new  ActiveXObject("Msxml2.XMLHTTP.3.0"); }
+				catch(e){}
+			try{ return new  ActiveXObject("Msxml2.XMLHTTP"); }
+				catch(e){}
+			return false ;
+		}
+	}
+	return new XMLHttpRequest() ;
+}
+</code></pre></div></div>
+
+<p>  js代码-getNewContent.js</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function getNewContent(){
+	var request = getHTTPObject() ;
+	if(request){
+		request.open("GET","example.txt",true) ;
+		request.onreadystatechange = function(){
+			if(request.readyState == 4){
+				alert("Response Received")
+				var para = document.createElement("p") ;
+				var txt = document.createTextNode(request.responseText) ;
+				para.appendChild(txt) ;
+				document.getElementById('new').appendChild(para) ;
+			}
+		};
+		request.send(null)
+	}else{
+			alert("Sorry,your browser doesn't support XMLHttpRequest") ;
+		}
+}
+addLoadEvent(getNewContent) ;
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="7">7 充实文档内容</h2>
+
+<p>  JavaScript的应用准则</p>
+
+<p>  1. 渐进增强(progressive enhancement)。你应该总是从最核心的的部分，也就是从内容开始。更具内容用标记实现良好的结构；然后再逐步加强这些内容。这些增强的效果可以通过CSS改进呈现效果，也可以通过DOM添加各种行为。如果用DOM添加核心内容，那么未免太迟了，核心内容从一开始就考虑了。</p>
+
+<p>  2. 平稳退化。支持了渐进增强也就支持了平稳退化，在退化的过程中，核心的内容不会丢失。</p>
+
+<blockquote>
+  <p>script引用：<code class="highlighter-rouge">&lt;script src="*.js"&gt;&lt;/script&gt;</code>，同行将代码放入/scripts文件夹中</p>
+</blockquote>
+
+<blockquote>
+  <p>css引用：<code class="highlighter-rouge">&lt;link rel="stylesheet" href="*.css" media="screen" /&gt;</code>，同行将代码放入/styles文件夹中。可以将文件导入basic.css文件中，语句：<code class="highlighter-rouge">@import url(*.css)</code>，例如：</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@import url(layout.css) ;
+@import url(color.css) ;
+@import url(typography.css) ;
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

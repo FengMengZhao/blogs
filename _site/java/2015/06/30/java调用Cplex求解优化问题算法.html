@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - java调用Cplex求解优化问题算法</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/java/2015/06/30/java%E8%B0%83%E7%94%A8Cplex%E6%B1%82%E8%A7%A3%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98%E7%AE%97%E6%B3%95.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  June 30, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">java调用Cplex求解优化问题算法</h1>
+
+<div id="post">
+  <p>###一般性线性规划问题求解</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import ilog.concert.*;
+import ilog.cplex.*;
+//现行规划问题的求解
+//数值默认状态均为0
+public class LinPro 
+{
+	static double[] lb = {0.0,0.0,0.0} ;//输入决策变量的下界*
+	static double[] ub = {Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE} ;//输入决策变量的上界*
+	static double[] objvals = {} ;//输入决策变量的价值系数*
+	
+	public static void main(String[] args) 
+	{
+		solve_lp();
+	}
+	
+	public static void solve_lp(){
+		try 
+		{
+			
+			IloCplex cplex = new IloCplex();//对象实例化，开辟堆内存空间
+			IloNumVar[] x = cplex.numVarArray(0, lb, ub);//修改决策变量的数量*
+			cplex.addMaximize(cplex.scalProd(x, objvals));//最大化目标函数                                                    cplex.scalProd(变量数组，数值型数组），表示向量与向量乘积的形式。
+			cplex.addMinimize(cplex.scalProd(x, objvals));//最小化目标函数
+			cplex.addLe(cplex.sum(cplex.prod(0, x[0]), 
+								  cplex.prod(0, x[1]), 
+								  cplex.prod(0, x[2])), 0);//输入约束条件"&lt;="*
+			cplex.addGe(cplex.sum(cplex.prod(0, x[0]), 
+								  cplex.prod(0, x[1]), 
+								  cplex.prod(0, x[2])), 0);//输入约束条件"&gt;="*
+			cplex.addEq(cplex.sum(cplex.prod(0, x[0]), 
+								  cplex.prod(0, x[1]), 
+								  cplex.prod(0, x[2])), 0);//输入约束条件"="*
+			if (cplex.solve()) 
+			{
+				cplex.output().println("Solution status = " + cplex.getStatus());
+				cplex.output().println("Solution value = " + cplex.getObjValue());
+				double[] val = cplex.getValues(x);
+				int ncols = cplex.getNcols();
+				for (int j = 0; j &lt; ncols; ++j)
+					cplex.output().println("Column: " + j + " Value = " + val[j]);
+			}
+			cplex.end();
+		} 
+		catch (IloException e) 
+		{
+
+			System.err.println("Concert exception '" + e + "' caught");
+
+		}
+	}	
+}
+</code></pre></div></div>
+
+<p>###运输问题求解</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import ilog.concert.*;
+import ilog.cplex.*;
+
+public class ExerciseTransport {
+	public static void main(String args[]){
+		try{
+			IloCplex cplex = new IloCplex() ;
+			IloNumVar[][] x = new IloNumVar[3][4] ;
+			double[] supply ={7.,4.,9.} ;
+			double[] demand ={3.,6.,5.,6.} ;
+			int [][] percost ={3,11,3,10;1,9,2,8;7,4,10,5} ;
+			for(int i=0;i&lt;3;i++){
+				x[i] = cplex.numVarArray(4,0,Double.MAX_VALUE) ;
+			}
+			
+			for(int i=0;i&lt;3;i++){
+				IloLinearNumExpr v1 = cplex.linearNumExpr() ;
+				for(int j=0;j&lt;4;j++){
+					v1.addTerm(1,x[i][j]) ;					
+				}
+				cplex.addEq(v1, supply[i]) ;
+			}
+			
+			
+			for(int j=0;j&lt;4;j++){
+				IloLinearNumExpr v2 = cplex.linearNumExpr() ;
+				for(int i=0;i&lt;3;i++){
+					v2.addTerm(1,x[i][j]) ;					
+				}
+				cplex.addEq(v2, demand[j]) ;
+			}
+			
+			IloLinearNumExpr expr = cplex.linearNumExpr() ;
+			for(int i=0;i&lt;3;i++){
+				for(int j=0;j&lt;4;j++){
+					expr.addTerm(percost[i][j],x[i][j]) ;
+				}
+			}
+			cplex.addMinimize(expr) ;
+			
+			if(cplex.solve()){
+				for(int i=0;i&lt;3;++i){
+					System.out.print(i+":\t") ;
+					for(int j=0;j&lt;4;++j){
+						System.out.print(cplex.getValue(x[i][j])+"\t") ;
+					}
+					System.out.println() ;
+				}
+				System.out.println("Cost="+cplex.getObjValue()) ;
+			}
+			cplex.end() ;
+		}
+		catch(IloException e){
+			System.err.println("Concert exception caught:"+e);
+		}
+	}
+}
+</code></pre></div></div>
+
+<p>###运输问题求解（产销不平衡）</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import ilog.concert.*;
+import ilog.cplex.*;
+//产销不平衡的运输问题求解。(运筹学P90，例2)
+public class YunShu {
+	public static void main(String args[]){
+		try{
+			IloCplex cplex = new IloCplex() ;
+			IloNumVar[][] x = new IloNumVar[3][4] ;
+			double[] supply = {50.,60.,50.} ;
+			double[] demand_lb = {30.,70.,0.,10.} ;
+			double[] demand_ub = {50.,70.,30.,Double.MAX_VALUE} ;
+			double[][] percost = {16.,13.,22.,17.;14.,13.,19.,15.;19.,20.,23.,Double.MAX_VALUE} ;
+			for(int i=0;i&lt;3;i++){
+				x[i] = cplex.numVarArray(4,0,Double.MAX_VALUE) ;
+			}
+			
+			for(int i=0;i&lt;3;i++){
+				IloLinearNumExpr e1 = cplex.linearNumExpr() ;
+				for(int j=0;j&lt;4;j++){
+					e1.addTerm(1, x[i][j]) ;
+				}
+				cplex.addEq(e1, supply[i]) ;
+			}
+			for(int j=0;j&lt;4;j++){
+				IloLinearNumExpr e2 = cplex.linearNumExpr() ;
+				for(int i=0;i&lt;3;i++){
+					e2.addTerm(1,x[i][j]) ;
+				}
+				cplex.addLe(e2, demand_ub[j]) ;
+				cplex.addGe(e2, demand_lb[j]) ;
+			}
+			
+			IloLinearNumExpr expr = cplex.linearNumExpr() ;
+			for(int i=0;i&lt;3;i++){
+				for(int j=0;j&lt;4;j++){
+					expr.addTerm(percost[i][j],x[i][j]) ;
+				}
+			}
+			cplex.addMinimize(expr) ;
+			
+			if(cplex.solve()){
+				System.out.println("Solution status:"+cplex.getStatus()) ;
+				for(int i=0;i&lt;3;i++){
+					System.out.print(i+":\t") ;
+					for(int j=0;j&lt;4;j++){
+						System.out.print(cplex.getValue(x[i][j])+"\t") ;
+					}
+					System.out.println() ;
+				}
+				System.out.println("Solution value:"+cplex.getObjValue()) ;
+			}						
+		}
+		catch(IloException e){
+			System.err.println("Concert exception caught:"+e);
+		}
+	}
+}
+</code></pre></div></div>
+
+<p>###指派问题求解</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import ilog.concert.*;
+import ilog.cplex.*;
+public class Assignment {
+	public static void main(String args[]){
+		try{
+			IloCplex cplex = new IloCplex() ;
+			int[][] percost = {2,15,13,4;10,4,14,15;9,14,16,13;7,8,11,9} ;
+			IloNumVar[][] x = new IloNumVar[4][4] ;
+			
+			for(int i=0;i&lt;4;i++){
+				for(int j=0;j&lt;4;j++){
+					x[i][j] = cplex.boolVar() ;
+				}
+			}
+			for(int i=0;i&lt;4;i++){
+				IloLinearNumExpr e1 = cplex.linearNumExpr() ;
+				for(int j=0;j&lt;4;j++){
+					e1.addTerm(1,x[i][j]) ;
+				}
+				cplex.addEq(e1, 1) ;
+			}
+			for(int j=0;j&lt;4;j++){
+				IloLinearNumExpr e2 = cplex.linearNumExpr() ;
+				for(int i=0;i&lt;4;i++){
+					e2.addTerm(1,x[i][j]) ;
+				}
+				cplex.addEq(e2, 1) ;
+			}
+			
+			IloLinearNumExpr expr = cplex.linearNumExpr() ;
+			for(int i=0;i&lt;4;i++){
+				for(int j=0;j&lt;4;j++){
+					expr.addTerm(percost[i][j],x[i][j]) ;
+				}
+			}
+			cplex.addMinimize(expr) ;
+			
+			if(cplex.solve()){
+				System.out.println("Solution status:"+cplex.getStatus()) ;
+				for(int i=0;i&lt;4;i++){
+					System.out.print(i+":\t") ;
+					for(int j=0;j&lt;4;j++){
+						System.out.print(cplex.getValue(x[i][j])+"\t") ;
+					}
+					System.out.println() ;
+				}
+				System.out.println("Solution Value:"+cplex.getObjValue()) ;
+				
+			}
+			
+		}
+		catch(IloException e){
+			System.err.println(e) ;
+		}
+	}
+}
+</code></pre></div></div>
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - javaweb 基础知识</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/07/27/javaweb-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  July 27, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">javaweb 基础知识</h1>
+
+<div id="post">
+  <p>2015/7/22</p>
+
+<blockquote>
+  <p>HTML(Hypertext Markup Language) is the standard markup language used to cread web pages,是一种超文本标记语言。</p>
+</blockquote>
+
+<h3 id="表格html代码示例">表格HTML代码示例</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>冯孟昭个人简历<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>基本信息<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">width=</span><span class="s">"100%"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>姓名<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>冯孟昭<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>联系方式<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>邮箱：fengmengzhao@gmail.com<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>教育背景<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>黑龙江科技大学（2010级）  西南财经大学（2014级）<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>博客<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://fengmengzhao.github.io"</span><span class="nt">&gt;</span>http://fengmengzhao.github.io<span class="nt">&lt;/a&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="表单html代码示例">表单HTML代码示例</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;title&gt;</span>表单<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">""</span> <span class="na">method=</span><span class="s">"post"</span> <span class="nt">&gt;</span>
+			编<span class="err">&amp;</span>nbsp号：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"userid"</span> <span class="na">value=</span><span class="s">"No."</span> <span class="na">size=</span><span class="s">"2"</span> <span class="na">maxlength=</span><span class="s">"2"</span><span class="nt">&gt;&lt;br&gt;</span>
+
+			用户名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"username value="</span><span class="err">请输入用户名"</span><span class="nt">&gt;&lt;br&gt;</span>
+
+			密<span class="err">&amp;</span>nbsp码：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"请输入用户名"</span><span class="nt">&gt;&lt;br&gt;</span>
+
+			性<span class="err">&amp;</span>nbsp别：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"sex"</span> <span class="na">value=</span><span class="s">"男"</span> <span class="na">checked</span><span class="nt">&gt;</span>男
+
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"sex"</span> <span class="na">value=</span><span class="s">"女"</span><span class="nt">&gt;</span>女<span class="nt">&lt;br&gt;</span>
+
+			部<span class="err">&amp;</span>nbsp门：<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"dept"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"技术部"</span><span class="nt">&gt;</span>技术部<span class="nt">&lt;/option&gt;</span>
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"销售部"</span> <span class="na">selected</span><span class="nt">&gt;</span>销售部<span class="nt">&lt;/option&gt;</span>
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"财务部"</span><span class="nt">&gt;</span>财务部<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;/select&gt;&lt;br&gt;</span>
+
+			兴<span class="err">&amp;</span>nbsp趣：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">inst</span> <span class="na">value=</span><span class="s">"唱歌"</span><span class="nt">&gt;</span>唱歌
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">inst</span> <span class="na">value=</span><span class="s">"读书"</span><span class="nt">&gt;</span>读书
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">inst</span> <span class="na">value=</span><span class="s">"跳舞"</span><span class="nt">&gt;</span>跳舞
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">inst</span> <span class="na">value=</span><span class="s">"编程"</span> <span class="na">checked</span><span class="nt">&gt;</span>编程
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">inst</span> <span class="na">value=</span><span class="s">"游泳"</span><span class="nt">&gt;</span>游泳<span class="nt">&lt;br&gt;</span>
+			
+			说<span class="err">&amp;</span>nbsp明：<span class="nt">&lt;textarea</span> <span class="na">name=</span><span class="s">"note"</span> <span class="na">cols=</span><span class="s">"30"</span> <span class="na">rows=</span><span class="s">"3"</span><span class="nt">&gt;</span>冯孟昭学习javaweb基础课程<span class="nt">&lt;/textarea&gt;&lt;br&gt;</span>
+
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"注册"</span><span class="nt">&gt;&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>JavaScript是一种基于对象的脚本语言(Scripting language),可以直接使用已经提供好的对象进行操作。JavaScript中所有的变量都用<code class="highlighter-rouge">var</code>声明，变量的类型由具体的变量内容决定，变量声明为了简便可以不用声明直接使用变量。
+JavaScript中的函数都使用<code class="highlighter-rouge">function</code>关键字来声明，如果需要函数有返回值则直接通过<code class="highlighter-rouge">return</code>返回即可。</p>
+</blockquote>
+
+<h3 id="九九乘法表html代码示例javascript">九九乘法表HTML代码示例（JavaScript）</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;title&gt;</span>javaScript九九乘法表<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"&lt;table border=</span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">&gt;"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;=</span><span class="mi">9</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+					<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"&lt;tr&gt;"</span><span class="p">)</span> <span class="p">;</span>
+					<span class="k">for</span><span class="p">(</span><span class="nx">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="nx">j</span><span class="o">&lt;=</span><span class="mi">9</span><span class="p">;</span><span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+						<span class="k">if</span><span class="p">(</span><span class="nx">i</span><span class="o">&gt;=</span><span class="nx">j</span><span class="p">){</span>
+							<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"&lt;td&gt;"</span><span class="o">+</span><span class="nx">i</span><span class="o">+</span><span class="s2">"*"</span><span class="o">+</span><span class="nx">j</span><span class="o">+</span><span class="s2">"="</span><span class="o">+</span><span class="nx">i</span><span class="o">*</span><span class="nx">j</span><span class="o">+</span><span class="s2">"&lt;/td&gt;"</span><span class="p">)</span> <span class="p">;</span>
+						<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+							<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"&lt;td&gt;&amp;nbsp&lt;/td&gt;"</span><span class="p">)</span> <span class="p">;</span>
+						<span class="p">}</span>
+					<span class="p">}</span>
+					<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"&lt;/tr&gt;"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="p">}</span>
+			<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"&lt;/table&gt;"</span><span class="p">)</span> <span class="p">;</span>	
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<p>2015/7/27</p>
+
+<h3 id="事件处理之onload">事件处理之onLoad</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>事件处理<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">hello</span><span class="p">(){</span>
+				<span class="nx">alert</span><span class="p">(</span><span class="s2">"欢迎您的光临！"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+			
+			<span class="kd">function</span> <span class="nx">byebye</span><span class="p">(){</span>
+				<span class="nx">alert</span><span class="p">(</span><span class="s2">"谢谢您的光临！"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body</span> <span class="na">onload=</span><span class="s">"hello()"</span> <span class="na">onUnload=</span><span class="s">"byebye()"</span><span class="nt">&gt;</span>
+		
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="事件处理之onclick">事件处理之onClick</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>事件处理<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">fun</span><span class="p">(){</span>
+				<span class="nx">alert</span><span class="p">(</span><span class="s2">"欢迎光临！！！"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h3&gt;&lt;a</span> <span class="na">href=</span><span class="s">"http://fengmengzhao.github.io"</span> <span class="na">onclick=</span><span class="s">"fun()"</span><span class="nt">&gt;</span>冯孟昭博客<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="事件处理之表单正则表达式">事件处理之表单(正则表达式)</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>表单操作<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">validate</span><span class="p">(</span><span class="nx">f</span><span class="p">){</span>
+				<span class="nx">value</span> <span class="o">=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">email</span><span class="p">.</span><span class="nx">value</span> <span class="p">;</span>
+
+				<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="sr">/^</span><span class="se">\w</span><span class="sr">+@</span><span class="se">\w</span><span class="sr">+.</span><span class="se">\w</span><span class="sr">+$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">value</span><span class="p">)){</span>
+					<span class="nx">alert</span><span class="p">(</span><span class="s2">"邮箱输入格式不正确"</span><span class="p">)</span> <span class="p">;</span>
+					<span class="nx">f</span><span class="p">.</span><span class="nx">email</span><span class="p">.</span><span class="nx">focus</span><span class="p">()</span> <span class="p">;</span>
+					<span class="nx">f</span><span class="p">.</span><span class="nx">email</span><span class="p">.</span><span class="nx">select</span><span class="p">()</span> <span class="p">;</span>
+					<span class="k">return</span> <span class="kc">false</span> <span class="p">;</span>
+				<span class="p">}</span>
+
+				<span class="k">return</span> <span class="kc">true</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"表单.html"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">name=</span><span class="s">"myform"</span> <span class="na">onsubmit=</span><span class="s">"return validate(this)"</span><span class="nt">&gt;</span>
+			Email: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"email"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="na">s</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="事件处理之表单显示">事件处理之表单(显示)</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>表单<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">show</span><span class="p">(){</span>
+				<span class="kd">var</span> <span class="nx">name</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">value</span> <span class="p">;</span>
+				<span class="nx">alert</span><span class="p">(</span><span class="s2">"姓名："</span> <span class="o">+</span> <span class="nx">name</span><span class="p">)</span> <span class="p">;</span>
+
+				<span class="kd">var</span> <span class="nx">sex</span> <span class="p">;</span>
+				<span class="k">if</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">sex</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">checked</span><span class="p">){</span>
+					<span class="nx">sex</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">sex</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">value</span> <span class="p">;</span>
+				<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+					<span class="nx">sex</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">sex</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">value</span> <span class="p">;</span>
+				<span class="p">}</span>
+				<span class="nx">alert</span><span class="p">(</span><span class="s2">"性别："</span> <span class="o">+</span> <span class="nx">sex</span><span class="p">)</span> <span class="p">;</span>
+
+				<span class="kd">var</span> <span class="nx">inst</span><span class="o">=</span><span class="s2">""</span> <span class="p">;</span>
+				<span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">inst</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+					<span class="k">if</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">inst</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">checked</span><span class="p">){</span>
+						<span class="nx">inst</span><span class="o">+=</span><span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">inst</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="o">+</span><span class="s2">"；"</span><span class="p">;</span>
+					<span class="p">}</span>
+				<span class="p">}</span>
+				<span class="nx">alert</span><span class="p">(</span><span class="s2">"兴趣："</span> <span class="o">+</span> <span class="nx">inst</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">""</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">name=</span><span class="s">"myform"</span><span class="nt">&gt;</span>
+		姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;&lt;br&gt;</span>
+		性别：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"sex"</span> <span class="na">value=</span><span class="s">"男"</span> <span class="na">checked</span><span class="nt">&gt;</span>男
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"sex"</span> <span class="na">value=</span><span class="s">"女"</span> <span class="na">checked</span><span class="nt">&gt;</span>女<span class="nt">&lt;br&gt;</span>
+		兴趣：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"唱歌"</span><span class="nt">&gt;</span>唱歌
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"跳舞"</span><span class="nt">&gt;</span>跳舞
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"游泳"</span><span class="nt">&gt;</span>游泳
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"编程"</span> <span class="na">checked</span><span class="nt">&gt;</span>编程
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"上网"</span><span class="nt">&gt;</span>上网<span class="nt">&lt;br&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"显示"</span> <span class="na">onClick=</span><span class="s">"show()"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="事件处理之表单chekbox">事件处理之表单(chekbox)</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>表单<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">show</span><span class="p">(</span><span class="nx">val</span><span class="p">){</span>
+				<span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">value</span><span class="o">=</span><span class="nx">val</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">""</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">name=</span><span class="s">"myform"</span><span class="nt">&gt;</span>
+			部门：<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"dept"</span> <span class="na">onChange=</span><span class="s">"show(this.value)"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"技术部"</span><span class="nt">&gt;</span>技术部<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"销售部"</span> <span class="na">selected</span><span class="nt">&gt;</span>销售部<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"财务部"</span><span class="nt">&gt;</span>财务部<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;/select&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"result"</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="window之confirm">window之confirm</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>window<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">fun</span><span class="p">(){</span>
+				<span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">"确认删除？"</span><span class="p">)){</span>
+					<span class="nx">alert</span><span class="p">(</span><span class="s2">"您选择是"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+					<span class="nx">alert</span><span class="p">(</span><span class="s2">"你选择否"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onClick=</span><span class="s">"fun()"</span><span class="nt">&gt;</span>删除邮件<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="window之站点切换">window之站点切换</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>window<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">url</span><span class="p">){</span>
+				<span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="o">=</span><span class="nx">url</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">""</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">name=</span><span class="s">"myform"</span><span class="nt">&gt;</span>
+			友情链接：<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"url"</span> <span class="na">onChange=</span><span class="s">"fun(this.value)"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"#"</span><span class="nt">&gt;</span>==================请选择站点==================<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"http://fengmengzhao.github.io"</span><span class="nt">&gt;</span>冯孟昭博客<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"http://baidu.com"</span><span class="nt">&gt;</span>百度<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"http://sohu.com"</span><span class="nt">&gt;</span>搜狐<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;/select&gt;</span> 
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="window之父子窗口">window之父子窗口</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>window<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">url</span><span class="p">){</span>
+				<span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="s2">"弹出页面"</span><span class="p">,</span><span class="s2">"width=500,height=500,scrollable=yes,resizable=no"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"myform"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"打开"</span> <span class="na">onClick=</span><span class="s">"fun('openerDemo.html')"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>父窗口</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>window<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">closeWin</span><span class="p">(){</span>
+				<span class="nb">window</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span> <span class="p">;</span>
+				
+			<span class="p">}</span>
+			<span class="nb">window</span><span class="p">.</span><span class="nx">opener</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">()</span> <span class="p">;</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h3</span> <span class="na">a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onClick=</span><span class="s">"closeWin()"</span><span class="nt">&gt;</span>关闭网页<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>子窗口</p>
+</blockquote>
+
+<h3 id="window之父窗口返回子窗口内容">window之父窗口返回子窗口内容</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>window<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">showNewPage</span><span class="p">(</span><span class="nx">url</span><span class="p">){</span>
+				<span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="s2">"弹出页面"</span><span class="p">,</span><span class="s2">"width=500,height=500,scrollable=yes,resizable=no"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"parentForm"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"选择信息"</span> <span class="na">onClick=</span><span class="s">"showNewPage('content.html')"</span><span class="nt">&gt;&lt;br&gt;</span>
+			选择结果：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"result"</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>父窗口</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>window<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">returnValue</span><span class="p">(){</span>
+				<span class="kd">var</span> <span class="nx">city</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">myform</span><span class="p">.</span><span class="nx">city</span><span class="p">.</span><span class="nx">value</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">opener</span><span class="p">.</span><span class="nb">document</span> <span class="p">;</span>
+				<span class="nx">doc</span><span class="p">.</span><span class="nx">parentForm</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">city</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"myform"</span><span class="nt">&gt;</span>
+			选择：<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"city"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"北京"</span><span class="nt">&gt;</span>北京<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"上海"</span><span class="nt">&gt;</span>上海<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"广州"</span><span class="nt">&gt;</span>广州<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"天津"</span><span class="nt">&gt;</span>天津<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"重庆"</span><span class="nt">&gt;</span>重庆<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;/select&gt;&lt;br&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"返回"</span> <span class="na">onClick=</span><span class="s">"returnValue()"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>子窗口</p>
+</blockquote>
+
+<hr />
+
+<p>2015/7/28</p>
+
+<h2 id="xml">XML</h2>
+
+<blockquote>
+  <p>XML(eXtended Markup Language,可扩展的标记性语言)提供一种跨平台、跨程序、跨网络的语言的数据描述方式，使用XML可以方便地实现数据交换、系统配置、内容管理等常见的功能。
+XML和HTML类似，都是标记性语言，两者都是由SGML(Standard General Markup Language)语言发展而来的，最大的不同是HTML中的元素都是固定的，且以现实为主，而XML语言中的标记都是用户自定义的，主要以数据的保存为主。</p>
+</blockquote>
+
+<h3 id="比较html和xml的区别">比较HTML和XML的区别</h3>
+
+<h4 id="html下的记事本">HTML下的记事本</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>记事本<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;ul&gt;</span>
+			<span class="nt">&lt;li&gt;</span>冯孟昭<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;ul&gt;</span>
+				<span class="nt">&lt;li&gt;</span>id: 001<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;li&gt;</span>school: 西南财经大学<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;li&gt;</span>email: fengmengzhao@gmail.com<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;li&gt;</span>tel: 18723344555<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;li&gt;</span>site: fengmengzhao.github.io<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;/ul&gt;</span>
+		<span class="nt">&lt;/ul&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="xml下的记事本">XML下的记事本</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0"?&gt;</span>
+<span class="cp">&lt;?xml-stylesheet type="text/css" href="记事本.css"?&gt;</span>
+<span class="nt">&lt;addresslist&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name&gt;</span>冯孟昭<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;id&gt;</span>001<span class="nt">&lt;/id&gt;</span>
+		<span class="nt">&lt;school&gt;</span>西南财经大学<span class="nt">&lt;/school&gt;</span>
+		<span class="nt">&lt;email&gt;</span>fengmengzhao@gmail.com<span class="nt">&lt;/email&gt;</span>
+		<span class="nt">&lt;tel&gt;</span>18723344555<span class="nt">&lt;/tel&gt;</span>
+		<span class="nt">&lt;site&gt;</span>fengmengzhao.github.io<span class="nt">&lt;/site&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+<span class="nt">&lt;/addresslist&gt;</span>
+</code></pre></div></div>
+
+<h4 id="记事本的css样式">记事本的css样式</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>name
+{	display:block;
+	color:blue;
+	font-size:20pt;
+	font-weight:bold;	}
+
+id,school,email,tel,size
+{	display:block;
+	color:black;
+	font-size:14pt;
+	font-weight:normal;
+	font-style:italic;	}
+</code></pre></div></div>
+
+<blockquote>
+  <p>使用css样式可以让一个XML文件按照HTML的样式进行显示，但是从实际上来讲，XML并不是用来显示的，更多的是用于数据结构的描述，如果想要进行数据的显示，则使用HTML会更加方便。</p>
+</blockquote>
+
+<blockquote>
+  <p>XML的注释语法<code class="highlighter-rouge">&lt;[!CDATA[不解析内容]]&gt;</code></p>
+</blockquote>
+
+<h3 id="xml解析">XML解析</h3>
+
+<h4 id="dom解析">DOM解析</h4>
+
+<blockquote>
+  <p>DOM(Document Object Model,文档对象模型)，在应用程序中基于DOM的XML解析器将一个XML文档转换成一个对象模型集合(通常称为DOM树)，应用程序通过对这个对象模型的操作，来实现XML文档的数据操作。通过DOM接口，应用程序可以在任何时候访问XML文档的任何一部分数据，因此这种利用DOM接口的机制称作随机访问机制。
+DOM分析器将整个XML文档转化成DOM树存放在内存中</p>
+</blockquote>
+
+<h5 id="xml文档-联系人">XML文档-联系人</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0"?&gt;</span>
+<span class="nt">&lt;addresslist&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name&gt;</span>冯孟昭<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;email&gt;</span>fengmengzhao@gmai.com<span class="nt">&lt;/email&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name&gt;</span>陈亮亮<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;email&gt;</span>342652980@qq.com<span class="nt">&lt;/email&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+<span class="nt">&lt;/addresslist&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>DOM解析中四个核心接口</p>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <p><code class="highlighter-rouge">Document</code>,代表整个XML文档，表示整颗DOM树的根，提供了对文档中数据进行访问和操作的入口</p>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <p><code class="highlighter-rouge">Node</code>,每一个Node接口代表DOM树中的一个节点</p>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <p><code class="highlighter-rouge">NodeList</code>,此接口表示一个节点的集合，一般用于表示顺序关系的一组节点</p>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <p><code class="highlighter-rouge">NamedNodeMap</code>,此节点表示一组节点和其唯一名称对应的一一对应关系，主要用于属性节点的表示</p>
+  </blockquote>
+</blockquote>
+
+<h5 id="dom解析xml文件的步骤">Dom解析XML文件的步骤</h5>
+
+<ol>
+  <li>
+    <p>创建DocumentFactory</p>
+  </li>
+  <li>
+    <p>创建DocumentBuilder</p>
+  </li>
+  <li>
+    <p>创建Document</p>
+  </li>
+  <li>
+    <p>创建NodeList</p>
+  </li>
+</ol>
+
+<hr />
+
+<p>2015/7/29</p>
+
+<h5 id="dom解析联系人xml文件的代码">DOM解析联系人.xml文件的代码</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+public class DomParsingDemo02 {
+	public static void main(String args[])throws Exception{
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance() ;//创建DocumentFactory
+		DocumentBuilder builder = factory.newDocumentBuilder() ;//创建DocumentBuilder
+		Document doc = builder.parse(new File("D:\\html_file\\domDemo01.xml")) ;//创建Document
+		NodeList nl = doc.getElementsByTagName("linkman") ;//创建NodeList
+		
+		//输出
+		for(int i=0;i&lt;nl.getLength();i++){
+			Element e = (Element) nl.item(i) ;
+			System.out.println("姓名："+e.getElementsByTagName("name").item(0).getFirstChild().getNodeValue()+"\t"+"邮箱："+e.getElementsByTagName("email").item(0).getFirstChild().getNodeValue()) ;
+		}
+	}
+}
+</code></pre></div></div>
+
+<h5 id="dom解析xml文件示例">DOM解析XML文件示例</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0"?&gt;</span>
+<span class="nt">&lt;addresslist&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name&gt;</span>冯孟昭<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;id&gt;</span>001<span class="nt">&lt;/id&gt;</span>
+		<span class="nt">&lt;school&gt;</span>西南财经大学<span class="nt">&lt;/school&gt;</span>
+		<span class="nt">&lt;email&gt;</span>fengmengzhao@gmail.com<span class="nt">&lt;/email&gt;</span>
+		<span class="nt">&lt;tel&gt;</span>18723344555<span class="nt">&lt;/tel&gt;</span>
+		<span class="nt">&lt;site&gt;</span>fengmengzhao.github.io<span class="nt">&lt;/site&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+<span class="nt">&lt;/addresslist&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>待解析XML文件</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import java.io.*;
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
+
+public class DomParsingDemo03
+{
+	public static void main(String args[])throws Exception
+	{
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance() ;
+		DocumentBuilder builder = factory.newDocumentBuilder() ;
+		Document doc = builder.parse(new File("D:\\html_file\\domDemo03.xml")) ;
+		NodeList nl = doc.getElementsByTagName("linkman") ;
+
+		for(int i=0;i&lt;nl.getLength();i++)
+		{
+			Element e = (Element)nl.item(i) ;
+			System.out.println("姓名："+e.getElementsByTagName("name").item(0).getFirstChild().getNodeValue()) ;
+			System.out.println("id："+e.getElementsByTagName("id").item(0).getFirstChild().getNodeValue()) ;
+			System.out.println("学校："+e.getElementsByTagName("school").item(0).getFirstChild().getNodeValue()) ;
+			System.out.println("邮箱："+e.getElementsByTagName("email").item(0).getFirstChild().getNodeValue()) ;
+			System.out.println("电话："+e.getElementsByTagName("tel").item(0).getFirstChild().getNodeValue()) ;
+			System.out.println("主页："+e.getElementsByTagName("site").item(0).getFirstChild().getNodeValue()) ;
+		}
+	}
+}
+</code></pre></div></div>
+
+<blockquote>
+  <p>解析XML文件代码</p>
+</blockquote>
+
+<h5 id="dom将xml文档写入硬盘">DOM将XML文档写入硬盘</h5>
+
+<h6 id="要写入的文档内容">要写入的文档内容</h6>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="GBK" standalone="no"?&gt;</span>
+<span class="nt">&lt;addresslist&gt;</span>
+<span class="nt">&lt;linkman&gt;</span>
+<span class="nt">&lt;name&gt;</span>冯孟昭<span class="nt">&lt;/name&gt;</span>
+<span class="nt">&lt;email&gt;</span>fengmengzhao@gmail.com<span class="nt">&lt;/email&gt;</span>
+<span class="nt">&lt;/linkman&gt;</span>
+<span class="nt">&lt;/addresslist&gt;</span>
+</code></pre></div></div>
+
+<h6 id="写入文档代码">写入文档代码</h6>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">summerVacation</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">File</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">parsers</span><span class="p">.</span><span class="n">DocumentBuilder</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">parsers</span><span class="p">.</span><span class="n">DocumentBuilderFactory</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">OutputKeys</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">Transformer</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">TransformerFactory</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">dom</span><span class="p">.</span><span class="n">DOMSource</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">stream</span><span class="p">.</span><span class="n">StreamResult</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">w3c</span><span class="p">.</span><span class="n">dom</span><span class="p">.</span><span class="n">Document</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">w3c</span><span class="p">.</span><span class="n">dom</span><span class="p">.</span><span class="n">Element</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">WriteDOMFileDemo01</span> <span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="p">//</span><span class="err">设置入口</span>
+		<span class="n">DocumentBuilderFactory</span> <span class="n">factory</span> <span class="p">=</span> <span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="n">newInstance</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">DocumentBuilder</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">factory</span><span class="p">.</span><span class="n">newDocumentBuilder</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">Document</span> <span class="n">doc</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">newDocument</span><span class="p">()</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">创建节点</span>
+		<span class="n">Element</span> <span class="n">addresslist</span> <span class="p">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">"addresslist"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">linkman</span> <span class="p">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">"linkman"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">name</span> <span class="p">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">email</span> <span class="p">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">"email"</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">创建</span><span class="n">DOM</span><span class="err">树状结构</span>
+		<span class="n">name</span><span class="p">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">doc</span><span class="p">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="s2">"冯孟昭"</span><span class="p">))</span> <span class="p">;</span>
+		<span class="n">email</span><span class="p">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">doc</span><span class="p">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="s2">"fengmengzhao@gmail.com"</span><span class="p">))</span> <span class="p">;</span>
+		<span class="n">linkman</span><span class="p">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">linkman</span><span class="p">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">email</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">addresslist</span><span class="p">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">linkman</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">doc</span><span class="p">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">addresslist</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">将</span><span class="n">DOM</span><span class="err">树状接口转化为</span><span class="n">XML</span><span class="err">文档输出</span>
+		<span class="n">TransformerFactory</span> <span class="n">tf</span> <span class="p">=</span> <span class="n">TransformerFactory</span><span class="p">.</span><span class="n">newInstance</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">Transformer</span> <span class="n">t</span> <span class="p">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">newTransformer</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">t</span><span class="p">.</span><span class="n">setOutputProperty</span><span class="p">(</span><span class="n">OutputKeys</span><span class="p">.</span><span class="n">ENCODING</span><span class="p">,</span> <span class="s2">"GBK"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">DOMSource</span> <span class="n">source</span> <span class="p">=</span> <span class="n">new</span> <span class="n">DOMSource</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">StreamResult</span> <span class="n">result</span> <span class="p">=</span> <span class="n">new</span> <span class="n">StreamResult</span><span class="p">(</span><span class="n">new</span> <span class="n">File</span><span class="p">(</span><span class="s2">"D:</span><span class="se">\\</span><span class="s2">html_file</span><span class="se">\\</span><span class="s2">DomOutputDemo01.xml"</span><span class="p">))</span> <span class="p">;</span>
+		<span class="n">t</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>2015/7/30</p>
+
+<h3 id="sax解析">SAX解析</h3>
+
+<blockquote>
+  <p>SAX(Simple APIS for XML,操作XML的简单接口)，SAX采用的是一种顺序的模式进行访问，是一种快速读取XML数据的方式。</p>
+</blockquote>
+
+<blockquote>
+  <p>如果在开发中想要使用SAX解析，首先需要编写一SAX解析器。</p>
+</blockquote>
+
+<h4 id="编写sax解析器">编写SAX解析器</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">summerVacation</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">sax</span><span class="p">.</span><span class="n">Attributes</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">sax</span><span class="p">.</span><span class="n">SAXException</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">sax</span><span class="p">.</span><span class="n">helpers</span><span class="p">.</span><span class="n">DefaultHandler</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">MySAX</span> <span class="n">extends</span> <span class="n">DefaultHandler</span><span class="p">{</span>
+	
+		<span class="k">public</span> <span class="n">void</span> <span class="n">startDocument</span><span class="p">()</span>
+		<span class="n">throws</span> <span class="n">SAXException</span><span class="p">{</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"&lt;?xml version=</span><span class="se">\"</span><span class="s2">1.0</span><span class="se">\"</span><span class="s2">?&gt;"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		
+		<span class="k">public</span> <span class="n">void</span> <span class="n">endDocument</span><span class="p">()</span>
+		<span class="n">throws</span> <span class="n">SAXException</span><span class="p">{</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"文档读取结束。。。"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		
+		<span class="k">public</span> <span class="n">void</span> <span class="n">startElement</span><span class="p">(</span><span class="k">String</span> <span class="n">uri</span><span class="p">,</span>
+		<span class="k">String</span> <span class="n">localName</span><span class="p">,</span>
+		<span class="k">String</span> <span class="n">qName</span><span class="p">,</span>
+		<span class="n">Attributes</span> <span class="n">attributes</span><span class="p">)</span>
+	 <span class="n">throws</span> <span class="n">SAXException</span><span class="p">{</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">"&lt;"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">qName</span><span class="p">)</span> <span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">attributes</span> <span class="c1">!= null){
+</span>				<span class="n">for</span><span class="p">(</span><span class="n">int</span> <span class="n">i</span><span class="p">=</span><span class="m">0</span><span class="p">;</span><span class="n">i</span><span class="p">&lt;</span><span class="n">attributes</span><span class="p">.</span><span class="n">getLength</span><span class="p">();</span><span class="n">i</span><span class="p">++){</span>
+					<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">" "</span><span class="p">+</span><span class="n">attributes</span><span class="p">.</span><span class="n">getQName</span><span class="p">(</span><span class="n">i</span><span class="p">)+</span><span class="s2">"=</span><span class="se">\"</span><span class="s2">"</span><span class="p">+</span><span class="n">attributes</span><span class="p">.</span><span class="nf">getValue</span><span class="p">(</span><span class="n">i</span><span class="p">)+</span><span class="s2">"</span><span class="se">\"</span><span class="s2">"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">"&gt;"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		
+		<span class="k">public</span> <span class="n">void</span> <span class="n">characters</span><span class="p">(</span><span class="n">char</span><span class="p">[]</span> <span class="n">ch</span><span class="p">,</span>
+		<span class="n">int</span> <span class="n">start</span><span class="p">,</span>
+		<span class="n">int</span> <span class="n">length</span><span class="p">)</span>
+	 <span class="n">throws</span> <span class="n">SAXException</span><span class="p">{</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">new</span> <span class="k">String</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">length</span><span class="p">))</span> <span class="p">;</span>
+		<span class="p">}</span>
+		
+		<span class="k">public</span> <span class="n">void</span> <span class="n">endElement</span><span class="p">(</span><span class="k">String</span> <span class="n">uri</span><span class="p">,</span>
+		<span class="k">String</span> <span class="n">localName</span><span class="p">,</span>
+		<span class="k">String</span> <span class="n">qName</span><span class="p">)</span>
+	 <span class="n">throws</span> <span class="n">SAXException</span><span class="p">{</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">"&lt;/"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">qName</span><span class="p">)</span> <span class="p">;</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"&gt;"</span><span class="p">)</span> <span class="p">;</span> 
+		<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="要解析的xml文件">要解析的xml文件</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0"?&gt;</span>
+<span class="nt">&lt;addresslist&gt;</span>
+	<span class="nt">&lt;linkman</span> <span class="na">id=</span><span class="s">"fmz"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;name&gt;</span>冯孟昭<span class="nt">&lt;/name&gt;</span>
+
+		<span class="nt">&lt;email&gt;</span>fengmengzhao@gmai.com<span class="nt">&lt;/email&gt;</span>
+
+	<span class="nt">&lt;/linkman&gt;</span>
+
+	<span class="nt">&lt;linkman</span> <span class="na">id=</span><span class="s">"cll"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;name&gt;</span>陈亮亮<span class="nt">&lt;/name&gt;</span>
+
+		<span class="nt">&lt;email&gt;</span>342652980@qq.com<span class="nt">&lt;/email&gt;</span>
+
+	<span class="nt">&lt;/linkman&gt;</span>
+
+<span class="nt">&lt;/addresslist&gt;</span>
+</code></pre></div></div>
+
+<h4 id="解析测试代码">解析测试代码</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">summerVacation</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">xml</span><span class="p">.</span><span class="n">parsers</span><span class="p">.*;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">SaxParsingDemo02</span> <span class="p">{</span>
+
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="p">//</span><span class="err">建立</span><span class="n">SAX</span><span class="err">解析工厂</span>
+		<span class="n">SAXParserFactory</span> <span class="n">factory</span> <span class="p">=</span> <span class="n">SAXParserFactory</span><span class="p">.</span><span class="n">newInstance</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">//</span><span class="err">构建解析器</span>
+		<span class="n">SAXParser</span> <span class="n">parser</span> <span class="p">=</span> <span class="n">factory</span><span class="p">.</span><span class="n">newSAXParser</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">//</span><span class="err">解析</span><span class="n">XML</span><span class="err">，使用</span><span class="n">HANDLER</span>
+		<span class="n">parser</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">"d:</span><span class="se">\\</span><span class="s2">html_file</span><span class="se">\\</span><span class="s2">saxDemo02.xml"</span><span class="p">,</span> <span class="n">new</span> <span class="n">MySAX</span><span class="p">());</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>SAX解析明显要比DOM解析更加容易，DOM解析适合于对文件进行修改和随机存储的操作，但不适于大型文件的操作。SAX采用部分读取的方式，可以处理大型文件，而且只需要从文件中读取特定内容，SAX可以由用户自己建立自己的对象模型。</p>
+</blockquote>
+
+<h3 id="jdom">JDOM</h3>
+
+<blockquote>
+  <p>JDOM = DOM + SAX,<a href="http://www.jdom.org/" title="JODM组件下载">JDOM</a>是一个开源的java组件，它以直接易懂的形式向java开发者描述了XML文档和文档的内容。</p>
+</blockquote>
+
+<h4 id="jdom输出文件代码与dom的输出相比较">JDOM输出文件代码(与DOM的输出相比较)</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">summerVacation</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">File</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">FileOutputStream</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">jdom</span><span class="p">.</span><span class="n">Attribute</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">jdom</span><span class="p">.</span><span class="n">Document</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">jdom</span><span class="p">.</span><span class="n">Element</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">jdom</span><span class="p">.</span><span class="n">output</span><span class="p">.</span><span class="n">XMLOutputter</span><span class="p">;</span>
+
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">JdomWriteXml</span> <span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span> <span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		
+		<span class="p">//</span><span class="err">定义节点</span>
+		<span class="n">Element</span> <span class="n">addresslist</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Element</span><span class="p">(</span><span class="s2">"addresslist"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">linkman</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Element</span><span class="p">(</span><span class="s2">"linkman"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">name</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Element</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">email</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Element</span><span class="p">(</span><span class="s2">"email"</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">定义属性</span>
+		<span class="n">Attribute</span> <span class="n">id</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Attribute</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span><span class="s2">"fmz"</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">声明</span><span class="n">Document</span><span class="err">对象</span><span class="p">,</span><span class="err">同时定义根节点</span>
+		<span class="n">Document</span> <span class="n">doc</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Document</span><span class="p">(</span><span class="n">addresslist</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">设置元素的内容</span>
+		<span class="n">name</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">"冯孟昭"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">email</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">"1913565900@qq.com"</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">设置元素的属性</span>
+		<span class="n">name</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">设置节点关系</span>
+		<span class="n">linkman</span><span class="p">.</span><span class="n">addContent</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">linkman</span><span class="p">.</span><span class="n">addContent</span><span class="p">(</span><span class="n">email</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">addresslist</span><span class="p">.</span><span class="n">addContent</span><span class="p">(</span><span class="n">linkman</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">设置输出</span>
+		<span class="n">XMLOutputter</span> <span class="n">out</span> <span class="p">=</span> <span class="n">new</span> <span class="n">XMLOutputter</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">out</span><span class="p">.</span><span class="n">setFormat</span><span class="p">(</span><span class="n">out</span><span class="p">.</span><span class="n">getFormat</span><span class="p">().</span><span class="n">setEncoding</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span> <span class="p">;//</span><span class="err">设置编码，</span><span class="n">GBK</span><span class="err">与</span><span class="n">ANSI</span><span class="err">相对应</span>
+		<span class="n">out</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">new</span> <span class="n">FileOutputStream</span><span class="p">(</span><span class="n">new</span> <span class="n">File</span><span class="p">(</span><span class="s2">"d:</span><span class="se">\\</span><span class="s2">html_file</span><span class="se">\\</span><span class="s2">JdomDemo01.xml"</span><span class="p">)))</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>2015/7/31</p>
+
+<h4 id="jdom解析xml文件与sax解析相比较">JDOM解析XML文件(与SAX解析相比较)</h4>
+
+<h4 id="带解析xml文件">带解析XML文件</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;addresslist&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name</span> <span class="na">id=</span><span class="s">"fmz"</span><span class="nt">&gt;</span>冯孟昭<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;email&gt;</span>1913565900@qq.com<span class="nt">&lt;/email&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+<span class="nt">&lt;/addresslist&gt;</span>
+</code></pre></div></div>
+
+<h4 id="jdom解析文件代码">JDOM解析文件代码</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">summerVacation</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">File</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">Iterator</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="k">List</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">jdom</span><span class="p">.</span><span class="n">Document</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">jdom</span><span class="p">.</span><span class="n">Element</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">jdom</span><span class="p">.</span><span class="n">input</span><span class="p">.</span><span class="n">SAXBuilder</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">JdomReadXMLDemo01</span> <span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">SAXBuilder</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">new</span> <span class="n">SAXBuilder</span><span class="p">()</span> <span class="p">;//</span><span class="err">建立</span><span class="n">SAX</span><span class="err">解析</span>
+		<span class="n">Document</span> <span class="n">doc_read</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="n">new</span> <span class="n">File</span><span class="p">(</span><span class="s2">"d:</span><span class="se">\\</span><span class="s2">html_file</span><span class="se">\\</span><span class="s2">jdomDemo01.xml"</span><span class="p">))</span> <span class="p">;//</span><span class="err">找到</span><span class="n">Document</span><span class="err">文件</span>
+		<span class="n">Element</span> <span class="n">root</span> <span class="p">=</span>  <span class="n">doc_read</span><span class="p">.</span><span class="n">getRootElement</span><span class="p">()</span> <span class="p">;//</span><span class="err">读取根元素</span>
+		<span class="k">List</span><span class="p">&lt;?&gt;</span> <span class="k">list</span> <span class="p">=</span> <span class="n">root</span><span class="p">.</span><span class="n">getChildren</span><span class="p">(</span><span class="s2">"linkman"</span><span class="p">)</span> <span class="p">;//</span><span class="err">读取全部的子元素</span>
+		
+		<span class="n">Iterator</span><span class="p">&lt;?&gt;</span> <span class="n">itr</span> <span class="p">=</span> <span class="k">list</span><span class="p">.</span><span class="n">iterator</span><span class="p">()</span> <span class="p">;//</span><span class="err">构造迭代器</span>
+		<span class="k">while</span><span class="p">(</span><span class="n">itr</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+			<span class="n">Element</span> <span class="n">e</span> <span class="p">=</span> <span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="n">itr</span><span class="p">.</span><span class="k">next</span><span class="p">()</span> <span class="p">;</span>
+			<span class="k">String</span> <span class="n">name</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">getChildText</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">//</span><span class="k">String</span> <span class="n">id</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">getChild</span><span class="p">(</span><span class="s2">"name"</span><span class="p">).</span><span class="n">getAttribute</span><span class="p">(</span><span class="s2">"id"</span><span class="p">).</span><span class="nf">getValue</span><span class="p">()</span> <span class="p">;</span>
+			<span class="k">String</span> <span class="n">id</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">getChild</span><span class="p">(</span><span class="s2">"name"</span><span class="p">).</span><span class="n">getAttributeValue</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)</span> <span class="p">;</span>
+			<span class="k">String</span> <span class="n">email</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">getChildText</span><span class="p">(</span><span class="s2">"email"</span><span class="p">)</span> <span class="p">;</span>
+			
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"姓名："</span><span class="p">+</span><span class="n">name</span><span class="p">+</span><span class="s2">"，编号："</span><span class="p">+</span><span class="n">id</span><span class="p">)</span> <span class="p">;</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"邮箱："</span><span class="p">+</span><span class="n">email</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="dom4j">DOM4J</h3>
+
+<blockquote>
+  <p><a href="http://www.sourceforge.net/projects/dom4j/files/" title="DOM4J组件下载">DOM4J</a>也是XML的一个开源的操作组件包，主要用来读写XML文件，一些框架例如Hibernate和Spring都使用了DOM4J进行XML的解析。</p>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <p>在导入包的过程中，还要导入lib\jaxen-1.1-beta-6.jar文件，否则执行时可能抛出java.lang.NoClassDefFoundError: org\jaxen\JaxenException 异常</p>
+  </blockquote>
+</blockquote>
+
+<h4 id="dom4j输出xml文档代码">DOM4J输出XML文档代码</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">summerVacation</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">File</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">FileOutputStream</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">dom4j</span><span class="p">.</span><span class="n">Document</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">dom4j</span><span class="p">.</span><span class="n">DocumentHelper</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">dom4j</span><span class="p">.</span><span class="n">Element</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">dom4j</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">OutputFormat</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">dom4j</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">XMLWriter</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">DOM4JWriteXMLDemo01</span> <span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">Document</span> <span class="n">doc</span> <span class="p">=</span> <span class="n">DocumentHelper</span><span class="p">.</span><span class="n">createDocument</span><span class="p">()</span> <span class="p">;//</span><span class="err">创建文档</span>
+		
+		<span class="p">//</span><span class="err">创建节点和节点之间的关系</span>
+		<span class="n">Element</span> <span class="n">addresslist</span> <span class="p">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">addElement</span><span class="p">(</span><span class="s2">"addresslist"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">linkman</span> <span class="p">=</span> <span class="n">addresslist</span><span class="p">.</span><span class="n">addElement</span><span class="p">(</span><span class="s2">"linkman"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">name</span> <span class="p">=</span> <span class="n">linkman</span><span class="p">.</span><span class="n">addElement</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">Element</span> <span class="n">email</span> <span class="p">=</span> <span class="n">linkman</span><span class="p">.</span><span class="n">addElement</span><span class="p">(</span><span class="s2">"email"</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">设置节点内容</span>
+		<span class="n">name</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">"冯孟昭"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">name</span><span class="p">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"fmz"</span><span class="p">)</span> <span class="p">;//</span><span class="err">增加属性</span>
+		<span class="n">name</span><span class="p">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span> <span class="s2">"fmz"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">email</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">"fengmengzhao@gmail.com"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">email</span><span class="p">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"GOOGLE EMAIL"</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="p">//</span><span class="err">输出</span>
+		<span class="n">OutputFormat</span> <span class="n">output</span> <span class="p">=</span> <span class="n">OutputFormat</span><span class="p">.</span><span class="n">createPrettyPrint</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">output</span><span class="p">.</span><span class="n">setEncoding</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="p">;//</span><span class="err">格式设置</span>
+		<span class="n">XMLWriter</span> <span class="n">writer</span> <span class="p">=</span> <span class="n">new</span> <span class="n">XMLWriter</span><span class="p">(</span><span class="n">new</span> <span class="n">FileOutputStream</span><span class="p">(</span><span class="n">new</span> <span class="n">File</span><span class="p">(</span><span class="s2">"D:</span><span class="se">\\</span><span class="s2">html_file</span><span class="se">\\</span><span class="s2">dom4jDemo01.xml"</span><span class="p">)),</span><span class="n">output</span><span class="p">)</span> <span class="p">;//</span><span class="err">输出文件</span>
+		<span class="n">writer</span><span class="p">.</span><span class="nb">write</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="p">;//</span><span class="err">输出内容</span>
+		<span class="n">writer</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="dom4j-解析输出的文档">DOM4J 解析输出的文档</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">summerVacation</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">File</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">Iterator</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">dom4j</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">SAXReader</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">dom4j</span><span class="p">.</span><span class="n">Document</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">dom4j</span><span class="p">.</span><span class="n">Element</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">DOM4JParsingDemo01</span> <span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">SAXReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="n">new</span> <span class="n">SAXReader</span><span class="p">()</span> <span class="p">;//</span><span class="err">建立</span><span class="n">SAX</span><span class="err">解析读取</span>
+		<span class="n">Document</span> <span class="n">doc</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nb">read</span><span class="p">(</span><span class="n">new</span> <span class="n">File</span><span class="p">(</span><span class="s2">"d:</span><span class="se">\\</span><span class="s2">html_file</span><span class="se">\\</span><span class="s2">dom4jDemo01.xml"</span><span class="p">))</span> <span class="p">;//</span><span class="err">读取文档</span>
+		<span class="n">Element</span> <span class="n">root</span> <span class="p">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">getRootElement</span><span class="p">()</span> <span class="p">;</span>
+		
+		<span class="n">Iterator</span><span class="p">&lt;?&gt;</span> <span class="n">itr</span> <span class="p">=</span> <span class="n">root</span><span class="p">.</span><span class="n">elementIterator</span><span class="p">()</span> <span class="p">;</span>
+		<span class="k">while</span><span class="p">(</span><span class="n">itr</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+			<span class="n">Element</span> <span class="n">linkman</span> <span class="p">=</span> <span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="n">itr</span><span class="p">.</span><span class="k">next</span><span class="p">()</span> <span class="p">;</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"姓名："</span><span class="p">+</span><span class="n">linkman</span><span class="p">.</span><span class="n">elementText</span><span class="p">(</span><span class="s2">"name"</span><span class="p">))</span> <span class="p">;</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"邮箱："</span><span class="p">+</span><span class="n">linkman</span><span class="p">.</span><span class="n">elementText</span><span class="p">(</span><span class="s2">"email"</span><span class="p">))</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>XML的解析操作工具非常多，如JAXP和STAX等，但是其核心从操作原理就是DOM和SAX，只要掌握住核心就可以了</p>
+</blockquote>
+
+<h3 id="使用javascript操作dom">使用JavaScript操作DOM</h3>
+
+<blockquote>
+  <p>由于在HTML语言中，其本身采用了标记语言的方式，所以在HTML中通过JavaScript进行DOM操作，这样可以使页面运行更加绚丽、丰富。</p>
+</blockquote>
+
+<p>2015/8/3</p>
+
+<p>在HTML中可以通过<code class="highlighter-rouge">document.getElementById("id名称")</code>取得每一个设置的表单元素的对象，程序如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>JavaScript控制DOM树操作<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javaScript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">show</span><span class="p">(){</span>
+				<span class="c1">//通过DOM解析取得info元素，并设置其内容</span>
+				<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"info"</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">"&lt;h2&gt;http://fengmegnzhao.github.io/&lt;/h2&gt;"</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">""</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"显示"</span> <span class="na">onClick=</span><span class="s">"show()"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"info"</span><span class="nt">&gt;&lt;/span&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="通过dom取得下拉列表">通过DOM取得下拉列表</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>JavaScript控制DOM树操作<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javaScript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">setFun</span><span class="p">(){</span>
+				<span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="s2">"北京"</span><span class="p">,</span><span class="s2">"上海"</span><span class="p">,</span><span class="s2">"广州"</span><span class="p">)</span> <span class="p">;</span>
+
+				<span class="c1">//通过DOM取得下拉列表</span>
+				<span class="kd">var</span> <span class="nx">select</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"area"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="nx">select</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">;</span><span class="c1">//设置每次只能选中一个</span>
+				<span class="nx">select</span><span class="p">.</span><span class="nx">options</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">selected</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">;</span><span class="c1">//设置第一个为默认选中</span>
+
+				<span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">id</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+					<span class="c1">//设置option中的内容，建立option节点</span>
+					<span class="kd">var</span> <span class="nx">option</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"option"</span><span class="p">)</span> <span class="p">;</span>
+					<span class="nx">option</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"value"</span><span class="p">,</span><span class="nx">id</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">;</span><span class="c1">//设置option属性值</span>
+					<span class="c1">//在option元素下增加文本节点</span>
+					<span class="nx">option</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">value</span><span class="p">[</span><span class="nx">i</span><span class="p">]))</span> <span class="p">;</span>
+					<span class="nx">select</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">option</span><span class="p">)</span> <span class="p">;</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body</span> <span class="na">onload=</span><span class="s">"setFun()"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">""</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">name=</span><span class="s">"myform"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"city"</span> <span class="na">id=</span><span class="s">"area"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"0"</span><span class="nt">&gt;</span>没有城市<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;/select&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="通过dom操作完成增加和删除行">通过DOM操作完成增加和删除行</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>JavaScript控制DOM树操作动态增加和删除表格<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javaScript"</span><span class="nt">&gt;</span>
+			<span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">3</span> <span class="p">;</span>
+			<span class="kd">function</span> <span class="nx">addRow</span><span class="p">(){</span>
+				<span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"mytable"</span><span class="p">)</span> <span class="p">;</span><span class="c1">//取得表格(DOM 操作)</span>
+				<span class="kd">var</span> <span class="nx">tr</span> <span class="o">=</span> <span class="nx">table</span><span class="p">.</span><span class="nx">insertRow</span><span class="p">()</span> <span class="p">;</span><span class="c1">//插入一个新的行</span>
+				<span class="kd">var</span> <span class="nx">td1</span> <span class="o">=</span> <span class="nx">tr</span><span class="p">.</span><span class="nx">insertCell</span><span class="p">()</span> <span class="p">;</span><span class="c1">//为行插入单元格</span>
+				<span class="kd">var</span> <span class="nx">td2</span> <span class="o">=</span> <span class="nx">tr</span><span class="p">.</span><span class="nx">insertCell</span><span class="p">()</span> <span class="p">;</span><span class="c1">//为行插入单元格</span>
+				<span class="kd">var</span> <span class="nx">td3</span> <span class="o">=</span> <span class="nx">tr</span><span class="p">.</span><span class="nx">insertCell</span><span class="p">()</span> <span class="p">;</span><span class="c1">//为行插入单元格</span>
+				<span class="nx">td1</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">"冯孟昭"</span> <span class="o">+</span> <span class="s2">"_"</span> <span class="o">+</span> <span class="nx">count</span><span class="p">;</span>
+				<span class="nx">td2</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">"SWUFE"</span> <span class="p">;</span>
+				<span class="nx">td3</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">"&lt;input type='button' value='-' onClick='delRow(this);'&gt;"</span> <span class="p">;</span>
+				<span class="nx">count</span><span class="o">++</span> <span class="p">;</span>
+			<span class="p">}</span>
+
+			<span class="kd">function</span> <span class="nx">delRow</span><span class="p">(</span><span class="nx">btn</span><span class="p">){</span>
+				<span class="kd">var</span> <span class="nx">tr</span> <span class="o">=</span> <span class="nx">btn</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">parentNode</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"mytable"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="nx">table</span><span class="p">.</span><span class="nx">deleteRow</span><span class="p">(</span><span class="nx">tr</span><span class="p">.</span><span class="nx">rowIndex</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"+"</span> <span class="na">onClick=</span><span class="s">"addRow();"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"mytable"</span> <span class="na">border=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>冯孟昭_1<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>黑龙江科技大学<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"-"</span> <span class="na">onClick=</span><span class="s">"delRow(this);"</span><span class="nt">&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>冯孟昭_2<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>西南财经大学<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"-"</span> <span class="na">onClick=</span><span class="s">"delRow(this);"</span><span class="nt">&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>以上的代码通过JavaScript完成，增加和删除的操作也可以通过DOM完成</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>JavaScript控制DOM树操作动态增加和删除表格(DOM 操作完成)<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;script </span><span class="na">language=</span><span class="s">"javaScript"</span><span class="nt">&gt;</span>
+			<span class="kd">function</span> <span class="nx">addRow</span><span class="p">(){</span>
+				<span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"mytable"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"id"</span><span class="p">).</span><span class="nx">value</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"name"</span><span class="p">).</span><span class="nx">value</span> <span class="p">;</span>
+				
+				<span class="kd">var</span> <span class="nx">tbody</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"tbody"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">tr</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"tr"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">td_id</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"td"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">td_name</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"td"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">td_delButton</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"td"</span><span class="p">)</span> <span class="p">;</span>
+
+				<span class="nx">td_id</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">id</span><span class="p">))</span> <span class="p">;</span>
+				<span class="nx">td_name</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">name</span><span class="p">))</span> <span class="p">;</span>
+				<span class="nx">td_delButton</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">"&lt;input type='button' value='-' onClick='delRow(this);'&gt;"</span> <span class="p">;</span><span class="c1">//JavaScript的操作（还没有或者DOM操作如何完成）</span>
+				<span class="nx">tr</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">td_id</span><span class="p">)</span> <span class="p">;</span>
+				<span class="nx">tr</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">td_name</span><span class="p">)</span> <span class="p">;</span>
+				<span class="nx">tr</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">td_delButton</span><span class="p">)</span> <span class="p">;</span>
+				<span class="nx">tbody</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">tr</span><span class="p">)</span> <span class="p">;</span>
+				<span class="nx">table</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">tbody</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+			<span class="kd">function</span> <span class="nx">delRow</span><span class="p">(</span><span class="nx">thisbtn</span><span class="p">){</span>
+				<span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"mytable"</span><span class="p">)</span> <span class="p">;</span>
+				<span class="kd">var</span> <span class="nx">tr</span> <span class="o">=</span> <span class="nx">thisbtn</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">parentNode</span> <span class="p">;</span>
+				<span class="nx">table</span><span class="p">.</span><span class="nx">deleteRow</span><span class="p">(</span><span class="nx">tr</span><span class="p">.</span><span class="nx">rowIndex</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		编号：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"id"</span><span class="nt">&gt;</span>
+		姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"name"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"+"</span> <span class="na">onClick=</span><span class="s">"addRow();"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"mytable"</span> <span class="na">border=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>编号<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>姓名<span class="nt">&lt;/td&gt;</span> 
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>DOM操作，将之看做一个DOM树，需要创造节点<code class="highlighter-rouge">createElement()</code>和增加节点<code class="highlighter-rouge">appendChild()</code>；而JavaScript的操作主要是基于对象的现成的一些方法</p>
+</blockquote>
+
+<h3 id="tomcat服务器的安装及配置">Tomcat服务器的安装及配置</h3>
+
+<h4 id="静态请求与动态请求的区别">静态请求与动态请求的区别</h4>
+
+<p>在一般的web站点中，html、htm之类的后缀往往都属于静态请求，所以这样的操作一般是通过文件系统取出然后返回的，而如果请求的后缀是jsp、php之类的话，则可定就是动态请求了。</p>
+
+<p>静态请求所有的代码都是固定的，而动态请求所有的代码都是拼凑出来的。</p>
+
+<h4 id="tomcat"><a href="http://www.apache.org" title="Apache软件基金会">Tomcat</a></h4>
+
+<h4 id="tomcat主要目录的作用">Tomcat主要目录的作用</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>No.</td>
+      <td>目录</td>
+      <td>作用</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bin</td>
+      <td>所有可执行二进制命令，启用和关闭服务器的命令就在此文件夹中</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>conf</td>
+      <td>服务器的配置文件夹，其中保存了各种配置信息</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>lib</td>
+      <td>Tomcat所需要的各个库文件</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>logs</td>
+      <td>保存服务器的系统日志</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>webapps</td>
+      <td>web应用程序保存的目录，web项目保存到此目录即可发布</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>work</td>
+      <td>临时文件夹，生成所有的临时文件(<em>.java</em>、.class)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="tomcat服务器配置">Tomcat服务器配置</h4>
+
+<h4 id="修改端口号">修改端口号</h4>
+
+<p>Tomcat服务器安装后，默认端口号是8080，可以通过Tomcat目录conf\server.xml文件内容进行修改</p>
+
+<p><code class="highlighter-rouge">&lt;Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" /&gt;</code>改为</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Connector port="80" protocol="HTTP/1.1"
+connectionTimeout="20000"
+redirectPort="8443" 
+useBodyEncodingForURL="true"
+IEncoding="utf-8" 
+URIEncoding="utf-8"/&gt;
+</code></pre></div></div>
+
+<p>以上配置完成后，服务器必须重启才能实现，因为服务器每次重启都会访问<code class="highlighter-rouge">server.xml</code>文件</p>
+
+<h4 id="配置虚拟目录tomcat服务器配置最重要的配置">配置虚拟目录(Tomcat服务器配置最重要的配置)</h4>
+
+<p>在conf\server.xml文件的代码<code class="highlighter-rouge">&lt;/Host&gt;</code>前面加入代码<code class="highlighter-rouge">&lt;Context path="/fmz" docBase="D:\fmzwebDemo"/&gt;</code></p>
+
+<p>如果页面<code class="highlighter-rouge">http://localhost/fmz/</code> 运行异常，将conf\web.xml文件代码 <code class="highlighter-rouge">&lt;init-param&gt;&lt;param-name&gt;listings&lt;/param-name&gt;&lt;param-value&gt;false&lt;/param-value&gt;&lt;/init-param&gt;</code>改为<code class="highlighter-rouge">&lt;init-param&gt;&lt;param-name&gt;listings&lt;/param-name&gt;&lt;param-value&gt;true&lt;/param-value&gt;&lt;/init-param&gt;</code>即可</p>
+
+<h4 id="配置首页">配置首页</h4>
+
+<p>在虚拟目录fmzwebDemo文件夹下建立<code class="highlighter-rouge">index.html</code>，在输入<code class="highlighter-rouge">http:localhost/fmz/</code> 之后会自动跳转到<code class="highlighter-rouge">index.html</code>，主要原因是在conf\web.xml文件内有如下代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;welcome-file-list&gt;
+	&lt;welcome-file&gt;index.html&lt;/welcome-file&gt;
+	&lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;
+	&lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+&lt;/welcome-file-list&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>默认值为<code class="highlighter-rouge">index.html</code>可以修改为其他，如：<code class="highlighter-rouge">main.html</code></p>
+</blockquote>
+
+<p>2015/8/4</p>
+
+<h3 id="编写第一个jsp文件">编写第一个jsp文件</h3>
+
+<blockquote>
+  <p>jsp(Java Server page),jsp文件后缀必须为*.jsp,文件名的字母要求全部是小写</p>
+</blockquote>
+
+<blockquote>
+  <p>所谓的jsp程序代码开发指的是在HTML代码中嵌入大量的java代码而已</p>
+</blockquote>
+
+<h4 id="jsp文件执行过程">jsp文件执行过程</h4>
+
+<p>首先一个客户端向服务器端发送一个请求页面地址，服务器端在接收到用户请求的内容后对<em>.jsp文件进行转换，将其转化成</em>.java源文件，并最终编译为<em>.class文件，最后真正的执行也是以</em>.class文件为主的。<em>.java和</em>.class文件可以在Tomcat文件目录的work文件夹下找到。</p>
+
+<h3 id="交互性">交互性</h3>
+
+<p>表单文件(input.html)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>fmz javaweb<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"input.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			请输入要显示的内容：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"info"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"显示"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>JSP文件(input.jsp)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>fmz javaweb<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">str =</span><span class="err"> </span><span class="s">request.getParameter("info")</span> <span class="err">;//接收表单输入内容</span>
+			<span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">("&lt;</span><span class="na">h1</span><span class="nt">&gt;</span>"+str+"<span class="nt">&lt;/h1&gt;</span>") ;//输出信息
+		%&gt;
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>以上完成了一个简单的交互程序操作，可以通过表单与服务器进行交互，在JSP中服务器要想取得客户端输入的信息，需要使用<code class="highlighter-rouge">request.getParameter("info")</code>操作，
+其中<code class="highlighter-rouge">request</code>就是JSP提供的一个内置对象，而<code class="highlighter-rouge">getParameter()</code>方法接收的参数就是表单中文本框对应的名称。</p>
+</blockquote>
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

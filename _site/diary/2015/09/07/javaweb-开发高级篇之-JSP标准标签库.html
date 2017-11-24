@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - javaweb开发高级篇之JSP标准标签库</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/09/07/javaweb-%E5%BC%80%E5%8F%91%E9%AB%98%E7%BA%A7%E7%AF%87%E4%B9%8B-JSP%E6%A0%87%E5%87%86%E6%A0%87%E7%AD%BE%E5%BA%93.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  September 07, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">javaweb开发高级篇之JSP标准标签库</h1>
+
+<div id="post">
+  <h2 id="目录">目录</h2>
+
+<ul>
+  <li>
+    <p><a href="#1">1 JSTL简介</a></p>
+  </li>
+  <li>
+    <p><a href="#2">2 安装JSTL1.2</a></p>
+  </li>
+  <li>
+    <p><a href="#3">3 核心标签库</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#3.1">3.1 out标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.2">3.2 set标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.3">3.3 remove标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.4">3.4 catch标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.5">3.5 if标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.6">3.6 choose标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.7">3.7 forEach标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.8">3.8 forTokens标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.9">3.9 import标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.10">3.10 url标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.11">3.11 redirect标签</a></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#4">4 redirect标签</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#4.1">4.1 setLocale标签</a></p>
+      </li>
+      <li>
+        <p><a href="#4.2">4.2 requestEncoding标签</a></p>
+      </li>
+      <li>
+        <p><a href="#4.3">4.3 读取资源文件</a></p>
+      </li>
+      <li>
+        <p><a href="#4.4">4.4 数字格式化标签</a></p>
+      </li>
+      <li>
+        <p><a href="#4.5">4.5 日期时间的格式化标签</a></p>
+      </li>
+      <li>
+        <p><a href="#4.6">4.6 设置时区</a></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#5">5 SQL标签库</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#5.1">5.1 setDataSource标签</a></p>
+      </li>
+      <li>
+        <p><a href="#5.2">5.2 数据库操作标签</a></p>
+      </li>
+      <li>
+        <p><a href="#5.3">5.3 事务处理</a></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#6">6 XML标签库</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#6.1">6.1 XPath简介</a></p>
+      </li>
+      <li>
+        <p><a href="#6.2">6.2 parse标签</a></p>
+      </li>
+      <li>
+        <p><a href="#6.3">6.3 out标签</a></p>
+      </li>
+      <li>
+        <p><a href="#6.4">6.4 set标签</a></p>
+      </li>
+      <li>
+        <p><a href="#6.5">6.5 if标签</a></p>
+      </li>
+      <li>
+        <p><a href="#6.6">6.6 choose标签</a></p>
+      </li>
+      <li>
+        <p><a href="#6.7">6.7 forEach标签</a></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#7">7 函数标签库</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 JSTL简介</h2>
+
+<p>  JSTL(JSP Standard Tag Library，JSP标准标签库)是一个开放源代码标签组件，由Apache组织的Jakarta小组开发，可以直接从<a href="http://tomcat.apache.org/taglibs/" title="JSTL标签库下载">http://tomcat.apache.org/taglibs/</a>下载。</p>
+
+<p>  JSTL中的主要标签库</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>NO.</th>
+      <th>JSTL</th>
+      <th>标记名称</th>
+      <th>标签配置文件</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>核心标签库</td>
+      <td>c</td>
+      <td>c.tld</td>
+      <td>定义属性管理、迭代、判断、输出</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>SQL标签库</td>
+      <td>sql</td>
+      <td>sql.tld</td>
+      <td>定义查询数据库的操作</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>XML标签库</td>
+      <td>XML</td>
+      <td>x.tld</td>
+      <td>用于操作XML数据</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>函数标签库</td>
+      <td>fn</td>
+      <td>fn.tld</td>
+      <td>提供了一些常用的操作函数，如字符串函数</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>I18N格式标签库</td>
+      <td>fmt</td>
+      <td>fmt.tld</td>
+      <td>格式化数据</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<hr />
+
+<h2 id="2">2 安装JSTL1.2</h2>
+
+<p>  将jar包复制到lib文件夹中，解压缩复制tld文件到WEB-INF文件夹下。</p>
+
+<p>  配置映射路径</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;jsp-config&gt;
+	&lt;taglib&gt;
+		&lt;taglib-uri&gt;http://tomcat.apache.org/taglibs/jst/c&lt;/taglib-uri&gt;
+		&lt;taglib-location&gt;/WEB-INF/c.tld&lt;/taglib-location&gt;
+	&lt;/taglib&gt;
+	&lt;taglib&gt;
+		&lt;taglib-uri&gt;http://tomcat.apache.org/taglibs/jst/fmt&lt;/taglib-uri&gt;
+		&lt;taglib-location&gt;/WEB-INF/fmt.tld&lt;/taglib-location&gt;
+	&lt;/taglib&gt;
+	&lt;taglib&gt;
+		&lt;taglib-uri&gt;http://tomcat.apache.org/taglibs/jst/fn&lt;/taglib-uri&gt;
+		&lt;taglib-location&gt;/WEB-INF/fn.tld&lt;/taglib-location&gt;
+	&lt;/taglib&gt;
+	&lt;taglib&gt;
+		&lt;taglib-uri&gt;http://tomcat.apache.org/taglibs/jst/sql&lt;/taglib-uri&gt;
+		&lt;taglib-location&gt;/WEB-INF/sql.tld&lt;/taglib-location&gt;
+	&lt;/taglib&gt;
+	&lt;taglib&gt;
+		&lt;taglib-uri&gt;http://tomcat.apache.org/taglibs/jst/x&lt;/taglib-uri&gt;
+		&lt;taglib-location&gt;/WEB-INF/x.tld&lt;/taglib-location&gt;
+	&lt;/taglib&gt;
+&lt;/jsp-config&gt;
+</code></pre></div></div>
+
+<p>  第一个JSTL程序-hello_jst.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h3&gt;&lt;c:out</span> <span class="na">value=</span><span class="s">"Hello World！！！"</span><span class="nt">/&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="3">3 核心标签库</h2>
+
+<p>  核心标签库是JSTL中最重要的部分，也是开发中最常用到的部分。</p>
+
+<h3 id="3.1">3.1 out标签</h3>
+
+<p>  out标签的主要功能是输出</p>
+
+<p>  使用out进行输出-out_jstl_demo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span> <span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">","&lt;</span><span class="na">http:</span><span class="err">//</span><span class="na">fengmengzhao</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="nt">&gt;</span>") ; %&gt;
+		<span class="nt">&lt;h3&gt;</span>属性存在：<span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">"${info}"</span><span class="nt">/&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>属性不存在：<span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">"${ref}"</span> <span class="na">default=</span><span class="s">"属性不存在！"</span><span class="nt">/&gt;&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>属性不存在：<span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">"${ref}"</span><span class="nt">&gt;</span>属性不存在！<span class="nt">&lt;/c:out&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.2">3.2 set标签</h3>
+
+<p>  主要用来将属性保存在四个属性范围中</p>
+
+<p>  通过<c:set>设置属性-set_jsp_demo.jsp</c:set></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:set</span> <span class="na">var=</span><span class="s">"info"</span> <span class="na">value=</span><span class="s">"http://fengmengzhao.github.io"</span> <span class="na">scope=</span><span class="s">"page"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>属性内容是：${info}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  还可以将内容设置到一个JavaBean的属性中，此时通过target和property完成</p>
+
+<p>  定义JavaBean-SimpleInfo.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">jstldemo</span><span class="p">.</span><span class="n">vo</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">SimpleInfo</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">content</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setContent</span><span class="p">(</span><span class="k">String</span> <span class="n">content</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">content</span> <span class="p">=</span> <span class="n">content</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getContent</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">content</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  设置属性-set_bean.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"org.fmz.jstldemo.vo.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">SimpleInfo</span> <span class="na">si =</span><span class="err"> </span><span class="s">new</span> <span class="na">SimpleInfo</span><span class="err">()</span> <span class="err">;</span> 
+			<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">simple</span><span class="err">",</span><span class="na">si</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;c:set</span> <span class="na">value=</span><span class="s">"http://fengmengzhao.github.io"</span> <span class="na">target=</span><span class="s">"${simple}"</span> <span class="na">property=</span><span class="s">"content"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>属性内容是：${simple.content}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.3">3.3 remove标签</h3>
+
+<p>  remove标签的主要作用是删除指定属性范围的属性</p>
+
+<p>  删除属性-remove_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:set</span> <span class="na">value=</span><span class="s">"http://fengmengzhao.github.io"</span> <span class="na">scope=</span><span class="s">"request"</span> <span class="na">var=</span><span class="s">"info"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;c:remove</span> <span class="na">scope=</span><span class="s">"request"</span> <span class="na">var=</span><span class="s">"info"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>属性内容是：${info}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h3 id="3.4">3.4 catch标签</h3>
+
+<p>  catch标签主要用来捕捉程序中产生的异常，并对异常进行处理</p>
+
+<p>  进行异常处理-catch_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:catch</span> <span class="na">var=</span><span class="s">"errorMsg"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="na">int</span> <span class="na">x =</span><span class="err"> </span><span class="s">10</span> <span class="err">/</span> <span class="na">0</span> <span class="err">;</span>
+			<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/c:catch&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>错误信息是：${errorMsg}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.5">3.5 if标签</h3>
+
+<p>  判断操作-if_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:if</span> <span class="na">test=</span><span class="s">"${param.ref == 'fmz'}"</span> <span class="na">var=</span><span class="s">"res1"</span> <span class="na">scope=</span><span class="s">"page"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>欢迎${param.ref}光临！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;/c:if&gt;</span>
+		<span class="nt">&lt;c:if</span> <span class="na">test=</span><span class="s">"${10 &lt; 30}"</span> <span class="na">var=</span><span class="s">"res2"</span> <span class="na">scope=</span><span class="s">"page"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>10 确实小于 30！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;/c:if&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.6">3.6 choose标签</h3>
+
+<p>  进行多个条件的判断</p>
+
+<p>  多条件判断-choos_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">num</span><span class="err">",</span><span class="na">10</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;c:choose&gt;</span>
+			<span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">"${num == 10}"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>num属性内容是10！<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;/c:when&gt;</span>
+			<span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">"${num == 20}"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>num属性内容是20！<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;/c:when&gt;</span>
+			<span class="nt">&lt;c:otherwise&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>没有一个条件成立！<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;/c:otherwise&gt;</span>
+		<span class="nt">&lt;/c:choose&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.7">3.7 forEach标签</h3>
+
+<p>  输出数组-print_array_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span><span class="err">[]</span> <span class="na">str =</span><span class="err"> </span><span class="s">{"fmz","cll","http://fengmengzhao.github.io"}</span> <span class="err">;</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">ref</span><span class="err">",</span><span class="na">str</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出全部内容：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span><span class="nt">&gt;</span>
+				${each}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出前2个内容：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span> <span class="na">begin=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+				${each}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出全部内容(间隔为2)：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span> <span class="na">step=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+				${each}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  输出集合-print_list_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">List</span> <span class="na">list =</span><span class="err"> </span><span class="s">new</span> <span class="na">ArrayList</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("</span><span class="na">fmz</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("</span><span class="na">cll</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("</span><span class="na">http:</span><span class="err">//</span><span class="na">fengmengzhao</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">ref</span><span class="err">",</span><span class="na">list</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出全部内容：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span><span class="nt">&gt;</span>
+				${each}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出前2个内容：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span> <span class="na">begin=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+				${each}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出全部内容(间隔为2)：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span> <span class="na">step=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+				${each}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  输出Map集合-print_map_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Map</span> <span class="na">map =</span><span class="err"> </span><span class="s">new</span> <span class="na">HashMap</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">map</span><span class="err">.</span><span class="na">put</span><span class="err">("</span><span class="na">fmz</span><span class="err">","</span><span class="na">http:</span><span class="err">//</span><span class="na">fengmengzhao</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">map</span><span class="err">.</span><span class="na">put</span><span class="err">("</span><span class="na">cll</span><span class="err">","</span><span class="na">http:</span><span class="err">//</span><span class="na">cll</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">map</span><span class="err">.</span><span class="na">put</span><span class="err">("</span><span class="na">mail</span><span class="err">","</span><span class="na">fengmengzhao</span><span class="err">@</span><span class="na">gmail</span><span class="err">.</span><span class="na">com</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">ref</span><span class="err">",</span><span class="na">map</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出全部内容：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span><span class="nt">&gt;</span>
+				${each.key} --&gt; ${each.value}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出前2个内容：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span> <span class="na">begin=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+				${each.key} --&gt; ${each.value}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>输出全部内容(间隔为2)：
+			<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">var=</span><span class="s">"each"</span> <span class="na">step=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+				${each.key} --&gt; ${each.value}、
+			<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Map集合中的对象都是通过Map.Entry的形式保存的，需要通过Map.Entry中的getKey()和getValue()方法取得关键字和对应的值信息</p>
+</blockquote>
+
+<h3 id="3.8">3.8 forTokens标签</h3>
+
+<p>  使用forTokens进行输出-print_tokens_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">str =</span><span class="err"> </span><span class="s">"http://fengmengzhao.github.io"</span> <span class="err">;</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">ref</span><span class="err">",</span><span class="na">str</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>拆分结果：
+			<span class="nt">&lt;c:forTokens</span> <span class="na">items=</span><span class="s">"${ref}"</span> <span class="na">delims=</span><span class="s">"."</span> <span class="na">var=</span><span class="s">"con"</span><span class="nt">&gt;</span>
+				${con}、
+			<span class="nt">&lt;/c:forTokens&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.9">3.9 import标签</h3>
+
+<p>  导入外部项目站点-import_url_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:import</span> <span class="na">url=</span><span class="s">"http://www.baidu.com"</span> <span class="na">charEncoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  接收参数中的页面-param.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>${param.name}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>${param.url}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  传递参数-import_param.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:import</span> <span class="na">url=</span><span class="s">"param.jsp"</span> <span class="na">charEncoding=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;c:param</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">value=</span><span class="s">"fmz"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;c:param</span> <span class="na">name=</span><span class="s">"url"</span> <span class="na">value=</span><span class="s">"http://fengmengzhao.github.io"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/c:import&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.10">3.10 url标签</h3>
+
+<p>  产生url地址-create_url.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:url</span> <span class="na">value=</span><span class="s">"http://fengmengzhao.github.io"</span> <span class="na">var=</span><span class="s">"urlinfo"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;c:param</span> <span class="na">name=</span><span class="s">"autor"</span> <span class="na">value=</span><span class="s">"fmz"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;c:param</span> <span class="na">name=</span><span class="s">"logo"</span> <span class="na">value=</span><span class="s">"BeautifulYou"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/c:url&gt;</span>
+		<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"${urlinfo}"</span><span class="nt">&gt;</span>冯孟昭博客地址<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.11">3.11 redirect标签</h3>
+
+<p>  客户单跳转到param.jsp-redirect_jstl.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:redirect</span> <span class="na">url=</span><span class="s">"param.jsp"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;c:param</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">value=</span><span class="s">"fmz"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;c:param</span> <span class="na">name=</span><span class="s">"url"</span> <span class="na">value=</span><span class="s">"http://fengmengzhao.github.io"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/c:redirect&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="4">4 国际化标签库</h2>
+
+<p>  国际化是程序的重要组成部分，一个程序可以根据所在的区域进行相应的信息显示。</p>
+
+<h3 id="4.1">4.1 setLocale标签</h3>
+
+<p>  设置Locale显示-locale.jsp</p>
+
+<p>&lt;%@ page contentType=”text/html” pageEncoding=”utf-8”%&gt;
+&lt;%@ page import=”java.util.*”%&gt;
+&lt;%@ taglib prefix=”fmt” uri=”http://tomcat.apache.org/taglibs/jst/fmt”%&gt;</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">date</span><span class="err">",</span><span class="na">new</span> <span class="na">Date</span><span class="err">())</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>中文格式显示：
+			<span class="nt">&lt;fmt:setLocale</span> <span class="na">value=</span><span class="s">"zh_CN"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>英文格式显示：
+			<span class="nt">&lt;fmt:setLocale</span> <span class="na">value=</span><span class="s">"en_US"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;fmt:requestEncoding</span> <span class="na">value=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="4.2">4.2 requestEncoding标签</h3>
+
+<p>  设置统一编码：<code class="highlighter-rouge">&lt;fmt:requestEncoding value="utf-8"/&gt;</code></p>
+
+<h3 id="4.3">4.3 读取资源文件</h3>
+
+<p>  定义资源文件-/WEB-INF/classes/Message.properties</p>
+
+<p>name = FengMengZhao
+info = \u6b22\u8fce{0}\u5149\u4e34\uff01</p>
+
+<blockquote>
+  <p>\u6b22\u8fce{0}\u5149\u4e34\uff01 是转义字符，为”欢迎{0}光临！”的转义</p>
+</blockquote>
+
+<p>  读取资源文件-message.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fmt"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fmt"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;fmt:bundle</span> <span class="na">basename=</span><span class="s">"Message"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;fmt:message</span> <span class="na">key=</span><span class="s">"name"</span> <span class="na">var=</span><span class="s">"nameref"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/fmt:bundle&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>姓名：${nameref}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;fmt:bundle</span> <span class="na">basename=</span><span class="s">"Message"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;fmt:message</span> <span class="na">key=</span><span class="s">"info"</span> <span class="na">var=</span><span class="s">"inforef"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;fmt:param</span> <span class="na">value=</span><span class="s">"冯孟昭"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;/fmt:message&gt;</span>
+		<span class="nt">&lt;/fmt:bundle&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>信息：${inforef}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  设置要读取的资源文件-bundle_message.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fmt"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fmt"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;fmt:setBundle</span> <span class="na">basename=</span><span class="s">"Message"</span> <span class="na">var=</span><span class="s">"msg"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;fmt:message</span> <span class="na">key=</span><span class="s">"name"</span> <span class="na">var=</span><span class="s">"nameref"</span> <span class="na">bundle=</span><span class="s">"${msg}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>姓名：${nameref}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;fmt:message</span> <span class="na">key=</span><span class="s">"info"</span> <span class="na">var=</span><span class="s">"inforef"</span> <span class="na">bundle=</span><span class="s">"${msg}"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;fmt:param</span> <span class="na">value=</span><span class="s">"冯孟昭"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/fmt:message&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>信息：${inforef}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  可以通过<fmt:setLocale>标签指定所要读取的区域资源文件</fmt:setLocale></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;fmt:setLocale value="zh_CN"/&gt;
+&lt;fmt:setBundle basename="Message" var="msg"/&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>由于设置中文环境，所以将读取Message_zh_CN.properties资源文件</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h3 id="4.4">4.4 数字格式化标签</h3>
+
+<p>  格式化数字显示-format_num.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fmt"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fmt"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;fmt:formatNumber</span> <span class="na">value=</span><span class="s">"13463522.2149873"</span> <span class="na">maxIntegerDigits=</span><span class="s">"8"</span> <span class="na">maxFractionDigits=</span><span class="s">"3"</span> <span class="na">groupingUsed=</span><span class="s">"true"</span> <span class="na">var=</span><span class="s">"num1"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>13463522.2149873格式化数字结果：${num1}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;fmt:formatNumber</span> <span class="na">value=</span><span class="s">"13463522.2149873"</span> <span class="na">pattern=</span><span class="s">"##.###E0"</span> <span class="na">var=</span><span class="s">"num2"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>13463522.2149873科学计数法结果：${num2}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  数字的反格式化-parse_num.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fmt"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fmt"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;fmt:parseNumber</span> <span class="na">value=</span><span class="s">"463,522.21"</span> <span class="na">var=</span><span class="s">"num1"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>463,522.21反格式化数字结果：${num1}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;fmt:parseNumber</span> <span class="na">value=</span><span class="s">"4.64E6"</span> <span class="na">pattern=</span><span class="s">"##.###E0"</span> <span class="na">var=</span><span class="s">"num2"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>4.64E6反科学计数法结果：${num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;fmt:parseNumber</span> <span class="na">value=</span><span class="s">"3.5%"</span> <span class="na">pattern=</span><span class="s">"00%"</span> <span class="na">var=</span><span class="s">"num3"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>3.5%反百分号结果：${num3}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="4.5">4.5 日期时间的格式化标签</h3>
+
+<p>  格式化日期时间-format_date.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fmt"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fmt"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">date</span><span class="err">",</span><span class="na">new</span> <span class="na">Date</span><span class="err">())</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">dateStyle=</span><span class="s">"default"</span> <span class="na">timeStyle=</span><span class="s">"default"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>default日期时间显示格式：${date}<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">dateStyle=</span><span class="s">"short"</span> <span class="na">timeStyle=</span><span class="s">"short"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>short日期时间显示格式：${date}<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">dateStyle=</span><span class="s">"medium"</span> <span class="na">timeStyle=</span><span class="s">"medium"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>medium日期时间显示格式：${date}<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">dateStyle=</span><span class="s">"long"</span> <span class="na">timeStyle=</span><span class="s">"long"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>long日期时间显示格式：${date}<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">dateStyle=</span><span class="s">"full"</span> <span class="na">timeStyle=</span><span class="s">"full"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>full日期时间显示格式：${date}<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">pattern=</span><span class="s">"yyyy年MM月dd日 HH时mm分ss秒SSS毫秒"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>自定义日期时间显示格式：${date}<span class="nt">&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  日期的反格式化-parse_date.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fmt"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fmt"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+			<span class="nt">&lt;fmt:parseDate</span> <span class="na">value=</span><span class="s">"2015年9月7日 星期一 下午04时15分55秒 CST"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">dateStyle=</span><span class="s">"full"</span> <span class="na">timeStyle=</span><span class="s">"full"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>字符串转换为日期：${date}<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;fmt:parseDate</span> <span class="na">value=</span><span class="s">"2015年09月07日 16时15分55秒891毫秒"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">pattern=</span><span class="s">"yyyy年MM月dd日 HH时mm分ss秒SSS毫秒"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>自定义字符串转换为日期：${date}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="4.6">4.6 设置时区</h3>
+
+<p>  设置时区显示-time_zone.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fmt"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fmt"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">date</span><span class="err">",</span><span class="na">new</span> <span class="na">Date</span><span class="err">())</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;fmt:timeZone</span> <span class="na">value=</span><span class="s">"HST"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;fmt:formatDate</span> <span class="na">value=</span><span class="s">"${date}"</span> <span class="na">type=</span><span class="s">"both"</span> <span class="na">dateStyle=</span><span class="s">"full"</span> <span class="na">timeStyle=</span><span class="s">"full"</span> <span class="na">var=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;h2&gt;</span>夏威夷时区时间：${date}<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;/fmt:timeZone&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="5">5 SQL标签库</h2>
+
+<p>  从MVC的设计模式上可以看出，对于web的开发一定是分层的，所有的数据库操作都要放在JavaBean(DAO)中完成，而JSTL是直接在JSP文件上操作数据库，这种做法在开发中并不推荐。</p>
+
+<h3 id="5.1">5.1 setDataSource标签</h3>
+
+<p>  此标签用来设定数据源</p>
+
+<p>  使用配置好的数据源(jdbc/mldn)-datasource.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"sql"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/sql"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;sql:setDataSource</span> <span class="na">dataSource=</span><span class="s">"jdbc/mldn"</span> <span class="na">var=</span><span class="s">"mldnds"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;sql:query</span> <span class="na">var=</span><span class="s">"result"</span> <span class="na">dataSource=</span><span class="s">"${mldnds}"</span><span class="nt">&gt;</span>
+			SELECT empno,ename,job,sal,hiredate FROM emp ;
+		<span class="nt">&lt;/sql:query&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>一共有${result.rowCount}条记录！<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="5.2">5.2 数据库操作标签</h3>
+
+<p>  查询标签，输出全部的结果-query_emp.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"sql"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/sql"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;sql:setDataSource</span> <span class="na">dataSource=</span><span class="s">"jdbc/mldn"</span> <span class="na">var=</span><span class="s">"mldnds"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;sql:query</span> <span class="na">var=</span><span class="s">"result"</span> <span class="na">dataSource=</span><span class="s">"${mldnds}"</span><span class="nt">&gt;</span>
+			SELECT empno,ename,job,sal,hiredate FROM emp ;
+		<span class="nt">&lt;/sql:query&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>一共有${result.rowCount}条记录！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">width=</span><span class="s">"100%"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>雇员编号<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>雇员姓名<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>雇员工作<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>雇佣日期<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>雇员薪资<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${result.rows}"</span> <span class="na">var=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td&gt;</span>${row.empno}<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>${row.ename}<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>${row.job}<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>${row.hiredate}<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>${row.sal}<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;/c:forEach&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  增加新数据标签-inset_emp.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"sql"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/sql"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;sql:setDataSource</span> <span class="na">dataSource=</span><span class="s">"jdbc/mldn"</span> <span class="na">var=</span><span class="s">"mldnds"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;sql:update</span> <span class="na">var=</span><span class="s">"result"</span> <span class="na">dataSource=</span><span class="s">"${mldnds}"</span><span class="nt">&gt;</span>
+			INSERT INTO emp(empno,ename,job,hiredate,sal) values(6888,'张军','经理','2014-10-22',10000) ;
+		<span class="nt">&lt;/sql:update&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  删除数据标签-delete_emp.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"sql"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/sql"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;sql:setDataSource</span> <span class="na">dataSource=</span><span class="s">"jdbc/mldn"</span> <span class="na">var=</span><span class="s">"mldnds"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;sql:update</span> <span class="na">var=</span><span class="s">"result"</span> <span class="na">dataSource=</span><span class="s">"${mldnds}"</span><span class="nt">&gt;</span>
+			DELETE FROM emp WHERE empno=6888 ;
+		<span class="nt">&lt;/sql:update&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  使用预处理更新操作-preupdate_emp.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"sql"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/sql"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">empno</span><span class="err">",</span><span class="na">8964</span><span class="err">)</span> <span class="err">;</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">ename</span><span class="err">","李奇")</span> <span class="err">;</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">job</span><span class="err">","分析员")</span> <span class="err">;</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">date</span><span class="err">",</span><span class="na">new</span> <span class="na">java</span><span class="err">.</span><span class="na">util</span><span class="err">.</span><span class="na">Date</span><span class="err">())</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;sql:setDataSource</span> <span class="na">dataSource=</span><span class="s">"jdbc/mldn"</span> <span class="na">var=</span><span class="s">"mldnds"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;sql:update</span> <span class="na">var=</span><span class="s">"result"</span> <span class="na">dataSource=</span><span class="s">"${mldnds}"</span><span class="nt">&gt;</span>
+			UPDATE emp SET ename=?, job=?, hiredate=? WHERE empno=? ;
+			<span class="nt">&lt;sql:param</span> <span class="na">value=</span><span class="s">"${ename}"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;sql:param</span> <span class="na">value=</span><span class="s">"${job}"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;sql:dateParam</span> <span class="na">value=</span><span class="s">"${date}"</span> <span class="na">type=</span><span class="s">"date"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;sql:param</span> <span class="na">value=</span><span class="s">"${empno}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/sql:update&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="5.3">5.3 事务处理</h3>
+
+<p>  transaction.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"sql"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/sql"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;sql:setDataSource</span> <span class="na">dataSource=</span><span class="s">"jdbc/mldn"</span> <span class="na">var=</span><span class="s">"mldnds"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;sql:transaction</span> <span class="na">isolation=</span><span class="s">"serializable"</span> <span class="na">dataSource=</span><span class="s">"${mldnds}"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;sql:update</span> <span class="na">var=</span><span class="s">"result"</span><span class="nt">&gt;</span>
+				INSERT INTO emp(empno,ename,job,hiredate,sal) values(6888,'张军','经理','2014-10-22',10000) ;
+			<span class="nt">&lt;/sql:update&gt;</span>
+		<span class="nt">&lt;/sql:transaction&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span> ***
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="6">6 XML标签库</h2>
+
+<p>  JSTL提供的用于XML解析的操作可以轻松的进行XML文件的解析</p>
+
+<h3 id="6.1">6.1 XPath简介</h3>
+
+<p>  XPath的主要功能是能够在XML文档中准确的找到某一个节点的元素，<code class="highlighter-rouge">/</code>代表根元素，<code class="highlighter-rouge">../</code>表示父节点，<code class="highlighter-rouge">//</code>表示任何路径下的节点，<code class="highlighter-rouge">@属性名称</code>表示属性，<code class="highlighter-rouge">*</code>表示通配符</p>
+
+<p>  定义一个XML文件-address.xml</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;address&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name</span> <span class="na">id=</span><span class="s">"fmz"</span><span class="nt">&gt;</span>冯孟昭<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;email&gt;</span>fengmengzhao@gmail.com<span class="nt">&lt;/email&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+<span class="nt">&lt;/address&gt;</span>
+</code></pre></div></div>
+
+<p>  </p>
+
+<h3 id="6.2">6.2 parse标签</h3>
+
+<p>  进行parse解析后即可以使用out标签输出。</p>
+
+<h3 id="6.3">6.3 out标签</h3>
+
+<p>  输出name和email的内容-xml_out.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"x"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/x"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:import</span> <span class="na">var=</span><span class="s">"add"</span> <span class="na">url=</span><span class="s">"/tag_jst/xml_jst/address.xml"</span> <span class="na">charEncoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:parse</span> <span class="na">var=</span><span class="s">"addressXml"</span> <span class="na">doc=</span><span class="s">"${add}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>姓名：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$addressXml/address/linkman/name"</span><span class="nt">/&gt;</span>(id：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$addressXml/address/linkman/name/@id"</span><span class="nt">/&gt;</span>)<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>邮箱：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$addressXml/address/linkman/email"</span><span class="nt">/&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="6.4">6.4 set标签</h3>
+
+<p>  使用set标签保存解析结果-xml_set.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"x"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/x"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:import</span> <span class="na">var=</span><span class="s">"add"</span> <span class="na">url=</span><span class="s">"/tag_jst/xml_jst/address.xml"</span> <span class="na">charEncoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:parse</span> <span class="na">var=</span><span class="s">"addressXml"</span> <span class="na">doc=</span><span class="s">"${add}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:set</span> <span class="na">var=</span><span class="s">"nameXml"</span> <span class="na">scope=</span><span class="s">"page"</span> <span class="na">select=</span><span class="s">"$addressXml/address/linkman"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>姓名：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$nameXml/name"</span><span class="nt">/&gt;</span>(id：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$nameXml/name/@id"</span><span class="nt">/&gt;</span>)<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>邮箱：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$nameXml/email"</span><span class="nt">/&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="6.5">6.5 if标签</h3>
+
+<p>  使用if标签判断输出-xml_if.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"x"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/x"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:import</span> <span class="na">var=</span><span class="s">"add"</span> <span class="na">url=</span><span class="s">"/tag_jst/xml_jst/address.xml"</span> <span class="na">charEncoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:parse</span> <span class="na">var=</span><span class="s">"addressXml"</span> <span class="na">doc=</span><span class="s">"${add}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:if</span> <span class="na">select=</span><span class="s">"$addressXml//name/@id='fmz'"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>姓名：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$addressXml/address/linkman/name"</span><span class="nt">/&gt;</span>(id：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$addressXml/address/linkman/name/@id"</span><span class="nt">/&gt;</span>)<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;/x:if&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="6.6">6.6 choose标签</h3>
+
+<p>  使用choose标签进行判断-xml_choose.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"x"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/x"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:import</span> <span class="na">var=</span><span class="s">"add"</span> <span class="na">url=</span><span class="s">"/tag_jst/xml_jst/address.xml"</span> <span class="na">charEncoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:parse</span> <span class="na">var=</span><span class="s">"addressXml"</span> <span class="na">doc=</span><span class="s">"${add}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:choose&gt;</span>
+			<span class="nt">&lt;x:when</span> <span class="na">select=</span><span class="s">"$addressXml//name/@id='fmz'"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>姓名：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$addressXml/address/linkman/name"</span><span class="nt">/&gt;</span>(id：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"$addressXml/address/linkman/name/@id"</span><span class="nt">/&gt;</span>)<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;/x:when&gt;</span>
+			<span class="nt">&lt;x:otherwise&gt;</span>
+				<span class="nt">&lt;h3&gt;</span>神马也不是！<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;/x:otherwise&gt;</span>
+		<span class="nt">&lt;/x:choose&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="6.7">6.7 forEach标签</h3>
+
+<p>  定义xml文件-alladdress.xml</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;address&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name</span> <span class="na">id=</span><span class="s">"fmz"</span><span class="nt">&gt;</span>冯孟昭<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;email&gt;</span>fengmengzhao@gmail.com<span class="nt">&lt;/email&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name</span> <span class="na">id=</span><span class="s">"kf"</span><span class="nt">&gt;</span>客服中心<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;email&gt;</span>kf@gmail.com<span class="nt">&lt;/email&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+	<span class="nt">&lt;linkman&gt;</span>
+		<span class="nt">&lt;name</span> <span class="na">id=</span><span class="s">"hr"</span><span class="nt">&gt;</span>招聘中心<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;email&gt;</span>hr@gmail.com<span class="nt">&lt;/email&gt;</span>
+	<span class="nt">&lt;/linkman&gt;</span>
+<span class="nt">&lt;/address&gt;</span>
+</code></pre></div></div>
+
+<p>  forEach输出name节点内容-xml_foreach.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/c"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"x"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/x"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;c:import</span> <span class="na">var=</span><span class="s">"add"</span> <span class="na">url=</span><span class="s">"/tag_jst/xml_jst/alladdress.xml"</span> <span class="na">charEncoding=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:parse</span> <span class="na">var=</span><span class="s">"addressXml"</span> <span class="na">doc=</span><span class="s">"${add}"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;x:forEach</span> <span class="na">select=</span><span class="s">"$addressXml//linkman"</span> <span class="na">var=</span><span class="s">"linkman"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>姓名：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"name"</span><span class="nt">/&gt;</span>(编号：<span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">"name/@id"</span><span class="nt">/&gt;</span>)<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;/x:forEach&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="7">7 函数标签库</h2>
+
+<p>  所谓的函数标签库就是对String类的封装</p>
+
+<p>  字符串判断操作-string_demo01.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fn"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fn"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">","</span><span class="na">Hello</span> <span class="na">swufe</span><span class="err">,</span><span class="na">Hello</span> <span class="na">Fmz</span><span class="err">")</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>查找Fmz：${fn:contains(info,"Fmz")}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>不区分大小写查找Fmz：${fn:containsIgnoreCase(info,"fmz")}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>判断开头：${fn:startsWith(info,"Hello")}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>判断结尾：${fn:endsWith(info,"Fmz")}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>查找位置：${fn:indexOf(info,",")}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  字符串操作-string_demo02.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"fn"</span> <span class="na">uri=</span><span class="s">"http://tomcat.apache.org/taglibs/jst/fn"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">","</span><span class="na">Hello</span> <span class="na">swufe</span><span class="err">,</span><span class="na">Hello</span> <span class="na">Fmz</span><span class="err">")</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>替换：${fn:replace(info,"Fmz","fmz")}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>截取：${fn:substring(info,0,10)}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>拆分：${fn:split(info," ")[1]}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span> ***
+</code></pre></div></div>
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - javaweb开发高级篇之表达式语言</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/08/31/javaweb-%E5%BC%80%E5%8F%91%E9%AB%98%E7%BA%A7%E7%AF%87%E4%B9%8B%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E8%A8%80.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  August 31, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">javaweb开发高级篇之表达式语言</h1>
+
+<div id="post">
+  <h2 id="目录">目录</h2>
+
+<ul>
+  <li>
+    <p><a href="#1">1 表达式语言简介</a></p>
+  </li>
+  <li>
+    <p><a href="#2">2 表达式语言的内置对象</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#2.1">2.1 访问四种属性范围的内容</a></p>
+      </li>
+      <li>
+        <p><a href="#2.2">2.2 调用内置对象进行操作</a></p>
+      </li>
+      <li>
+        <p><a href="#2.3">2.3 接收请求参数</a></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#3">3 集合操作</a></p>
+  </li>
+  <li>
+    <p><a href="#4">4 在MVC中运用表达式语言</a></p>
+  </li>
+  <li>
+    <p><a href="#5">5 运算符</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 表达式语言简介</h2>
+
+<p>  表达式语言(Expression Language，EL)是JSP2.0中新增加的功能。使用表达式语言可以方便的地访问标志位(在JSP中一共提供了四种标志位：page(PageContext)、request、session、application)中的属性内容，这样就可以避免出现很多的Script代码</p>
+
+<p>  表达式语言的使用</p>
+
+<p>  <code class="highlighter-rouge">${属性名称}</code></p>
+
+<blockquote>
+  <p>使用表达式语言的最大好处是：如果输出的内容为null，会自动使用空字符串(““)表示</p>
+</blockquote>
+
+<p>  实例代码-print_attribute_demo01.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">","</span><span class="na">http:</span><span class="err">//</span><span class="na">fengmengzhao</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="err">")</span> <span class="err">;</span>	
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>${info}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;&lt;</span><span class="err">%=</span><span class="na">request</span><span class="err">.</span><span class="na">getAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">")%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="2">2 表达式语言的内置对象</h2>
+
+<p>  表达式语言的主要功能是进行内容的显示，为了显示方便，在表达式语言中提供了很多的内置对象，通过不同的内置对象的设置表达式输出不同的内容</p>
+
+<p>  表达式语言的内置对象</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>NO.</th>
+      <th>表达式的内置对象</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>pageContext</td>
+      <td>表示javax.servlet.jsp.PageContext对象</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>pageScope</td>
+      <td>表示从page属性范围查找输出属性</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>requestScope</td>
+      <td>表示从request属性范围查找输出属性</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>sessionScope</td>
+      <td>表示从session属性范围查找输出属性</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>applicationScope</td>
+      <td>表示从application属性范围查找输出属性</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>param</td>
+      <td>接收传递到本页面的参数</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>paramValues</td>
+      <td>接收传递到本页面的一组参数</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>header</td>
+      <td>取得一个头信息数据</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>headerValues</td>
+      <td>取得一组头信息数据</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>cookie</td>
+      <td>取得cookie中的数据</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>initParam</td>
+      <td>取得配置的初始化参数</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="2.1">2.1 访问四种属性范围的内容</h3>
+
+<p>  示例代码-repeat_attribute_demo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>	<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">","</span><span class="na">page</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">","</span><span class="na">http:</span><span class="err">//</span><span class="na">fengmengzhao</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">session</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">","</span><span class="na">session</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">application</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">","</span><span class="na">application</span><span class="err">")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>${pageScope.info}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>${requestScope.info}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>${sessionScope.info}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>${applicationScope.info}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>如果使用内置对象进行输出，在属性同名的情况下会先查找page属性范围，然后依次是request、session、application属性范围，用表达式语言可以在属性同名的情况下进行指定的属性范围进行输出。</p>
+</blockquote>
+
+<h3 id="2.2">2.2 调用内置对象进行操作</h3>
+
+<p>  示例代码-invoke_method_demo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>IP地址：${pageContext.request.remoteAddr}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>Session ID：${pageContext.session.id}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>是否是新的session：${pageContext.session.new}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>表达式语言中更多的是利用反射的操作机制，在通过表达式的内置对象调用方法时，都是以调用getXxx()或者isXxx()的方法居多</p>
+</blockquote>
+
+<h3 id="2.3">2.3 接收请求参数</h3>
+
+<p>  接收一个参数：<code class="highlighter-rouge">${param.参数名称}</code></p>
+
+<p>  实例代码-get_param_demo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>request接受参数：<span class="nt">&lt;</span><span class="err">%=</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">ref</span><span class="err">")%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>表达式接受参数：${param.ref}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  接收一组参数：<code class="highlighter-rouge">${paramVlues.参数名称}</code></p>
+
+<p>  实例代码-param_values_demo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+			<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;//在实际的开发中，需要用过滤器的完成。</span>
+			<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>第一个参数：${paramValues.inst[0]}<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>第二个参数：${paramValues.inst[1]}<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>第三个参数：${paramValues.inst[2]}<span class="nt">&lt;/h3&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>第四个参数：${paramValues.inst[3]}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="3">3 集合操作</h2>
+
+<p>  集合有Collection、Map、Iterator接口，Collection接口的子接口有Set、List，所有的集合都使用Iterator方法进行输出，而且List和Set集合的本质区别在于List接口对Collection接口进行了扩充，而Set接口并没有进行扩充。Map接口一次记性一对内容的保存操作，而且Map每次保存都是Map Enty接口对象。</p>
+
+<p>  输出Collection接口-print_collection.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">List</span> <span class="na">list =</span><span class="err"> </span><span class="s">new</span> <span class="na">ArrayList</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("</span><span class="na">fmz</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("</span><span class="na">http:</span><span class="err">//</span><span class="na">fengmengzhao</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("</span><span class="na">cll</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">",</span><span class="na">list</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>第一个属性内容：${info[0]}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>第二个属性内容：${info[1]}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>第三个属性内容：${info[2]}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>使用request范围保存属性目的是为MVC设计模式做准备，因为在MVC设计模式中都是使用request属性范围将Servlet中的内容传递给JSP页面进行显示，而表达式语言的最大优点需要结合MVC模式才能显示出来</p>
+</blockquote>
+
+<p>  输出Map接口-print_map.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Map</span> <span class="na">map =</span><span class="err"> </span><span class="s">new</span> <span class="na">HashMap</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">map</span><span class="err">.</span><span class="na">put</span><span class="err">("</span><span class="na">fmz</span><span class="err">","冯孟昭")</span> <span class="err">;</span>
+			<span class="na">map</span><span class="err">.</span><span class="na">put</span><span class="err">("</span><span class="na">blog</span><span class="err">","</span><span class="na">http:</span><span class="err">//</span><span class="na">fengmengzhao</span><span class="err">.</span><span class="na">github</span><span class="err">.</span><span class="na">io</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">",</span><span class="na">map</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>key为fmz的内容：${info["fmz"]}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>key为blog的内容：${info["blog"]}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="4">4 在MVC模式中应用表达式语言</h2>
+
+<p>  表达式语言的强大功能支出在于，可以直接通过反射的方式调用保存在属性范围中的java对象内容</p>
+
+<p>  定义一个VO类-Dept.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">eldemo</span><span class="p">.</span><span class="n">vo</span> <span class="p">;</span>
+<span class="k">public</span> <span class="n">class</span> <span class="n">Dept</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">dname</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">int</span> <span class="n">deptno</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">loc</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setDname</span><span class="p">(</span><span class="k">String</span> <span class="n">dname</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">dname</span> <span class="p">=</span> <span class="n">dname</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setDeptno</span><span class="p">(</span><span class="n">int</span> <span class="n">deptno</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">deptno</span> <span class="p">=</span> <span class="n">deptno</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setLoc</span><span class="p">(</span><span class="k">String</span> <span class="n">loc</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">loc</span> <span class="p">=</span> <span class="n">loc</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getDname</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">dname</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">getDeptno</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">deptno</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getLoc</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">loc</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  通过jsp文件进行输出-print_vo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"org.fmz.eldemo.vo.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">Dept</span> <span class="na">dept =</span><span class="err"> </span><span class="s">new</span> <span class="na">Dept</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">dept</span><span class="err">.</span><span class="na">setDeptno</span><span class="err">(</span><span class="na">112</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">dept</span><span class="err">.</span><span class="na">setDname</span><span class="err">("工商管理学院")</span> <span class="err">;</span>
+			<span class="na">dept</span><span class="err">.</span><span class="na">setLoc</span><span class="err">("四川成都")</span> <span class="err">;</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">",</span><span class="na">dept</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>部门编号为：${info.deptno}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>部门名称为：${info.dname}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>部门位置为：${info.loc}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>首先实例化对象，分别设置里面的属性内容，并将属性保存在request属性范围中，然后可以方便的通过表达式的方式进行输出。</p>
+</blockquote>
+
+<blockquote>
+  <p>在使用表达式进行输出时，实际上是使用的java的反射机制。</p>
+</blockquote>
+
+<p>  编写Servlet传递request属性-ElServlet.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">eldemo</span><span class="p">.</span><span class="n">servlet</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">eldemo</span><span class="p">.</span><span class="n">vo</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">ElServlet</span> <span class="n">extends</span> <span class="n">HttpServlet</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span><span class="n">throws</span> <span class="n">ServletException</span><span class="p">,</span><span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">IOException</span><span class="p">{</span>
+		<span class="n">Dept</span> <span class="n">dept</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Dept</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setDeptno</span><span class="p">(</span><span class="m">110</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setDname</span><span class="p">(</span><span class="s2">"工商管理学院"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setLoc</span><span class="p">(</span><span class="s2">"四川成都"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">request</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s2">"info"</span><span class="p">,</span><span class="n">dept</span><span class="p">)</span> <span class="p">;</span>	
+		<span class="n">request</span><span class="p">.</span><span class="n">getRequestDispatcher</span><span class="p">(</span><span class="s2">"dept_info.jsp"</span><span class="p">).</span><span class="k">forward</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="n">response</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">doPost</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span><span class="n">throws</span> <span class="n">ServletException</span><span class="p">,</span><span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">IOException</span><span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">doGet</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="n">response</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>本程序通过request属性范围保存了一个VO对象，之后通过服务器跳转的方式将request属性内容传递给dept_info.jsp</p>
+</blockquote>
+
+<p>  接收request属性并输出-dept_info.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>部门编号为：${info.deptno}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>部门名称为：${info.dname}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>部门位置为：${info.loc}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  现在完成的是一个对象的输出，如果在DAO操作中执行的是数据库的查询，则传递到JSP页面上的将是一个对象集合(List)，这是就要想办法进行集合的输出</p>
+
+<p>  一个JSP页面只应该包含三种代码：接收属性、判断和输出，而且在JSP页面中最好只导入一个java.util包，所以此时就需要Iterator记性输出，通过Iterator找出集合中的每一个元素，然后将元素元素保存在page属性范围内(因为每一个输出的内容只在本页面内有效)</p>
+
+<p>  定义Servlet传递集合-ElServlet_dept.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">eldemo</span><span class="p">.</span><span class="n">servlet</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">eldemo</span><span class="p">.</span><span class="n">vo</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">ElServlet_dept</span> <span class="n">extends</span> <span class="n">HttpServlet</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span><span class="n">throws</span> <span class="n">ServletException</span><span class="p">,</span><span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">IOException</span><span class="p">{</span>
+		<span class="k">List</span><span class="p">&lt;</span><span class="n">Dept</span><span class="p">&gt;</span> <span class="k">list</span> <span class="p">=</span> <span class="n">new</span> <span class="n">ArrayList</span><span class="p">&lt;</span><span class="n">Dept</span><span class="p">&gt;()</span> <span class="p">;</span>
+		<span class="n">Dept</span> <span class="n">dept</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="n">dept</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Dept</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setDeptno</span><span class="p">(</span><span class="m">110</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setDname</span><span class="p">(</span><span class="s2">"工商管理学院"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setLoc</span><span class="p">(</span><span class="s2">"四川成都"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="k">list</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">dept</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">dept</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Dept</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setDeptno</span><span class="p">(</span><span class="m">120</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setDname</span><span class="p">(</span><span class="s2">"金融学院"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">dept</span><span class="p">.</span><span class="n">setLoc</span><span class="p">(</span><span class="s2">"四川成都"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="k">list</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">dept</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">request</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s2">"info"</span><span class="p">,</span><span class="k">list</span><span class="p">)</span> <span class="p">;</span>	
+		<span class="n">request</span><span class="p">.</span><span class="n">getRequestDispatcher</span><span class="p">(</span><span class="s2">"dept_list.jsp"</span><span class="p">).</span><span class="k">forward</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="n">response</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">doPost</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span><span class="n">throws</span> <span class="n">ServletException</span><span class="p">,</span><span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">IOException</span><span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">doGet</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="n">response</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>将对象集合传递到dept_list.jsp文件中进行输出</p>
+</blockquote>
+
+<p>  输出属性集合-dept_list.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">List</span> <span class="na">list =</span><span class="err"> </span><span class="s">(List)request.getAttribute("info")</span> <span class="err">;</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">list</span> <span class="err">!=</span> <span class="na">null</span><span class="err">){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">width=</span><span class="s">"80%"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td&gt;</span>部门编号<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>部门名称<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>部门地址<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="na">Iterator</span> <span class="na">iter =</span><span class="err"> </span><span class="s">list.iterator()</span> <span class="err">;</span>
+				<span class="na">while</span><span class="err">(</span><span class="na">iter</span><span class="err">.</span><span class="na">hasNext</span><span class="err">()){</span>
+					<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">dept</span><span class="err">",</span><span class="na">iter</span><span class="err">.</span><span class="na">next</span><span class="err">())</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;tr&gt;</span>
+						<span class="nt">&lt;td&gt;</span>${dept.deptno}<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>${dept.dname}<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>${dept.loc}<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>	
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/table&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>为了防止出现NollPointerException报错，需要进行非空判断</p>
+</blockquote>
+
+<blockquote>
+  <p>表达式语言让JSP文件中的Script代码越来越少</p>
+</blockquote>
+
+<blockquote>
+  <p>表达式语言实际上是将每一个对象取出放在page方位内，因为只在本页面内有效。</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h2 id="5">5 运算符</h2>
+
+<p>  算术运算符操作-math_demo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">numl</span><span class="err">",</span><span class="na">20</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">num2</span><span class="err">",</span><span class="na">30</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>加法操作：${numl + num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>减法操作：${numl - num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>乘法操作：${numl * num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>除法操作：${numl / num2} 和 ${num1 div num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>取余操作：${numl % num2} 和 ${num1 mod num2}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  关系运算符操作-rel_demo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">numl</span><span class="err">",</span><span class="na">10</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">num2</span><span class="err">",</span><span class="na">10</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>等于：${numl == num2} 和 ${num1 eq num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>不等于：${numl != num2} 和 ${num1 ne num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>大于：${numl &gt; num2} 和 ${num1 gt num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>小于：${numl <span class="nt">&lt;</span> <span class="nt">num2</span><span class="err">}</span> <span class="err">和</span> <span class="err">${</span><span class="na">num1</span> <span class="na">lt</span> <span class="na">num2</span><span class="err">}&lt;/</span><span class="na">h3</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>大于等于：${numl &gt;= num2} 和 ${num1 ge num2}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>小于等于：${numl <span class="nt">&lt;</span><span class="err">=</span> <span class="na">num2</span><span class="err">}</span> <span class="err">和</span> <span class="err">${</span><span class="na">num1</span> <span class="na">le</span> <span class="na">num2</span><span class="err">}&lt;/</span><span class="na">h3</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  其他运算符操作-other_demo.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">num1</span><span class="err">",</span><span class="na">10</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">num2</span><span class="err">",</span><span class="na">20</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">num3</span><span class="err">",</span><span class="na">30</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>Empt：${empty info}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>三目运算：${num1 &gt; num2 ? true : false}<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>优先运算：${num1 * (num2 + num3)}<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

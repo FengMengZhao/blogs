@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - java从文件中读取数据并赋值给数组</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/java/2015/06/29/java%E4%BB%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%B5%8B%E5%80%BC%E7%BB%99%E6%95%B0%E7%BB%84.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  June 29, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">java从文件中读取数据并赋值给数组</h1>
+
+<div id="post">
+  <p>###从txt文件中读取数据赋值给一维数组</p>
+
+<blockquote>
+  <ol>
+    <li>字节流读入字节数组中</li>
+    <li>字节数组转化为字符串</li>
+    <li>字符创解析为字符串数组</li>
+    <li>字符串数组转化为数值，并赋值为数组</li>
+    <li>文本文件是以字节的形式储存的。在txt文件中一个数字或者字母表示一个字节，比如0为（byte）48，9为（byte）57，空格为（byte）32，a为（byte）97，z为（byte）122，A为（byte）65，Z为（byte）90。</li>
+  </ol>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class ReadTxtFileToOneDimensionalArray {
+	public static void main(String args[])throws Exception{
+		File file = new File("G:\\文档文件\\临时文件\\时间表1.txt") ;
+		InputStream input = new FileInputStream(file) ;
+		byte[] b = new byte[(int)file.length()] ;
+		input.read(b) ;
+		String str = new String(b) ;
+		System.out.println(str) ;
+		String[] number = str.split("\t") ;
+		for(int i=0;i&lt;number.length;i++){
+			System.out.print(number[i]+"\t") ;
+		}
+		int[] temp = new int[number.length] ;
+		for(int i=0;i&lt;number.length;i++){
+			temp[i] = Integer.parseInt(number[i]) ;
+			System.out.print(temp[i]+"\t") ;
+		}
+		input.close() ; 
+	}
+}
+</code></pre></div></div>
+
+<p>###从txt文件中读取数据赋值给二维数组</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class ReadTxtFileToTwoDimensionalArray {
+	public static void main(String args[])throws Exception{
+		File file = new File("G:\\文档文件\\临时文件\\时间表.txt") ;
+		InputStream input = new FileInputStream(file) ;
+		byte[] b = new byte[(int)file.length()] ;
+		input.read(b) ;
+		
+		String str = new String(b) ;
+		String[] split = str.split("\r\n") ;
+		String[][] array = new String[split.length][] ;
+		for(int i=0;i&lt;split.length;i++){
+			array[i] = split[i].split(" ") ; 
+		}
+		int[][] temp = new int[split.length][array[0].length] ;
+		for(int i=0;i&lt;temp.length;i++){
+			for(int j=0;j&lt;temp[0].length;j++){
+				temp[i][j] = Integer.parseInt(array[i][j]) ;
+				System.out.print(temp[i][j]+"\t") ;
+			}
+			System.out.println() ;
+		}
+		input.close() ; 
+	}
+}
+</code></pre></div></div>
+
+<p>###用字符流<code class="highlighter-rouge">BufferedReader</code>读取数据到二维数组（目前只能做到在知道行和列的情况下，能准确额读入二维数组！！！）</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class ReadTxtFileToArrayWithBufferedReader {
+	public static void main(String args[])throws Exception{
+		File file = new File("G:\\文档文件\\临时文件\\时间表.txt") ;
+		Reader r = new FileReader(file) ;
+		BufferedReader buf = new BufferedReader(r) ;
+		String line = null ;
+		int[][] temp = new int[10][9]  ;
+		int row = 0 ;
+		while((line = buf.readLine()) != null){
+			String[] str = line.split(" ") ;
+			for(int i=0;i&lt;str.length;i++){
+				temp[row][i] = Integer.parseInt(str[i]) ;
+				System.out.print(temp[row][i]+"\t") ;
+			}
+			System.out.println() ;
+			row ++ ;
+		}
+		buf.close() ;
+	}
+}
+</code></pre></div></div>
+
+<p>###从Excel文件中读取数据到一维数组</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class ReadExcelToOneDimensionalArray {
+	public static void main(String args[]){
+		try{
+			File file = new File("G:\\文档文件\\临时文件\\时间表1.xls") ;
+			Workbook book = Workbook.getWorkbook(file) ;
+			Sheet sheet = book.getSheet(0) ;
+			int[][] temp = new int[sheet.getRows()][sheet.getColumns()] ;
+			for(int i=0;i&lt;sheet.getRows();i++){
+				for(int j=0;j&lt;sheet.getColumns();j++){
+					Cell cell = sheet.getCell(j, i) ;
+					temp[i][j] = Integer.parseInt(cell.getContents()) ;
+					System.out.print(temp[i][j]+"\t") ;
+				}
+				System.out.println() ;
+			}
+			book.close() ;
+		}catch(Exception e){
+			System.out.println(e) ;
+		}
+	}
+}
+</code></pre></div></div>
+
+<p>###从Excel文件中读取数据到二维数组</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class ReadExcelToTwoDimensionalArray {
+	public static void main(String args[]){
+		try{
+			File file = new File("G:\\文档文件\\临时文件\\时间表2.xls") ;
+			Workbook book = Workbook.getWorkbook(file) ;
+			Sheet sheet = book.getSheet(0) ;
+			int[][] temp = new int[sheet.getRows()][sheet.getColumns()] ;
+			for(int i=0;i&lt;sheet.getRows();i++){
+				for(int j=0;j&lt;sheet.getColumns();j++){
+					Cell cell = sheet.getCell(j, i) ;
+					temp[i][j] = Integer.parseInt(cell.getContents()) ;
+					System.out.print(temp[i][j]+"\t") ;
+				}
+				System.out.println() ;
+			}
+			book.close() ;
+		}catch(Exception e){
+			System.out.println(e) ;
+		}
+	}
+}
+</code></pre></div></div>
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

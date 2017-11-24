@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - 用户登录程序开发</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/08/06/%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  August 06, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">用户登录程序开发</h1>
+
+<div id="post">
+  <h3 id="完成登录界面需要的页面">完成登录界面需要的页面</h3>
+
+<ol>
+  <li>
+    <p>login.html 登录页，提供用户的登录表单，可以输入用户的id和密码</p>
+  </li>
+  <li>
+    <p>login_check.jsp 登录检查页，根据表单提交过来的id和密码进行数据库验证。成功，则跳转到登陆成功页；否则，跳转到登录失败页。</p>
+  </li>
+  <li>
+    <p>login_success.jsp 登录成功页，显示欢迎信息</p>
+  </li>
+  <li>
+    <p>login_failure.jsp 登录失败页，提示用户登录错误，并提供用户重新登录的超链接</p>
+  </li>
+</ol>
+
+<p>数据库建立表格</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/*======================= 使用MLDN数据库 =======================*/
+USE mldn ;
+/*======================= 删除user数据表 =======================*/
+DROP TABLE IF EXISTS user ;
+/*======================= 创建user数据表 =======================*/
+CREATE TABLE user(
+	userid			VARCHAR(30)		PRIMARY KEY ,
+	name			VARCHAR(30)		NOT NULL ,
+	password		VARCHAR(32)		NOT NULL
+) ;
+/*======================= 插入测试数据 =======================*/
+INSERT INTO user (userid,name,password) VALUES ('admin','冯孟昭','admin') ;
+</code></pre></div></div>
+
+<h3 id="程序实现">程序实现</h3>
+
+<h4 id="登录页">登录页</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;</span>登录界面<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+			<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"login_check.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;tr</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;td&gt;</span>用户登录<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>
+					<span class="nt">&lt;tr&gt;</span>
+						<span class="nt">&lt;td&gt;</span>登录<span class="ni">&amp;nbsp;</span>ID：<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"id"</span><span class="nt">&gt;&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>
+					<span class="nt">&lt;tr&gt;</span>
+						<span class="nt">&lt;td&gt;</span>登录密码：<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"password"</span><span class="nt">&gt;&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>
+					<span class="nt">&lt;tr</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;/table&gt;</span>
+			<span class="nt">&lt;/form&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="登录检查页">登录检查页</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/htm;"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.sql.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%!</span>
+		<span class="na">public</span> <span class="na">static</span> <span class="na">final</span> <span class="na">String</span> <span class="na">DBDRIVER =</span><span class="err"> </span><span class="s">"org.gjt.mm.mysql.Driver"</span> <span class="err">;</span>
+		<span class="na">public</span> <span class="na">static</span> <span class="na">final</span> <span class="na">String</span> <span class="na">DBURL =</span><span class="s">"jdbc:mysql://localhost:3306/fmz?useUnicode=true&amp;characterEncoding=utf-8"</span> <span class="err">;</span>
+		<span class="na">public</span> <span class="na">static</span> <span class="na">final</span> <span class="na">String</span> <span class="na">DBUSER =</span><span class="err"> </span><span class="s">"root"</span> <span class="err">;</span>
+		<span class="na">public</span> <span class="na">static</span> <span class="na">final</span> <span class="na">String</span> <span class="na">DBPASS =</span><span class="err"> </span><span class="s">"mysqladmin"</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">Connection</span> <span class="na">conn =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+		<span class="na">PreparedStatement</span> <span class="na">pstmt =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+		<span class="na">ResultSet</span> <span class="na">rs =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+		<span class="na">boolean</span> <span class="na">flag =</span><span class="err"> </span><span class="s">false</span> <span class="err">;</span>
+		<span class="na">String</span> <span class="na">name =</span><span class="err"> </span><span class="s">null</span> <span class="err">;</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">try</span><span class="err">{</span>
+			<span class="na">Class</span><span class="err">.</span><span class="na">forName</span><span class="err">(</span><span class="na">DBDRIVER</span><span class="err">)</span> <span class="err">;</span>
+			<span class="na">conn =</span><span class="err"> </span><span class="s">DriverManager.getConnection(DBURL,DBUSER,DBPASS)</span> <span class="err">;</span>
+
+			<span class="na">String</span> <span class="na">sql =</span><span class="err"> </span><span class="s">"SELECT name FROM user WHERE userid = ? AND password=?"</span> <span class="err">;</span>
+			<span class="na">pstmt =</span><span class="err"> </span><span class="s">conn.prepareStatement(sql)</span> <span class="err">;</span>
+			<span class="na">pstmt</span><span class="err">.</span><span class="na">setString</span><span class="err">(</span><span class="na">1</span><span class="err">,</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">id</span><span class="err">"))</span> <span class="err">;</span>
+			<span class="na">pstmt</span><span class="err">.</span><span class="na">setString</span><span class="err">(</span><span class="na">2</span><span class="err">,</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">password</span><span class="err">"))</span> <span class="err">;</span>
+			<span class="na">rs =</span><span class="err"> </span><span class="s">pstmt.executeQuery()</span> <span class="err">;</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">rs</span><span class="err">.</span><span class="na">next</span><span class="err">()){</span>
+				<span class="na">name =</span><span class="err"> </span><span class="s">rs.getString(1)</span> <span class="err">;</span>
+				<span class="na">flag =</span><span class="err"> </span><span class="s">true</span> <span class="err">;</span>
+			<span class="err">}</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+		<span class="na">System</span><span class="err">.</span><span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">(</span><span class="na">e</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">}</span><span class="na">finally</span><span class="err">{</span>
+			<span class="na">try</span><span class="err">{</span>
+				<span class="na">rs</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+				<span class="na">pstmt</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+				<span class="na">conn</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+			<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+				<span class="na">System</span><span class="err">.</span><span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">(</span><span class="na">e</span><span class="err">)</span> <span class="err">;</span>
+			<span class="err">}</span>
+		<span class="err">}</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">if</span><span class="err">(</span><span class="na">flag</span><span class="err">){</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;jsp:forward</span> <span class="na">page=</span><span class="s">"login_success.jsp"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">"uname"</span> <span class="na">value=</span><span class="s">"&lt;%=name%&gt;"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/jsp:forward&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;jsp:forward</span> <span class="na">page=</span><span class="s">"login_failure.html"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="err">}</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="登录成功页">登录成功页</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;center&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>登录成功<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;h2&gt;</span>欢迎<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"red"</span><span class="nt">&gt;&lt;</span><span class="err">%=</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">uname</span><span class="err">")%</span><span class="nt">&gt;&lt;/font&gt;</span>光临！<span class="nt">&lt;h2&gt;</span>
+		<span class="nt">&lt;/center&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="登录失败页">登录失败页</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>登录失败，请<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"login.html"</span><span class="nt">&gt;</span>重新登录<span class="nt">&lt;/a&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>jdbc链接mysql数据库，在显示中文时，出现乱码，目前还没有解决。</p>
+</blockquote>
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

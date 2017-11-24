@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - javaweb开发基础篇之JavaBean</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/08/13/javaweb-%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%AF%87%E4%B9%8B-JavaBean.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  August 13, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">javaweb开发基础篇之JavaBean</h1>
+
+<div id="post">
+  <h2 id="目录">目录</h2>
+
+<ul>
+  <li>
+    <p><a href="#1">1 JavaBean简介</a></p>
+  </li>
+  <li>
+    <p><a href="#2">2 在JSP中使用JavaBean</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#2.1">2.1 web开发的标准目录结构</a></p>
+      </li>
+      <li>
+        <p><a href="#2.2">2.2 使用JSP的page指令导入所需要的JavaBean</a></p>
+      </li>
+      <li>
+        <p><a href="#2.3">2.3 使用<code class="highlighter-rouge">&lt;jsp:useBean/&gt;</code>指令</a></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#3">3 JavaBean与表单</a></p>
+  </li>
+  <li>
+    <p><a href="#4">4 设置属性<code class="highlighter-rouge">&lt;jsp:setProperty/&gt;</code></a></p>
+  </li>
+  <li>
+    <p><a href="#5">5 取得属性<code class="highlighter-rouge">&lt;jsp:getProperty/&gt;</code></a></p>
+  </li>
+  <li>
+    <p><a href="#6">6 JavaBean的保存范围</a></p>
+  </li>
+  <li>
+    <p><a href="#7">7 删除JavaBean</a></p>
+  </li>
+  <li>
+    <p><a href="#8">8 实例操作：注册验证</a></p>
+  </li>
+  <li>
+    <p><a href="#9">9 DAO设计模式</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#9.1">9.1 DAO设计模式简介</a></p>
+      </li>
+      <li>
+        <p><a href="#9.2">9.2 DAO开发</a></p>
+
+        <ul>
+          <li>
+            <p><a href="#9.2.1">9.2.1 VO类设计</a></p>
+          </li>
+          <li>
+            <p><a href="#9.2.2">9.2.2 数据库连接及数据库工厂模式设计</a></p>
+          </li>
+          <li>
+            <p><a href="#9.2.3">9.2.3 DAO设计模式</a></p>
+          </li>
+          <li>
+            <p><a href="#9.2.4">9.2.4 测试类</a></p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="#9.3">9.3 JSP调用DAO</a></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 JavaBean简介</h2>
+
+<p>  JavaBean是使用java语言开发的一个可重用组件，在JSP开发中可以使用JavaBean减少重复代码，使整个JSP代码开发更加简洁。</p>
+
+<p>  jsp与JavaBean搭配使用的优点：</p>
+
+<p>  1. 可以将HTML代码和java代码相分离，主要是为了日后维护的方便</p>
+
+<p>  2. 可以利用JavaBean的优点。将常用到的程序写成JavaBean组件，当JSP使用时，只要调用JavaBean组件来执行用户所需要的功能即可，可以节省开发的时间。</p>
+
+<p>  在JSP中如果使用JSP提供的JavaBean标签来操作简单类，必须满足如下开发要求：</p>
+
+<p>  1. 所有的类必须放在一个包中，在web中没有包的类是不存在的</p>
+
+<p>  2. 所有的类必须声明为 public class ，这样才能被外部访问</p>
+
+<p>  3. 类种所有的属性必须封装，即使用private修饰</p>
+
+<p>  4. 封装的属性如果需要被外部操作，必须编写对应的 setter 和 getter 方法</p>
+
+<p>  5. 在一个JavaBean中至少存在一个无参构造方法，此方法为JSP中标签所用</p>
+
+<p>  第一个JavaBean组件-SimpleBean.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">demo</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">SimpleBean</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">int</span> <span class="n">age</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setAge</span><span class="p">(</span><span class="n">int</span> <span class="n">age</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">=</span> <span class="n">age</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">getAge</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">toString</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="s2">"姓名："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">+</span><span class="s2">"，年龄："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>如果一个类中只包含了属性和 setter、getter，那么这种类就称为简单的JavaBean。类似的这种称呼有：POJO(Plain Ordinary Java Objects)，简单的java对象、VO(Value Object)，值对象、TO(Transfers Object)，传输对象</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h2 id="2">2 在JSP中使用JavaBean</h2>
+
+<h3 id="2.1">2.1 web开发的标准目录结构</h3>
+
+<p>  web开发的标准目录结构</p>
+
+<p><code class="highlighter-rouge">webroot/(WEB-INF/(web.xml/(lib|classes|tags))|jsp|js|css|images|index.jsp)</code></p>
+
+<p>  web项目各个目录的作用：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>NO.</th>
+      <th style="text-align: center">目录或者文件名称</th>
+      <th style="text-align: right">作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td style="text-align: center">webroot</td>
+      <td style="text-align: right">根目录，虚拟目录直接指向此文件夹，此文件夹下必然包含WEB-INF文件夹</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td style="text-align: center">WEB-INF</td>
+      <td style="text-align: right">最安全的文件夹，保存各种类，第三方jar包，配置文件等</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td style="text-align: center">web.xml</td>
+      <td style="text-align: right">web的部署描述符</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td style="text-align: center">classes</td>
+      <td style="text-align: right">保存所有的JavaBean，如果不存在可以手工创建</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td style="text-align: center">lib</td>
+      <td style="text-align: right">保存所有的第三方jar文件</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td style="text-align: center">tags</td>
+      <td style="text-align: right">保存所有的标签文件</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td style="text-align: center">jsp</td>
+      <td style="text-align: right">存放所有的*.jsp文件，一般根据功能再创建子文件夹</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td style="text-align: center">js</td>
+      <td style="text-align: right">存放所有的*.js文件</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td style="text-align: center">css</td>
+      <td style="text-align: right">样式表文件的保存路径</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td style="text-align: center">images</td>
+      <td style="text-align: right">存放所有图片，如<em>.gif、</em>.jpg文件</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>  在WEB-INF文件夹下建立classes文件夹，写入一个简单的JavaBean程序-SimpleBean.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">demo</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">SimpleBean</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">int</span> <span class="n">age</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setAge</span><span class="p">(</span><span class="n">int</span> <span class="n">age</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">=</span> <span class="n">age</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">getAge</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">toString</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="s2">"姓名："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">+</span><span class="s2">"，年龄："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>在编译时，可以直接通过打包编译：<code class="highlighter-rouge">javac -d . -encoding utf-8 SimlpleBean.java</code>，这样可以直接将编译后的class文件放在定义的包中</p>
+</blockquote>
+
+<h3 id="2.2">2.2 使用JSP的page指令导入所需要的JavaBean</h3>
+
+<p>  此种方法就相当于导入了相应的class文件的包</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"cn.fmz.demo.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">SimpleBean</span> <span class="na">simple =</span><span class="err"> </span><span class="s">new</span> <span class="na">SimpleBean</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">simple</span><span class="err">.</span><span class="na">setName</span><span class="err">("冯孟昭")</span> <span class="err">;</span>
+			<span class="na">simple</span><span class="err">.</span><span class="na">setAge</span><span class="err">(</span><span class="na">25</span><span class="err">)</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;&lt;</span><span class="err">%=</span><span class="na">simple</span><span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2.3">2.3 使用<jsp:useBean />指令</h3>
+
+<p>  除了import语句之外，还可以使用<jsp:useBean>JSP标签来完JSP对JavaBean的使用，代码格式如下：</jsp:useBean></p>
+
+<p><code class="highlighter-rouge">&lt;jsp:useBean id="实例化对象的名称" scope="保存范围" class="包.类名称"/&gt;</code></p>
+
+<blockquote>
+  <p>scope一共有四种属性范围：page、request、session、application。</p>
+</blockquote>
+
+<p>  如果修改了JavaBean，则在编译之后，需要重新启动浏览器才能完成对新的JavaBean的加载，如果想要Tomcat服务器实时更新JavaBean的修改，需要修改Tomcat配置文件conf/server.xml：<code class="highlighter-rouge">&lt;Context path="/fmz" docBase="D:\fmzwebDemo" reloadable="true"/&gt;</code></p>
+
+<blockquote>
+  <p>注意：当真正的项目运行的时候，一定要将reloadable设置为false，因为不断的加载会使系统运行的性能比较低；Tomcat重新加载新的内容后，所有的操作都将初始化，所有设置过的session属性都将消失。</p>
+</blockquote>
+
+<p>  使用<code class="highlighter-rouge">&lt;jsp:useBean/&gt;</code>标签指令的时候，可以直接进行对象的实例化，在开发中带来了很多方便，其内部的实现原理是反射机制完成的，其中要求的 包.类名称 和 无参构造方法 都是反射机制的前提条件。</p>
+
+<h3 id="3">3 JavaBean与表单</h3>
+
+<p>  在JavaBean语法中，实际上最大的特点就是与表单的交互上</p>
+
+<p>  输入表单-input_bean.html</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"input_bean.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;&lt;br&gt;</span>
+			年龄：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"age"</span><span class="nt">&gt;&lt;br&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  JSP文件接收参数-input_bean.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"cn.fmz.demo.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">SimpleBean</span> <span class="na">simple =</span><span class="err"> </span><span class="s">new</span> <span class="na">SimpleBean</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">simple</span><span class="err">.</span><span class="na">setName</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">name</span><span class="err">"))</span> <span class="err">;</span>
+			<span class="na">simple</span><span class="err">.</span><span class="na">setAge</span><span class="err">(</span><span class="na">Integer</span><span class="err">.</span><span class="na">parseInt</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">age</span><span class="err">")))</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h2&gt;&lt;</span><span class="err">%=</span><span class="na">simple</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>这样的方式，如果接收表单的参数过多的话，接收起来非常麻烦。</p>
+</blockquote>
+
+<p>  使用JavaBean标签来接受参数，编写JSP文件-input_bean01.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;jsp:useBean</span> <span class="na">id=</span><span class="s">"simple"</span> <span class="na">scope=</span><span class="s">"page"</span> <span class="na">class=</span><span class="s">"cn.fmz.demo.SimpleBean"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;jsp:setProperty</span> <span class="na">name=</span><span class="s">"simple"</span> <span class="na">property=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;h2&gt;&lt;</span><span class="err">%=</span><span class="na">simple</span><span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  <code class="highlighter-rouge">&lt;jsp:setProperty name="javaBean对象" property="*"/&gt;</code>，property表示要操作的属性值，*表示自动匹配(接收所有的参数)。此处的原理是：如果匹配成功，则会自动调用 setter 方法进行内容的设置。</p>
+
+<hr />
+
+<hr />
+
+<h2 id="4">4 设置属性 jsp:setProperty</h2>
+
+<p>  设置属性的操作</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>NO.</th>
+      <th style="text-align: center">类型</th>
+      <th style="text-align: right">语法格式</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td style="text-align: center">自动匹配</td>
+      <td style="text-align: right">jsp:setProperty name=”实例化对象名称” property=”*”</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td style="text-align: center">指定属性</td>
+      <td style="text-align: right">jsp:setProperty name=”实例化对象名称” property=”属性名称”</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td style="text-align: center">指定参数</td>
+      <td style="text-align: right">jsp:setProperty name=”实例化对象名称” property=”属性名称” param=”参数”</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td style="text-align: center">指定内容</td>
+      <td style="text-align: right">jsp:setProperty name=”实例化对象名称” property=”属性名称” value=”内容”</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<hr />
+
+<h2 id="5">5 取得属性 jsp:getProperty</h2>
+
+<p>  取得属性格式：</p>
+
+<p><code class="highlighter-rouge">&lt;jsp:getProperty name="实例化对象名称" property="属性名称"/&gt;</code></p>
+
+<p>  此标签取得属性的原理是：自动调用JavaBean中的 getter 方法。</p>
+
+<hr />
+
+<hr />
+
+<h2 id="6">6 JavaBean的保存范围</h2>
+
+<p>  在<code class="highlighter-rouge">&lt;jsp:useBean/&gt;</code>标签的指令上存在一个scope属性，表示一个JavaBean的保存范围，共有四种保存范围：</p>
+
+<p>  1. page：保存在一个页的范围之内，跳转后此JavaBean无效</p>
+
+<p>  2. request：一个JavaBean可以保存在一次服务器的跳转的范围中</p>
+
+<p>  3. session：在一个用户的操作范围中保存，重新打开浏览器才会才生新的JavaBean</p>
+
+<p>  4. application：在整个服务器上保存，服务器关闭时才会消失</p>
+
+<hr />
+
+<hr />
+
+<h2 id="7">7 删除JavaBean</h2>
+
+<p>  如果一个JavaBean不再使用，可以使用四个属性范围的方法进行删除：</p>
+
+<p>  1. 删除page范围的JavaBean：pageContext.rsemoveAttribute(JavaBean 名称)</p>
+
+<p>  2. 删除request范围的JavaBean：request.removeAttribute(JavaBean 名称)</p>
+
+<p>  3. 删除session范围的JavaBean：session.removeAttribute(JavaBean 名称)</p>
+
+<p>  4. 删除application范围的JavaBean：application.removeAttribute(JavaBean 名称)</p>
+
+<hr />
+
+<hr />
+
+<h2 id="8">8 实例操作：注册验证</h2>
+
+<p>  JavaBean文件-Register.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">demo</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">Register</span><span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">age</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">email</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">Map</span><span class="p">&lt;</span><span class="k">String</span><span class="p">,</span><span class="k">String</span><span class="p">&gt;</span> <span class="n">errors</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+
+	<span class="k">public</span> <span class="n">Register</span><span class="p">(){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s2">""</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">=</span> <span class="s2">""</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">email</span> <span class="p">=</span> <span class="s2">""</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">errors</span> <span class="p">=</span> <span class="n">new</span> <span class="n">HashMap</span><span class="p">&lt;</span><span class="k">String</span><span class="p">,</span><span class="k">String</span><span class="p">&gt;()</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">boolean</span> <span class="n">isValidate</span><span class="p">(){</span>
+		<span class="k">boolean</span> <span class="n">flag</span> <span class="p">=</span> <span class="nb">true</span> <span class="p">;</span>
+		<span class="k">if</span><span class="p">(</span><span class="c1">! this.name.matches("\\w{6,15}")){
+</span>			<span class="n">flag</span> <span class="p">=</span> <span class="nb">false</span> <span class="p">;</span>
+			<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s2">""</span> <span class="p">;</span>
+			<span class="n">errors</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"errorname"</span><span class="p">,</span><span class="s2">"请输入6~15位字母或者数字"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="c1">! this.email.matches("\\w+@\\w+\\.\\w+\\.?\\w*")){
+</span>			<span class="n">flag</span> <span class="p">=</span> <span class="nb">false</span> <span class="p">;</span>
+			<span class="n">this</span><span class="p">.</span><span class="n">email</span> <span class="p">=</span> <span class="s2">""</span> <span class="p">;</span>
+			<span class="n">errors</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"erroremail"</span><span class="p">,</span><span class="s2">"输入的email地址不合法"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="c1">! this.age.matches("\\d+")){
+</span>			<span class="n">flag</span> <span class="p">=</span> <span class="nb">false</span> <span class="p">;</span>
+			<span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">=</span> <span class="s2">""</span> <span class="p">;</span>
+			<span class="n">errors</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"errorage"</span><span class="p">,</span><span class="s2">"年龄只能是数字"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="n">flag</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getErrorMsg</span><span class="p">(</span><span class="k">String</span> <span class="n">key</span><span class="p">){</span>
+		<span class="k">String</span> <span class="n">value</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">errors</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">return</span> <span class="n">value</span> <span class="p">==</span> <span class="n">null</span> <span class="p">?</span> <span class="s2">""</span> <span class="p">:</span> <span class="n">value</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getEmail</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">email</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getAge</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setEmail</span><span class="p">(</span><span class="k">String</span> <span class="n">email</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">email</span> <span class="p">=</span> <span class="n">email</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setAge</span><span class="p">(</span><span class="k">String</span> <span class="n">age</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">age</span> <span class="p">=</span> <span class="n">age</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">String</span> <span class="n">toString</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="s2">"姓名："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">name</span><span class="p">+</span><span class="s2">"&lt;br&gt;年龄："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">age</span><span class="p">+</span><span class="s2">"&lt;br&gt;E-mail："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">email</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  表单文件-index.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+<span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;jsp:useBean</span> <span class="na">id=</span><span class="s">"reg"</span> <span class="na">scope=</span><span class="s">"request"</span> <span class="na">class=</span><span class="s">"cn.fmz.demo.Register"</span><span class="nt">/&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"check.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">value=</span><span class="s">"&lt;jsp:getProperty name="</span><span class="na">reg</span><span class="err">"</span> <span class="na">property=</span><span class="s">"name"</span><span class="nt">/&gt;</span>"&gt;
+			<span class="nt">&lt;</span><span class="err">%=</span><span class="na">reg</span><span class="err">.</span><span class="na">getErrorMsg</span><span class="err">("</span><span class="na">errorname</span><span class="err">")%</span><span class="nt">&gt;&lt;br&gt;</span>
+			年龄：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"age"</span> <span class="na">value=</span><span class="s">"&lt;jsp:getProperty name="</span><span class="na">reg</span><span class="err">"</span> <span class="na">property=</span><span class="s">"age"</span><span class="nt">/&gt;</span>"&gt;
+			<span class="nt">&lt;</span><span class="err">%=</span><span class="na">reg</span><span class="err">.</span><span class="na">getErrorMsg</span><span class="err">("</span><span class="na">errorage</span><span class="err">")%</span><span class="nt">&gt;&lt;br&gt;</span>
+			邮箱：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"email"</span> <span class="na">value=</span><span class="s">"&lt;jsp:getProperty name="</span><span class="na">reg</span><span class="err">"</span> <span class="na">property=</span><span class="s">"email"</span><span class="nt">/&gt;</span>"&gt;<span class="nt">&lt;</span><span class="err">%</span><span class="na">--</span> <span class="err">表单中加入</span><span class="na">value</span><span class="err">属性的作用是：当只有一个属性错误时，其他属性的内容能保持不变</span> <span class="na">--</span><span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;</span><span class="err">%=</span><span class="na">reg</span><span class="err">.</span><span class="na">getErrorMsg</span><span class="err">("</span><span class="na">erroremail</span><span class="err">")%</span><span class="nt">&gt;&lt;br&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  检查页文件-check.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+<span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;jsp:useBean</span> <span class="na">id=</span><span class="s">"reg"</span> <span class="na">scope=</span><span class="s">"request"</span> <span class="na">class=</span><span class="s">"cn.fmz.demo.Register"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;jsp:setProperty</span> <span class="na">name=</span><span class="s">"reg"</span> <span class="na">property=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">if</span><span class="err">(</span><span class="na">reg</span><span class="err">.</span><span class="na">isValidate</span><span class="err">()){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;jsp:forward</span> <span class="na">page=</span><span class="s">"success.jsp"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;jsp:forward</span> <span class="na">page=</span><span class="s">"index.jsp"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>  成功登陆文件-success.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+<span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;jsp:useBean</span> <span class="na">id=</span><span class="s">"reg"</span> <span class="na">scope=</span><span class="s">"request"</span> <span class="na">class=</span><span class="s">"cn.fmz.demo.Register"</span><span class="nt">/&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;center&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span><span class="na">--</span>
+			<span class="err">姓名：&lt;</span><span class="na">jsp:getProperty</span> <span class="na">name=</span><span class="s">"reg"</span> <span class="na">property=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;br&gt;</span>
+			年龄：<span class="nt">&lt;jsp:getProperty</span> <span class="na">name=</span><span class="s">"reg"</span> <span class="na">property=</span><span class="s">"age"</span><span class="nt">/&gt;&lt;br&gt;</span>
+			E-mail：<span class="nt">&lt;jsp:getProperty</span> <span class="na">name=</span><span class="s">"reg"</span> <span class="na">property=</span><span class="s">"email"</span><span class="nt">/&gt;&lt;br&gt;</span>
+		--%&gt;
+			<span class="nt">&lt;</span><span class="err">%=</span><span class="na">reg</span><span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/h2&gt;</span>
+	<span class="nt">&lt;/center&gt;</span>
+	
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="9">9 DAO设计模式</h2>
+
+<p>  DAO(Data Access Object，数据访问对象)的主要功能是数据操作，在程序的标砖开发构架中属于数据层的操作。</p>
+
+<h3 id="9.1">9.1 DAO设计模式简介</h3>
+
+<p>  程序的标准开发框架</p>
+
+<p>  客户层(Client) –&gt; 显示层(JSP/Servlet) –&gt; 业务层(BO) –&gt; 数据层(DAO) –&gt; 资源层(DataBase)</p>
+
+<p>  客户层：因为现在都使用B/S开发框架，所以一般使用浏览器进行访问。</p>
+
+<p>  显示层：使用JSP/Servlet进行页面效果的显示。</p>
+
+<p>  业务层(Bussiness Object)：会将多个原子性的DAO操作进行组合，组成完整的一个业务逻辑。</p>
+
+<p>  数据层(DAO)：提供多个原子性的DAO操作，如增加、修改、删除等都属于原子性操作。</p>
+
+<p>  DAO由以下几个部分组成：</p>
+
+<p>  DatabaseConnction：专门负责数据库的打开与关闭操作。</p>
+
+<p>  VO：主要由属性、setter、getter方法组成，VO类中的属性与表中的字段相对应，每一个VO类的对象都表示表中的每一条记录。</p>
+
+<p>  DAO：主要定义操作的接口，定义一系列数据库的原子性操作，如增加、修改、删除、按ID查询等。</p>
+
+<p>  Impl：DAO接口的真实实现类，完成具体的数据库操作，但是不负责数据的打开和关闭。</p>
+
+<p>  Proxy：代理实现类，主要完成数据库的打开和关闭，并且调用真实实现类对象的操作。</p>
+
+<p>  Factory：工厂类，通过工厂取得一个DAO的实例化对象。</p>
+
+<p>  包的命名规范：</p>
+
+<p>  数据库连接：xxx.dbc.DatabaseConnection。</p>
+
+<p>  DAO接口：xxx.dao.XxxDAO。</p>
+
+<p>  DAO接口的真实实现类：xxx.dao.impl.XxxDAOImpl。</p>
+
+<p>  DAO接口的代理实现类：xxx.dao.proxy.XxxDAOProxy。</p>
+
+<p>  VO类：xxx.vo.Xxx。VO的命名要与表的命名一致。</p>
+
+<p>  工厂类：xxx.factory.DAOFactory。</p>
+
+<h3 id="9.2">9.2 DAO开发</h3>
+
+<p>  DAO开发完全是围绕着数据操作进行的。</p>
+
+<h4 id="9.2.1">9.2.1 VO类设计</h4>
+
+<p>  定义对应的VO类-Emp.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">vo</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">Date</span> <span class="p">;</span>
+<span class="k">public</span> <span class="n">class</span> <span class="n">Emp</span><span class="p">{</span>
+	<span class="n">private</span> <span class="n">int</span> <span class="n">empno</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">ename</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">job</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">Date</span> <span class="n">hiredate</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">float</span> <span class="n">sal</span> <span class="p">;</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setEmpno</span><span class="p">(</span><span class="n">int</span> <span class="n">empno</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">empno</span> <span class="p">=</span> <span class="n">empno</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setEname</span><span class="p">(</span><span class="k">String</span> <span class="n">ename</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">ename</span> <span class="p">=</span> <span class="n">ename</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setJob</span><span class="p">(</span><span class="k">String</span> <span class="n">job</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">job</span> <span class="p">=</span> <span class="n">job</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setHiredate</span><span class="p">(</span><span class="n">Date</span> <span class="n">date</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">hiredate</span> <span class="p">=</span> <span class="n">date</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setSal</span><span class="p">(</span><span class="n">Float</span> <span class="n">sal</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">sal</span> <span class="p">=</span> <span class="n">sal</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="n">getEmpno</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">empno</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getEname</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">ename</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getJob</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">job</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">Date</span> <span class="n">getHiredate</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">hiredate</span> <span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">float</span> <span class="n">getSal</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">sal</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">String</span> <span class="n">toString</span><span class="p">(){</span>
+		<span class="n">return</span> <span class="s2">"雇员编号："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">empno</span><span class="p">+</span><span class="s2">"，雇员姓名："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">ename</span><span class="p">+</span><span class="s2">"，雇员工作"</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">job</span><span class="p">+</span><span class="s2">"，雇佣日期："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">hiredate</span><span class="p">+</span><span class="s2">"，雇员工资："</span><span class="p">+</span><span class="n">this</span><span class="p">.</span><span class="n">sal</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>每一个VO类的对象，表示表中的一条记录，包括属性和一系列 getter 和 setter 方法，注意：此处使用的日期格式是 java.util.Date 类。</p>
+</blockquote>
+
+<h4 id="9.2.2">9.2.2 数据库连接及数据库工厂模式设计</h4>
+
+<p>  定义数据库连接</p>
+
+<blockquote>
+  <p>数据库为了实现在不同的数据库下都能连接成功，需要创建接口和工厂模式进行取得。</p>
+</blockquote>
+
+<p>  1. 定义数据库接口-IDatabaseConnection.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dbc</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">sql</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">interface</span> <span class="n">IDatabaseConnection</span><span class="p">{</span>
+
+	<span class="k">public</span> <span class="n">Connection</span> <span class="n">getConnection</span><span class="p">()</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">;</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">close</span><span class="p">()</span> <span class="n">throws</span> <span class="n">Exception</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  2. 定义 MySQL 数据库的连接实现类-MySQLDatabaseConnection.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dbc</span><span class="p">.</span><span class="n">impl</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">sql</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dbc</span><span class="p">.</span><span class="n">IDatabaseConnection</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">MySQLDatabaseConnection</span> <span class="n">implements</span> <span class="n">IDatabaseConnection</span><span class="p">{</span>
+
+	<span class="k">public</span> <span class="n">static</span> <span class="n">final</span> <span class="k">String</span> <span class="n">DBDRIVER</span> <span class="p">=</span> <span class="s2">"org.gjt.mm.mysql.Driver"</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">final</span> <span class="k">String</span> <span class="n">DBURL</span> <span class="p">=</span> <span class="s2">"jdbc:mysql://localhost:3306/mldn"</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">final</span> <span class="k">String</span> <span class="n">DBUSER</span> <span class="p">=</span> <span class="s2">"root"</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">final</span> <span class="k">String</span> <span class="n">DBPASSWORD</span> <span class="p">=</span> <span class="s2">"mysqladmin"</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">Connection</span> <span class="n">conn</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+
+	<span class="k">public</span> <span class="n">MySQLDatabaseConnection</span><span class="p">()</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">Class</span><span class="p">.</span><span class="n">forName</span><span class="p">(</span><span class="n">DBDRIVER</span><span class="p">)</span> <span class="p">;</span>
+			<span class="n">this</span><span class="p">.</span><span class="n">conn</span> <span class="p">=</span> <span class="n">DriverManager</span><span class="p">.</span><span class="n">getConnection</span><span class="p">(</span><span class="n">DBURL</span><span class="p">,</span><span class="n">DBUSER</span><span class="p">,</span><span class="n">DBPASSWORD</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">throw</span> <span class="n">e</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">Connection</span> <span class="n">getConnection</span><span class="p">()</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">return</span> <span class="n">this</span><span class="p">.</span><span class="n">conn</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">throw</span> <span class="n">e</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="k">public</span> <span class="n">void</span> <span class="n">close</span><span class="p">()</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">conn</span> <span class="c1">!= null){
+</span>			<span class="n">try</span><span class="p">{</span>
+				<span class="n">this</span><span class="p">.</span><span class="n">conn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+			<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+				<span class="n">throw</span> <span class="n">e</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  3. 定义数据库连接工厂管理器-DatabaseConnectionFactoryManager.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">factory</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dbc</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dbc</span><span class="p">.</span><span class="n">impl</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">exception</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">DatabaseConnectionFactoryManager</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">IDatabaseConnection</span> <span class="n">getDatabaseConnectionFactory</span><span class="p">(</span><span class="k">String</span> <span class="n">DB</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		
+		<span class="k">if</span><span class="p">(</span><span class="n">DB</span><span class="p">.</span><span class="n">equalsIgnoreCase</span><span class="p">(</span><span class="s2">"MySQL"</span><span class="p">)){</span>
+			<span class="n">try</span><span class="p">{</span>
+				<span class="n">return</span> <span class="n">new</span> <span class="n">MySQLDatabaseConnection</span><span class="p">()</span> <span class="p">;</span>
+			<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+				<span class="n">throw</span> <span class="n">e</span> <span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="n">throw</span> <span class="n">new</span> <span class="n">ErrorSQLConnectionException</span><span class="p">(</span><span class="s2">"Error SQL request"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="p">/*</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">DB</span><span class="p">.</span><span class="n">equalsIgnoreCase</span><span class="p">(</span><span class="s2">"SQL Server"</span><span class="p">)){</span>
+			<span class="n">return</span> <span class="n">new</span> <span class="n">SQLServerDatabaseConnection</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="n">throw</span> <span class="n">new</span> <span class="n">ErrorSQLConnectionException</span><span class="p">(</span><span class="s2">"Error SQL request"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="n">DB</span><span class="p">.</span><span class="n">equalsIgnoreCase</span><span class="p">(</span><span class="s2">"Oracle"</span><span class="p">)){</span>
+			<span class="n">return</span> <span class="n">new</span> <span class="n">OracleDatabaseConnection</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="n">throw</span> <span class="n">new</span> <span class="n">ErrorSQLConnectionException</span><span class="p">(</span><span class="s2">"Error SQL request"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="p">*/</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>数据库连接工厂管理器里面定义了工厂方法：<code class="highlighter-rouge">getDatabaseConnectionFactory(String DB)</code>，通过此方法可以取得不同数据库的连接，当参数输入不正确时会抛出异常。</p>
+</blockquote>
+
+<blockquote>
+  <p>注意：放回的类型的接口的类型，这是java程序设计语言对象多态性的设计模式。</p>
+</blockquote>
+
+<p>  4. 数据库连接错误异常抛出类-ErrorSQLConnectionException.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">exception</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">ErrorSQLConnectionException</span> <span class="n">extends</span> <span class="n">Exception</span><span class="p">{</span> 
+	<span class="k">public</span> <span class="n">ErrorSQLConnectionException</span><span class="p">(</span><span class="k">String</span> <span class="n">str</span><span class="p">){</span>
+		<span class="n">super</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  通过以上4个接口和类，可以取得不同的数据库连接：<code class="highlighter-rouge">DatabaseConnectionFactoryManager.getDatabaseConnectionFactory("mysql")</code>方法会返回一个<code class="highlighter-rouge">new MySQLDatabaseConnection() ;</code>，放回类型为：<code class="highlighter-rouge">IDatabaseConnection</code>，通过自动向上转型完成子类对父类接口的实例化，体现出了JAVA语言的对象的多态性。</p>
+
+<h4 id="9.2.3">9.2.3 DAO设计模式</h4>
+
+<p>  在DAO设计模式中，最重要的就是定义DAO接口，在进行DAO接口定义之前必须对业务进行详细的分析，要清楚知道一张表在一个系统之中应该具备何种功能。</p>
+
+<p>  1. 定义DAO操作接口-IEmpDAO.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dao</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">vo</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">interface</span> <span class="n">IEmpDAO</span><span class="p">{</span>
+
+	<span class="p">/**</span>
+	  <span class="p">*</span> <span class="err">数据的增加操作，命名规范为：</span><span class="n">doXxx</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">emp</span> <span class="err">要增加的数据对象</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="err">是否增加成功的标记</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">throws</span> <span class="n">Exception</span> <span class="err">有异常交给别调用处处理</span>
+	  <span class="p">*/</span>
+	<span class="k">public</span> <span class="k">boolean</span> <span class="n">doCreate</span><span class="p">(</span><span class="n">Emp</span> <span class="n">emp</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">;</span>
+
+	<span class="p">/**</span>
+	  <span class="p">*</span> <span class="err">查询全部的数据，命名规范：</span><span class="n">findXxx</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">keyWord</span> <span class="err">查询关键字</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="err">返回全都的查询结果，每一个</span><span class="n">Emp</span><span class="err">对象表示表的一行记录</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">throws</span> <span class="n">Exception</span> <span class="err">有异常交给别调用处处理</span>
+	  <span class="p">*/</span>
+	<span class="k">public</span> <span class="k">List</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;</span> <span class="n">findAll</span><span class="p">(</span><span class="k">String</span> <span class="n">keyWord</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span> <span class="p">;</span>
+
+	<span class="p">/**</span>
+	  <span class="p">*</span> <span class="err">根据雇员标号查询雇员信息，</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="k">List</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;(</span><span class="n">retutn</span> <span class="n">type</span><span class="p">)</span> <span class="err">返回多条查询结果</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">empno</span> <span class="err">雇员编号</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="err">雇员的</span><span class="n">VO</span><span class="err">对象</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">throws</span> <span class="n">Exception</span> <span class="err">有异常交给别调用处处理</span>
+	  <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">Emp</span> <span class="n">findById</span><span class="p">(</span><span class="n">int</span> <span class="n">empo</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span> <span class="p">;</span>
+
+	<span class="p">/**</span>
+	  <span class="p">*</span><span class="err">判断雇员在数据库中是否存在</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">Emp</span> <span class="err">要查询的数据对象</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="err">范围布尔值，存在，返回</span><span class="nb">true</span><span class="err">；不存在，返回</span><span class="nb">false</span>
+	  <span class="p">*</span> <span class="p">@</span><span class="n">throws</span> <span class="n">Exception</span> <span class="err">有异常交给别调用处处理</span>
+	  <span class="p">*/</span>
+	<span class="k">public</span> <span class="k">boolean</span> <span class="nb">exists</span><span class="p">(</span><span class="n">Emp</span> <span class="n">emp</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">;</span>
+	
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  DAO接口完成之后要定义具体的实现类，一种是真实主题实现类，另一种是代理操作类，真实主题负责数据库的具体操作，代理主题负责数据库的关闭操作。</p>
+
+<p>  2. 真实主题实现类-EmpDAOImpl.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="n">impl</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">sql</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dao</span><span class="p">.*</span> <span class="p">;</span> 
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">vo</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">EmpDAOImpl</span> <span class="n">implements</span> <span class="n">IEmpDAO</span><span class="p">{</span>
+	<span class="n">private</span> <span class="n">Connection</span> <span class="n">conn</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">PreparedStatement</span> <span class="n">pstmt</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">EmpDAOImpl</span><span class="p">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="p">){</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">conn</span> <span class="p">=</span> <span class="n">conn</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">boolean</span> <span class="n">doCreate</span><span class="p">(</span><span class="n">Emp</span> <span class="n">emp</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="k">boolean</span> <span class="n">flag</span> <span class="p">=</span> <span class="nb">false</span> <span class="p">;</span>
+		<span class="k">String</span> <span class="n">sql</span> <span class="p">=</span> <span class="s2">"INSERT INTO emp(empno,ename,job,hiredate,sal) VALUES(?,?,?,?,?)"</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">conn</span><span class="p">.</span><span class="n">prepareStatement</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">emp</span><span class="p">.</span><span class="n">getEmpno</span><span class="p">())</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">setString</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="n">emp</span><span class="p">.</span><span class="n">getEname</span><span class="p">())</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">setString</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="n">emp</span><span class="p">.</span><span class="n">getJob</span><span class="p">())</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="nf">setDate</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="n">new</span> <span class="n">java</span><span class="p">.</span><span class="n">sql</span><span class="p">.</span><span class="n">Date</span><span class="p">(</span><span class="n">emp</span><span class="p">.</span><span class="n">getHiredate</span><span class="p">().</span><span class="nf">getTime</span><span class="p">()))</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">setFloat</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="n">emp</span><span class="p">.</span><span class="n">getSal</span><span class="p">())</span> <span class="p">;</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">executeUpdate</span><span class="p">()</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">){</span>
+			<span class="n">flag</span> <span class="p">=</span> <span class="nb">true</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">return</span> <span class="n">flag</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">List</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;</span> <span class="n">findAll</span><span class="p">(</span><span class="k">String</span> <span class="n">keyWord</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="k">List</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;</span> <span class="k">list</span> <span class="p">=</span> <span class="n">new</span> <span class="n">ArrayList</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;()</span> <span class="p">;</span>
+		<span class="k">String</span> <span class="n">sql</span> <span class="p">=</span> <span class="s2">"SELECT empno,ename,job,hiredate,sal FROM emp WHERE ename LIKE ? OR job LIKE ?"</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">conn</span><span class="p">.</span><span class="n">prepareStatement</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">setString</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s2">"%"</span><span class="p">+</span><span class="n">keyWord</span><span class="p">+</span><span class="s2">"%"</span><span class="p">)</span> <span class="p">;//</span><span class="err">百分号是模糊查询的作用</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">setString</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="s2">"%"</span><span class="p">+</span><span class="n">keyWord</span><span class="p">+</span><span class="s2">"%"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">executeQuery</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">Emp</span> <span class="n">emp</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="k">while</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="k">next</span><span class="p">()){</span>
+			<span class="n">emp</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Emp</span><span class="p">()</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setEmpno</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getInt</span><span class="p">(</span><span class="m">1</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setEname</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="m">2</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setJob</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="m">3</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setHiredate</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="nf">getDate</span><span class="p">(</span><span class="m">4</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setSal</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="m">5</span><span class="p">))</span> <span class="p">;</span>
+			<span class="k">list</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">emp</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">return</span> <span class="k">list</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">Emp</span> <span class="n">findById</span><span class="p">(</span><span class="n">int</span> <span class="n">empno</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="k">String</span> <span class="n">sql</span> <span class="p">=</span> <span class="s2">"SELECT empno,ename,job,hiredate,sal FROM emp WHERE empno LIKE ?"</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">conn</span><span class="p">.</span><span class="n">prepareStatement</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">empno</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">executeQuery</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">Emp</span> <span class="n">emp</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="k">while</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="k">next</span><span class="p">()){</span>
+			<span class="n">emp</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Emp</span><span class="p">()</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setEmpno</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getInt</span><span class="p">(</span><span class="m">1</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setEname</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="m">2</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setJob</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="m">3</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setHiredate</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="nf">getDate</span><span class="p">(</span><span class="m">4</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setSal</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="m">5</span><span class="p">))</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">pstmt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">return</span> <span class="n">emp</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">boolean</span> <span class="nb">exists</span><span class="p">(</span><span class="n">Emp</span> <span class="n">emp</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">return</span>  <span class="n">this</span><span class="p">.</span><span class="n">findById</span><span class="p">(</span><span class="n">emp</span><span class="p">.</span><span class="n">getEmpno</span><span class="p">())</span> <span class="p">==</span> <span class="n">null</span> <span class="p">?</span> <span class="nb">false</span> <span class="p">:</span> <span class="nb">true</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  3. 代理主题实现类-EmpDAOProxy.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="n">proxy</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dao</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="n">impl</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dbc</span><span class="p">.</span><span class="n">IDatabaseConnection</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">factory</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">vo</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">EmpDAOProxy</span> <span class="n">implements</span> <span class="n">IEmpDAO</span><span class="p">{</span>
+	<span class="p">//</span><span class="n">private</span> <span class="n">DatabaseConnection</span> <span class="n">dbconn</span> <span class="p">=</span>	<span class="n">null</span> <span class="p">;</span>
+	<span class="p">//</span><span class="n">private</span> <span class="n">MySQLDatabaseConnection</span> <span class="n">msql_dbconn</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">IDatabaseConnection</span> <span class="n">msql_dbconn</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">IEmpDAO</span> <span class="n">dao</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="n">EmpDAOProxy</span><span class="p">()</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">msql_dbconn</span> <span class="p">=</span> <span class="n">DatabaseConnectionFactoryManager</span><span class="p">.</span><span class="n">getDatabaseConnectionFactory</span><span class="p">(</span><span class="s2">"mysql"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">dao</span> <span class="p">=</span> <span class="n">new</span> <span class="n">EmpDAOImpl</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">msql_dbconn</span><span class="p">.</span><span class="n">getConnection</span><span class="p">())</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">boolean</span> <span class="n">doCreate</span><span class="p">(</span><span class="n">Emp</span> <span class="n">emp</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="k">boolean</span> <span class="n">flag</span> <span class="p">=</span> <span class="nb">false</span> <span class="p">;</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="n">findById</span><span class="p">(</span><span class="n">emp</span><span class="p">.</span><span class="n">getEmpno</span><span class="p">())</span> <span class="p">==</span> <span class="n">null</span><span class="p">){</span>
+				<span class="n">flag</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="n">doCreate</span><span class="p">(</span><span class="n">emp</span><span class="p">)</span> <span class="p">;</span>
+			<span class="p">}</span>
+		
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">throw</span> <span class="n">e</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">finally</span><span class="p">{</span>
+			<span class="n">this</span><span class="p">.</span><span class="n">msql_dbconn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="n">flag</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">List</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;</span> <span class="n">findAll</span><span class="p">(</span><span class="k">String</span> <span class="n">keyWord</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="k">List</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;</span> <span class="k">list</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="k">list</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="n">findAll</span><span class="p">(</span><span class="n">keyWord</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">throw</span> <span class="n">e</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">finally</span><span class="p">{</span>
+			<span class="n">this</span><span class="p">.</span><span class="n">msql_dbconn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="k">list</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">Emp</span> <span class="n">findById</span><span class="p">(</span><span class="n">int</span> <span class="n">empno</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">Emp</span> <span class="n">emp</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">emp</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="n">findById</span><span class="p">(</span><span class="n">empno</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">throw</span> <span class="n">e</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">finally</span><span class="p">{</span>
+			<span class="n">this</span><span class="p">.</span><span class="n">msql_dbconn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="n">emp</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">boolean</span> <span class="nb">exists</span><span class="p">(</span><span class="n">Emp</span> <span class="n">emp</span><span class="p">)</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="k">boolean</span> <span class="n">flag</span> <span class="p">=</span> <span class="nb">false</span> <span class="p">;</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">flag</span> <span class="p">=</span> <span class="n">this</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="nb">exists</span><span class="p">(</span><span class="n">emp</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">throw</span> <span class="n">e</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">finally</span><span class="p">{</span>
+			<span class="n">this</span><span class="p">.</span><span class="n">msql_dbconn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="n">flag</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>可以发现：在代理类的构造方法中实例化了数据库连接类的对象以及真实主题的实现类，而在代理类的各个方法中知识调用了真实主题类的相应方法。</p>
+</blockquote>
+
+<blockquote>
+  <p>可以在代理类中加入事务控制。</p>
+</blockquote>
+
+<blockquote>
+  <p>在这里之所以要加入代理类，主要是为以后进行更复杂的业务准备的，这样可以有效的避免程序的耦合度过高的问题，在简单的代码中作用并不明显。</p>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <p>如果一个程序可以由A–&gt;B，那么中间最好加一个过渡，使用A–&gt;C–&gt;B的形式，目的是避免程序的耦合度过高。</p>
+  </blockquote>
+</blockquote>
+
+<p>  4. DAO工厂类-DAOFactory.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">factory</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dao</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">dao</span><span class="p">.</span><span class="n">proxy</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">DAOFactory</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">IEmpDAO</span> <span class="n">getIEmpDAOInstance</span><span class="p">()</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">return</span> <span class="n">new</span> <span class="n">EmpDAOProxy</span><span class="p">()</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意：返回对象为中间代理类(中间代理类实例化了具体实现类的对象，并且具有对应的处理-此处为数据库的关闭操作)，返回类型为接口类，通过自动向上转型体现Java程序设计语言的对象多态性。</p>
+</blockquote>
+
+<h4 id="9.2.4">9.2.4 测试类</h4>
+
+<p>  1. TestDAOInset.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">test</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">factory</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">vo</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">TestDAOInsert</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">Emp</span> <span class="n">emp</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="p">/*</span>
+		<span class="n">for</span><span class="p">(</span><span class="n">int</span> <span class="n">x</span><span class="p">=</span><span class="m">0</span><span class="p">;</span><span class="n">x</span><span class="p">&lt;</span><span class="m">100</span><span class="p">;</span><span class="n">x</span><span class="p">++){</span>
+			<span class="n">emp</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Emp</span><span class="p">()</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setEmpno</span><span class="p">(</span><span class="m">100</span><span class="p">+</span><span class="n">x</span><span class="p">)</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setEname</span><span class="p">(</span><span class="s2">"陈亮亮-"</span><span class="p">+</span><span class="n">x</span><span class="p">)</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setJob</span><span class="p">(</span><span class="s2">"人力资源专员-"</span><span class="p">+</span><span class="n">x</span><span class="p">)</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setHiredate</span><span class="p">(</span><span class="n">new</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">Date</span><span class="p">())</span> <span class="p">;</span>
+			<span class="n">emp</span><span class="p">.</span><span class="n">setSal</span><span class="p">((</span><span class="n">float</span><span class="p">)(</span><span class="m">500.0</span> <span class="p">*</span> <span class="n">x</span><span class="p">))</span> <span class="p">;</span>
+			<span class="n">DAOFactory</span><span class="p">.</span><span class="n">getIEmpDAOInstance</span><span class="p">().</span><span class="n">doCreate</span><span class="p">(</span><span class="n">emp</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="p">*/</span>
+
+		<span class="n">emp</span> <span class="p">=</span> <span class="n">new</span> <span class="n">Emp</span><span class="p">()</span> <span class="p">;</span>
+		<span class="n">emp</span><span class="p">.</span><span class="n">setEmpno</span><span class="p">(</span><span class="m">0</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">emp</span><span class="p">.</span><span class="n">setEname</span><span class="p">(</span><span class="s2">"陈亮亮"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">emp</span><span class="p">.</span><span class="n">setJob</span><span class="p">(</span><span class="s2">"人力资源总监"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">emp</span><span class="p">.</span><span class="n">setHiredate</span><span class="p">(</span><span class="n">new</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">Date</span><span class="p">())</span> <span class="p">;</span>
+		<span class="n">emp</span><span class="p">.</span><span class="n">setSal</span><span class="p">(</span><span class="m">20000F</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">DAOFactory</span><span class="p">.</span><span class="n">getIEmpDAOInstance</span><span class="p">().</span><span class="n">doCreate</span><span class="p">(</span><span class="n">emp</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  2. TestDAOFindAll.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">test</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">factory</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">vo</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">TestDAOFindAll</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="k">List</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;</span> <span class="k">list</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="k">list</span> <span class="p">=</span> <span class="n">DAOFactory</span><span class="p">.</span><span class="n">getIEmpDAOInstance</span><span class="p">().</span><span class="n">findAll</span><span class="p">(</span><span class="s2">"冯孟昭"</span><span class="p">)</span> <span class="p">;</span>
+
+		<span class="n">Iterator</span><span class="p">&lt;</span><span class="n">Emp</span><span class="p">&gt;</span> <span class="n">itr</span> <span class="p">=</span> <span class="k">list</span><span class="p">.</span><span class="n">iterator</span><span class="p">()</span> <span class="p">;</span>
+		<span class="k">while</span><span class="p">(</span><span class="n">itr</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()){</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">itr</span><span class="p">.</span><span class="k">next</span><span class="p">())</span> <span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  3. TestDAOFindById.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">test</span> <span class="p">;</span>
+
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">factory</span><span class="p">.*</span> <span class="p">;</span>
+<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">vo</span><span class="p">.*</span> <span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">TestDAOFindById</span><span class="p">{</span>
+	<span class="k">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="k">String</span> <span class="n">args</span><span class="p">[])</span><span class="n">throws</span> <span class="n">Exception</span><span class="p">{</span>
+		<span class="n">Emp</span> <span class="n">emp</span> <span class="p">=</span> <span class="n">null</span> <span class="p">;</span>
+		<span class="n">emp</span> <span class="p">=</span> <span class="n">DAOFactory</span><span class="p">.</span><span class="n">getIEmpDAOInstance</span><span class="p">().</span><span class="n">findById</span><span class="p">(</span><span class="m">44444</span><span class="p">)</span> <span class="p">;</span>
+		
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">emp</span><span class="p">)</span> <span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="9.3">9.3 JSP调用DAO</h3>
+
+<p>  1. 增加雇员-emp_insert.jsp、emp_insert_do.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"emp_insert_do.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			雇员编号：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"empno"</span><span class="nt">&gt;&lt;br&gt;</span>
+			雇员姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"ename"</span><span class="nt">&gt;&lt;br&gt;</span>
+			雇员工作：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"job"</span><span class="nt">&gt;&lt;br&gt;</span>
+			雇用日期：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"hiredate"</span><span class="nt">&gt;&lt;br&gt;</span>
+			雇员工资：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"sal"</span><span class="nt">&gt;&lt;br&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>表单jsp文件</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"cn.fmz.factory.*,cn.fmz.vo.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.text.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+			<span class="na">Emp</span> <span class="na">emp =</span><span class="err"> </span><span class="s">new</span> <span class="na">Emp</span><span class="err">()</span> <span class="err">;</span>
+			<span class="na">emp</span><span class="err">.</span><span class="na">setEmpno</span><span class="err">(</span><span class="na">Integer</span><span class="err">.</span><span class="na">parseInt</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">empno</span><span class="err">")))</span> <span class="err">;</span>
+			<span class="na">emp</span><span class="err">.</span><span class="na">setEname</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">ename</span><span class="err">"))</span> <span class="err">;</span>
+			<span class="na">emp</span><span class="err">.</span><span class="na">setJob</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">job</span><span class="err">"))</span> <span class="err">;</span>
+			<span class="na">emp</span><span class="err">.</span><span class="na">setHiredate</span><span class="err">(</span><span class="na">new</span> <span class="na">SimpleDateFormat</span><span class="err">("</span><span class="na">yyy-MM-dd</span><span class="err">").</span><span class="na">parse</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">hiredate</span><span class="err">")))</span> <span class="err">;</span>
+			<span class="na">emp</span><span class="err">.</span><span class="na">setSal</span><span class="err">(</span><span class="na">Float</span><span class="err">.</span><span class="na">parseFloat</span><span class="err">(</span><span class="na">request</span><span class="err">.</span><span class="na">getParameter</span><span class="err">("</span><span class="na">sal</span><span class="err">")))</span> <span class="err">;</span>
+			<span class="na">try</span><span class="err">{</span>
+				<span class="na">if</span><span class="err">(</span><span class="na">DAOFactory</span><span class="err">.</span><span class="na">getIEmpDAOInstance</span><span class="err">().</span><span class="na">doCreate</span><span class="err">(</span><span class="na">emp</span><span class="err">)){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;h3&gt;</span>雇员信息添加成功！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span><span class="na">else</span><span class="err">{</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;h3&gt;</span>雇员信息添加失败！<span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+			<span class="na">e</span><span class="err">.</span><span class="na">printStackTrace</span><span class="err">()</span> <span class="err">;</span>
+		<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>信息添加文件</p>
+</blockquote>
+
+<blockquote>
+  <p>注意：日期的格式要从字符串转换为java.util.Date，转变方法为<code class="highlighter-rouge">new SimpleDateFormat("yyy-MM-dd").parse(request.getParameter("hiredate"))</code></p>
+</blockquote>
+
+<p>  2. 雇员信息模糊查询-emp_list_FuzzyQuery.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"cn.fmz.vo.*,cn.fmz.factory.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+
+			<span class="na">try</span><span class="err">{</span>
+				<span class="na">String</span> <span class="na">keyWord =</span><span class="err"> </span><span class="s">request.getParameter("kw")</span> <span class="err">;</span>
+				<span class="na">if</span><span class="err">(</span><span class="na">keyWord =</span><span class="s">=</span> <span class="na">null</span><span class="err">){</span>
+					<span class="na">keyWord =</span><span class="err"> </span><span class="s">""</span> <span class="err">;</span>
+				<span class="err">}</span>
+				<span class="na">List</span><span class="err">&lt;</span><span class="na">Emp</span><span class="nt">&gt;</span> all = DAOFactory.getIEmpDAOInstance().findAll(keyWord) ; 
+		%&gt;
+			<span class="nt">&lt;center&gt;</span>
+				<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"emp_list_FuzzyQuery.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+					请输入雇员姓名或者雇员工作：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"kw"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;/form&gt;</span>
+				<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">width=</span><span class="s">"80%"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;tr&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇员编号<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇员姓名<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇员工作<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇用日期<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇员工资<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="na">Iterator</span><span class="err">&lt;</span><span class="na">Emp</span><span class="nt">&gt;</span> itr = all.iterator() ;
+				while(itr.hasNext()){
+					Emp emp = itr.next() ;
+		%&gt;
+					<span class="nt">&lt;tr&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getEmpno</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getEname</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getJob</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getHiredate</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getSal</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;/table&gt;</span>
+			<span class="nt">&lt;/center&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+				<span class="na">throw</span> <span class="na">e</span> <span class="err">;</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意：<code class="highlighter-rouge">字符串 == null 和字符串 == ""</code>的区别，在jsp文件中经常会报错！</p>
+</blockquote>
+
+<p>  3. 根据雇员编号查询-emp_list_QueryFindById.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"cn.fmz.vo.*,cn.fmz.factory.*,cn.fmz.custom.string.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+
+			<span class="na">try</span><span class="err">{</span>
+				<span class="na">String</span> <span class="na">empno =</span><span class="err"> </span><span class="s">request.getParameter("empno")</span> <span class="err">;</span>
+				<span class="na">String</span> <span class="na">errorMsg =</span><span class="err"> </span><span class="s">""</span> <span class="err">;</span>
+				<span class="na">if</span><span class="err">(!</span><span class="na">FString</span><span class="err">.</span><span class="na">isNum</span><span class="err">(</span><span class="na">empno</span><span class="err">)){</span>
+					<span class="na">empno =</span><span class="err"> </span><span class="s">"-1"</span> <span class="err">;</span>
+					<span class="na">errorMsg =</span><span class="err"> </span><span class="s">"员工编号必须为数字！"</span> <span class="err">;</span>
+				<span class="err">}</span>
+
+				<span class="na">int</span> <span class="na">id</span> <span class="err">;</span>
+				<span class="na">id =</span><span class="err"> </span><span class="s">Integer.parseInt(empno)</span> <span class="err">;</span>
+				<span class="na">List</span><span class="err">&lt;</span><span class="na">Emp</span><span class="nt">&gt;</span> list = new ArrayList<span class="nt">&lt;Emp&gt;</span>() ;
+				if(id == -1){
+					list = DAOFactory.getIEmpDAOInstance().findAll("") ; 
+				}else{
+					Emp emp = DAOFactory.getIEmpDAOInstance().findById(id) ;
+					if(emp != null){
+						list.add(emp) ;
+					}else{
+						errorMsg = "查询结果不存在！" ;
+					}
+				}
+		%&gt;
+			<span class="nt">&lt;center&gt;</span>
+				<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"emp_list_QueryById.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+					请输入雇员编号：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"empno"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span><span class="ni">&amp;nbsp;</span><span class="nt">&lt;</span><span class="err">%=</span><span class="na">errorMsg</span><span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;/form&gt;</span>
+				<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">width=</span><span class="s">"80%"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;tr&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇员编号<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇员姓名<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇员工作<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇用日期<span class="nt">&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;</span>雇员工资<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="na">Iterator</span><span class="err">&lt;</span><span class="na">Emp</span><span class="nt">&gt;</span> itr = list.iterator() ;
+				while(itr.hasNext()){
+					Emp emp = itr.next() ;
+		%&gt;
+					<span class="nt">&lt;tr&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getEmpno</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getEname</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getJob</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getHiredate</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+						<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">emp</span><span class="err">.</span><span class="na">getSal</span><span class="err">()%</span><span class="nt">&gt;&lt;/td&gt;</span>
+					<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>	
+				<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;/table&gt;</span>
+			<span class="nt">&lt;/center&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+					<span class="na">throw</span> <span class="na">e</span> <span class="err">;</span>
+				<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

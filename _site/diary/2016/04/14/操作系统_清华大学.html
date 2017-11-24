@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - 操作系统_清华大学</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2016/04/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  April 14, 2016
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">操作系统_清华大学</h1>
+
+<div id="post">
+  <ul>
+  <li>
+    <p><a href="#1">1 操作系统结构</a></p>
+  </li>
+  <li>
+    <p><a href="#2">2 中断及系统调用</a></p>
+  </li>
+  <li>
+    <p><a href="#3">3 内存管理</a></p>
+  </li>
+  <li>
+    <p><a href="#4">4 进程及线程</a></p>
+  </li>
+  <li>
+    <p><a href="#5">5 处理机调度</a></p>
+  </li>
+  <li>
+    <p><a href="#6">6 同步互斥</a></p>
+  </li>
+  <li>
+    <p><a href="#7">7 文件系统</a></p>
+  </li>
+  <li>
+    <p><a href="#8">8 I/O子系统</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 操作系统结构</h2>
+
+<blockquote>
+  <p>不闻不若闻之，闻之不若见之，见之不若知之，指之不若行之；学至于行之而止矣。————荀子《儒效篇》</p>
+</blockquote>
+
+<p><strong>操作系统的地位</strong></p>
+
+<p><img src="http://fengmengzhao.github.io/source_htmls/images/OperatingSys.png" alt="OperatingSys" /></p>
+
+<p><strong>操作系统的演变</strong></p>
+
+<ul>
+  <li>单用户系统</li>
+  <li>批处理系统
+    <ul>
+      <li>保持多个程序工作在内存当中，并且在各自工作间复用CPU</li>
+    </ul>
+  </li>
+  <li>多道程序系统</li>
+  <li>分时
+    <ul>
+      <li>定时中断用于工作对CPU的复用</li>
+    </ul>
+  </li>
+  <li>个人计算机：每个用户一个系统</li>
+  <li>分布式计算：每个用户多个系统</li>
+</ul>
+
+<p><strong>简单结构</strong></p>
+
+<ul>
+  <li>MS-DOS – 在最小的空间，设计用于提供大部分功能 (1981~1994)
+    <ul>
+      <li>没有拆分为模块</li>
+      <li>虽然 MS-DOS 在接口和功能水平没有很好地分离，主要用汇编编写</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>分层结构</strong></p>
+
+<ul>
+  <li>将操作系统分为多层(levels)
+    <ul>
+      <li>每层建立在低层之上</li>
+      <li>最底层(layer o)，是硬件</li>
+      <li>做高层(layer N)，是用户界面</li>
+    </ul>
+  </li>
+  <li>每一层仅仅使用更第一层的功能(操作)和服务</li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li>UNIX操作系统是1972年由Kenneth Thompson和Dennis Ritchie在贝尔实验室设计</li>
+    <li>设计用于UNIX操作系统的编码例程</li>
+    <li>高级系统编程语言创建可移植性操作系统的概念</li>
+  </ul>
+</blockquote>
+
+<p><strong>微内核结构(Microkernel)</strong></p>
+
+<ul>
+  <li>尽可能将内核功能移到用户空间</li>
+  <li>用户模块之间的通信使用消息传递</li>
+  <li>好处：灵活/安全</li>
+  <li>缺点：性能</li>
+</ul>
+
+<p><strong>外核结构(Exokernel)</strong></p>
+
+<ul>
+  <li>让内核分配机器的物理资源给多个应用程序，并让每个程序决定如何处理这些资源</li>
+  <li>程序能够链接到操作系统库(libOs)，实现操作系统的抽象</li>
+  <li>保护与控制分离</li>
+</ul>
+
+<p><strong>VMM(虚拟机管理结构)</strong></p>
+
+<ul>
+  <li>虚拟机管理器能够将单独的机器接口转化为很多虚拟机，每一个虚拟机都是一个原始计算机系统的有效副本，并能够完成所有的处理器指令</li>
+</ul>
+
+<p><strong>x86-32硬件-内存构建</strong></p>
+
+<ul>
+  <li>地址是访问内存空间的索引</li>
+  <li>80386是32位的处理器，一般地址总线有32根，逻辑地址编码采用的地址位数是32位，即可以寻址的物理内存地址空间为2^32=4G字节</li>
+  <li>物理内存地址空间是处理器提交到总线上用于计算机系统中的内存和外设的最终地址。一个计算机系统只有一个物理地址空间</li>
+  <li>线性地址空间是在操作系统的虚拟管理之下每个运行的应用程序能访问的地址空间。每一个运行的应用程序都认为自己独享整个计算机系统的地址空间，这样可让多个运行的应用程序之间相互隔离</li>
+  <li>逻辑地址空间是应用程序上直接使用的地址空间</li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li>段机制启动、页机制未启动：逻辑地址 –&gt; 段地址空间 –&gt; 线性地址 = 物理地址</li>
+    <li>段机制和页机制都启动：逻辑地址 –&gt; 段机制处理 –&gt; 线性地址 –&gt; 页机制处理 –&gt; 物理地址</li>
+  </ul>
+</blockquote>
+
+<p><strong>x86-32硬件-寄存器</strong></p>
+
+<ul>
+  <li>通用寄存器
+    <ul>
+      <li>EAX: 累加器</li>
+      <li>EBX：基址寄存器</li>
+      <li>ECX：计数器</li>
+      <li>EDX: 数据寄存器</li>
+      <li>ESI：源地址指针寄存器</li>
+      <li>EDI：目的地址指针寄存器</li>
+      <li>EBP：基址指针寄存器</li>
+      <li>ESP：堆栈指针寄存器</li>
+    </ul>
+  </li>
+  <li>段寄存器
+    <ul>
+      <li>CS: 代码段(Code Segment)</li>
+      <li>DS: 数据段(Data Segment)</li>
+      <li>ES: 附加数据段(Extra Segment)</li>
+      <li>SS: 堆栈段(Stack Segment)</li>
+      <li>FS: 附加段</li>
+      <li>GS：附加段</li>
+    </ul>
+  </li>
+  <li>指令指针寄存器(EIP)
+    <ul>
+      <li>EIP的低16位就是8086的IP，它储存的是下一条要执行执行的内存地址，在分段地址转换中，表示指令的段内偏移地址</li>
+    </ul>
+  </li>
+  <li>标志寄存器(EFLAGS)</li>
+  <li>控制寄存器</li>
+  <li>系统地址寄存器，调试寄存器，测试寄存器</li>
+</ul>
+
+<blockquote>
+  <p>CPU是由控制器组成的，控制器控制着计算机的运行，而运算器完成对操作数据的加工处理，一个典型的CPU具有：多个通用寄存器，用来保存CPU运行时所需要的各类数据信息或者运行状态信息；算数逻辑运算单元(ALU)，对寄存器中的数据进行加工处理；操作控制器，产生各种操作控制信号，以便在各个寄存器之间数据通路；时序产生器，对各种操作控制信号进行定时，以便进行时间的约束。</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h2 id="2">2 中断及系统调用</h2>
+
+<p><strong>操作系统的启动流程</strong></p>
+
+<ul>
+  <li>cpu加电稳定后从0XFFFFO读取第一条指令
+    <ul>
+      <li>CS:IP = 0xf000:fff0</li>
+      <li>第一条指令是跳转指令</li>
+    </ul>
+  </li>
+  <li>CPU的初始状态为16位实模式
+    <ul>
+      <li>CS:IP是16位寄存器</li>
+      <li>指令指针PC=16*CS+IP</li>
+      <li>最大地址空间为1M</li>
+    </ul>
+  </li>
+  <li>主引导记录(MBR)
+    <ul>
+      <li>启动代码(446字节)
+        <ul>
+          <li>检查分区表的正确性</li>
+          <li>加载并跳转到磁盘上的引导程序</li>
+        </ul>
+      </li>
+      <li>硬盘分区表(64字节)
+        <ul>
+          <li>描述分区状态和位置</li>
+          <li>每个分区描述信息占据16字节</li>
+        </ul>
+      </li>
+      <li>结束标志字：2个字节(55AA)
+        <ul>
+          <li>主引导记录的有效标志</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>加载程序(bootloader)
+    <ul>
+      <li>从文件系统中读取启动配置信息</li>
+      <li>可选的操作系内核列表和加载参数</li>
+      <li>依据配置加载指定内核并跳转到内核执行</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="3">3 存储管理</h2>
+
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

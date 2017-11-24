@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - javaweb框架开发篇之Struts常用标签库</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/09/09/javaweb-%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91%E7%AF%87%E4%B9%8B-Struts-%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE%E5%BA%93.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  September 09, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">javaweb框架开发篇之Struts常用标签库</h1>
+
+<div id="post">
+  <h2 id="目录">目录</h2>
+
+<ul>
+  <li>
+    <p><a href="#1">1 Struts标签库简介</a></p>
+  </li>
+  <li>
+    <p><a href="#2">2 Bean标签</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#2.1">2.1  bean:define标签</a></p>
+      </li>
+      <li>
+        <p><a href="#2.2">2.2 bean:size标签</a></p>
+      </li>
+      <li>
+        <p><a href="#2.3">2.3 资源访问标签</a></p>
+      </li>
+      <li>
+        <p><a href="#2.4">2.4 bean:write标签</a></p>
+      </li>
+      <li>
+        <p><a href="#2.5">2.5 bean:include标签</a></p>
+      </li>
+      <li>
+        <p><a href="#2.6">2.6 bean:resourec标签</a></p>
+      </li>
+      <li>
+        <p><a href="#2.7">2.7 国际化与bean:message</a></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#3">3 Logic标签</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#3.1">3.1 logic:present &amp; logic:notPresent标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.2">3.2 logic:empty &amp; logic:notEmpty标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.3">3.3 关系预算标签</a></p>
+      </li>
+      <li>
+        <p><a href="#3.4">3.4 logic:iterate标签</a></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#4">4 Html标签</a></p>
+
+    <ul>
+      <li>
+        <p><a href="#4.1">4.1 实例：编写基本表单</a></p>
+      </li>
+      <li>
+        <p><a href="#4.2">4.2 复选框标签</a></p>
+      </li>
+      <li>
+        <p><a href="#4.3">4.3 下拉列表框</a></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h2 id="1">1 Struts标签库简介</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>NO.</th>
+      <th>标签库</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Bean标签</td>
+      <td>管理JSP页面中的bean操作</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Logic标签</td>
+      <td>完成各种逻辑控制操作</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>HTML标签</td>
+      <td>显示标签，主要生成HTML标记</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>TILES标签</td>
+      <td>使用动态模板构造显示页面</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>NESTED标签</td>
+      <td>使用嵌套标签进行复杂的页面显示</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<hr />
+
+<h2 id="2">2 Bean标签</h2>
+
+<h3 id="2.1">2.1 bean:define标签</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;bean:define</span> <span class="na">id=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"page"</span><span class="nt">&gt;</span>Hello World!!!<span class="nt">&lt;/bean:define&gt;</span>
+	<span class="nt">&lt;bean:define</span> <span class="na">id=</span><span class="s">"teacher"</span> <span class="na">value=</span><span class="s">"冯孟昭"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>定义内容：${info }<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>老师：${pageScope.teacher }<span class="nt">&lt;/h3&gt;</span>
+  <span class="nt">&lt;/body&gt;</span> 
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<p>  定义一个JavaBean-CopyBean.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">vo</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">CopyBean</span> <span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">msg</span> <span class="p">;</span>
+
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getMsg</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">msg</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setMsg</span><span class="p">(</span><span class="k">String</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">msg</span> <span class="p">=</span> <span class="n">msg</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  在JSP页面中定义并且复制此Bean-bean-copy.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;jsp:useBean</span> <span class="na">id=</span><span class="s">"copybean"</span> <span class="na">class=</span><span class="s">"org.fmz.struts.vo.CopyBean"</span> <span class="na">scope=</span><span class="s">"page"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;jsp:setProperty</span> <span class="na">name=</span><span class="s">"copybean"</span> <span class="na">property=</span><span class="s">"msg"</span> <span class="na">value=</span><span class="s">"Hello FMZ"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;bean:define</span> <span class="na">id=</span><span class="s">"info"</span> <span class="na">name=</span><span class="s">"copybean"</span> <span class="na">property=</span><span class="s">"msg"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>拷贝：${info }<span class="nt">&lt;/h3&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2.2">2.2 bean:size标签</h3>
+
+<p>  计算集合的长度-bean_size.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">List</span> <span class="na">list =</span><span class="err"> </span><span class="s">new</span> <span class="na">ArrayList</span><span class="err">()</span> <span class="err">;</span>
+		<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("</span><span class="na">Hello</span><span class="err">")</span> <span class="err">;</span>
+		<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("</span><span class="na">FMZ</span><span class="err">")</span> <span class="err">;</span>
+		<span class="na">list</span><span class="err">.</span><span class="na">add</span><span class="err">("光临！")</span> <span class="err">;</span>
+		<span class="na">pageContext</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">info</span><span class="err">",</span> <span class="na">list</span><span class="err">)</span> <span class="err">;</span>
+	 <span class="err">%</span><span class="nt">&gt;</span>
+	 <span class="nt">&lt;bean:size</span> <span class="na">id=</span><span class="s">"len"</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"page"</span><span class="nt">/&gt;</span>
+	 <span class="nt">&lt;h3&gt;</span>集合长度：${len }<span class="nt">&lt;/h3&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2.3">2.3 资源访问标签</h3>
+
+<p>  设置Cookie-cookie.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://str2015-09-20uts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;bean:cookie</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">id=</span><span class="s">"mycookie"</span> <span class="na">value=</span><span class="s">"FMZ"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">mycookie</span><span class="err">.</span><span class="na">setMaxAge</span><span class="err">(</span><span class="na">3000</span><span class="err">)</span> <span class="err">;</span>
+		<span class="na">response</span><span class="err">.</span><span class="na">addCookie</span><span class="err">(</span><span class="na">mycookie</span><span class="err">)</span> <span class="err">;</span>
+		<span class="na">Cookie</span><span class="err">[]</span> <span class="na">cookies =</span><span class="err"> </span><span class="s">request.getCookies()</span> <span class="err">;</span>
+		<span class="na">for</span><span class="err">(</span><span class="na">int</span> <span class="na">x=</span><span class="s">0;x&lt;cookies.length;x++){</span>
+	<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h3&gt;&lt;</span><span class="err">%=</span><span class="na">cookies</span><span class="err">[</span><span class="na">x</span><span class="err">].</span><span class="na">getName</span><span class="err">()</span> <span class="err">%</span><span class="nt">&gt;</span> --&gt; <span class="nt">&lt;</span><span class="err">%=</span><span class="na">cookies</span><span class="err">[</span><span class="na">x</span><span class="err">].</span><span class="na">getValue</span><span class="err">()</span> <span class="err">%</span><span class="nt">&gt;&lt;/h3&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="err">}</span> 
+	 <span class="err">%</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<p>  设置头信息-header.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;bean:header</span> <span class="na">name=</span><span class="s">"Accept-Language"</span> <span class="na">id=</span><span class="s">"myheader"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;h3&gt;</span>Accept-Language头信息内容：${myheader }<span class="nt">&lt;/h3&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<p>  设置参数-param.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span> 	
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;bean:parameter</span> <span class="na">id=</span><span class="s">"myparam"</span> <span class="na">name=</span><span class="s">"msg"</span> <span class="na">value=</span><span class="s">"FMZ"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>myparam的内容：${myparam}<span class="nt">&lt;/h3&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2.4">2.4 bean:write标签</h3>
+
+<p>  使用bean:write输出-bean_write.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span> 	
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;bean:define</span> <span class="na">id=</span><span class="s">"info"</span> <span class="na">scope=</span><span class="s">"page"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>Hello FMZ<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;/bean:define&gt;</span>
+	<span class="nt">&lt;bean:write</span> <span class="na">name=</span><span class="s">"info"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2.5">2.5 bean:include标签</h3>
+
+<p>  定义被包含页面-content.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span> 	
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>Hello FMZ<span class="nt">&lt;/h3&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<p>  使用bean:include标签包含页面-include.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span> 	
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;bean:include</span> <span class="na">id=</span><span class="s">"inc"</span> <span class="na">page=</span><span class="s">"/content.jsp"</span><span class="nt">/&gt;</span>	
+	${inc }
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2.6">2.6 bean:resourec标签</h3>
+
+<p>  定义被包含页面-content.xml</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;book&gt;</span>
+	<span class="nt">&lt;author&gt;</span>冯孟昭<span class="nt">&lt;/author&gt;</span>
+	<span class="nt">&lt;title&gt;</span>java开发实战经典<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/book&gt;</span>
+</code></pre></div></div>
+
+<p>  使用bean:resource包含页面-resource.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span> 	
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;bean:resource</span> <span class="na">id=</span><span class="s">"source"</span> <span class="na">name=</span><span class="s">"/content.xml"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;bean:write</span> <span class="na">name=</span><span class="s">"source"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2.7">2.7 国际化与bean:message</h3>
+
+<p>  Struts本事支持国际化程序的开发，用户只需要根据区域的不同配置不同的语言资源文件(资源文件通过struts-config.xml指定)，此处为ApplicationResource.properties，即可显示不同区域的语言。</p>
+
+<p>  定义中文资源文件-ApplicationResource_zh_CN.properties</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Resources for parameter 'org.fmz.struts.ApplicationResources'
+# Project StrutsBean
+hello.info =&lt;h3&gt;{0}\u60A8\u597D\uFF0C\u6B22\u8FCE{1}\u5149\u4E34\uFF01&lt;/h3&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>转码操作通过doc启动<code class="highlighter-rouge">native2ascii</code>即可</p>
+</blockquote>
+
+<p>  定义中文资源文件-ApplicationResource_en_US.properties</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Resources for parameter 'org.fmz.struts.ApplicationResources'
+# Project StrutsBean
+hello.info =&lt;h3&gt;{0} hello,welcome{1}\uFF01&lt;/h3&gt;
+</code></pre></div></div>
+
+<p>  使用bean:message读取资源文件-message.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span> 	
+    
+    <span class="nt">&lt;title&gt;</span>bean_define.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;bean:message</span> <span class="na">key=</span><span class="s">"hello.info"</span> <span class="na">arg0=</span><span class="s">"FMZ"</span> <span class="na">arg1=</span><span class="s">"CLL"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>通过浏览器的语言设置，重启浏览器后即可完成国际化的转变。</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h2 id="3">3 Logic标签</h2>
+
+<p>  Logic标签的主要作用是进行各种逻辑处理，如执行分支语句、迭代、比较操作等，所有的logic标签都定义在struts-logic.tld文件中</p>
+
+<h3 id="3.1">3.1 logic:present &amp; logic:notPresent标签</h3>
+
+<p>  判断属性是否存在-present.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">author</span><span class="err">",</span> <span class="err">"</span><span class="na">fmz</span><span class="err">")</span> <span class="err">;</span>
+	 <span class="err">%</span><span class="nt">&gt;</span>
+	 <span class="nt">&lt;logic:present</span> <span class="na">name=</span><span class="s">"author"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>author属性存在，内容是：${author }<span class="nt">&lt;/h3&gt;</span>
+	 <span class="nt">&lt;/logic:present&gt;</span>
+	 <span class="nt">&lt;logic:notPresent</span> <span class="na">name=</span><span class="s">"url"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>url属性不存在！<span class="nt">&lt;/h3&gt;</span>
+	 <span class="nt">&lt;/logic:notPresent&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.2">3.2 logic:empty &amp; logic:notEmpty标签</h3>
+
+<p>  判断内容是否为空-empty.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span> 
+		<span class="na">List</span><span class="err">&lt;</span><span class="na">String</span><span class="nt">&gt;</span> list = new ArrayList<span class="nt">&lt;String&gt;</span>() ;
+		request.setAttribute("author",list) ;  		
+	 %&gt;
+	 <span class="nt">&lt;logic:empty</span> <span class="na">name=</span><span class="s">"author"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>属性的内容为空，长度为0！<span class="nt">&lt;/h3&gt;</span>
+	 <span class="nt">&lt;/logic:empty&gt;</span>
+	 <span class="nt">&lt;logic:empty</span> <span class="na">name=</span><span class="s">"url"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>url属性不存在！<span class="nt">&lt;/h3&gt;</span>
+	 <span class="nt">&lt;/logic:empty&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.3">3.3 关系运算标签</h3>
+
+<p>  关系运算标签的使用-rel.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span> 
+		<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">author</span><span class="err">","</span><span class="na">fmz</span><span class="err">")</span> <span class="err">;</span>
+		<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">num</span><span class="err">",</span><span class="na">30</span><span class="err">)</span> <span class="err">;</span>
+	 <span class="err">%</span><span class="nt">&gt;</span>
+	 <span class="nt">&lt;logic:equal</span> <span class="na">name=</span><span class="s">"author"</span> <span class="na">value=</span><span class="s">"fmz"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>满足等于条件！<span class="nt">&lt;/h3&gt;</span>
+	 <span class="nt">&lt;/logic:equal&gt;</span>
+	 <span class="nt">&lt;logic:notEqual</span> <span class="na">name=</span><span class="s">"url"</span> <span class="na">value=</span><span class="s">"fmz"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>不满足等于条件！<span class="nt">&lt;/h3&gt;</span>
+	 <span class="nt">&lt;/logic:notEqual&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.4">3.4 logic:iterate标签</h3>
+
+<p>  输出集合对象-iterate.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span> 
+		<span class="na">String</span> <span class="na">allArr</span><span class="err">[]</span> <span class="err">=</span> <span class="err">{"</span><span class="na">fmz</span><span class="err">","</span><span class="na">cll</span><span class="err">","</span><span class="na">wlm</span><span class="err">"}</span> <span class="err">;</span>
+		<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">allArr</span><span class="err">",</span><span class="na">allArr</span><span class="err">)</span> <span class="err">;</span>
+	 <span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>输入对象数组：<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;logic:iterate</span> <span class="na">id=</span><span class="s">"arr"</span> <span class="na">name=</span><span class="s">"allArr"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>名字：${arr }<span class="nt">&lt;/h3&gt;</span> 
+	<span class="nt">&lt;/logic:iterate&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">List</span><span class="err">&lt;</span><span class="na">String</span><span class="nt">&gt;</span> allList = new ArrayList<span class="nt">&lt;String&gt;</span>() ;
+		allList.add("fmz") ;
+		allList.add("cll") ;
+		allList.add("wlm") ;
+		request.setAttribute("allList",allList) ;
+	 %&gt;
+	 <span class="nt">&lt;h3&gt;</span>输入List集合：<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;logic:iterate</span> <span class="na">id=</span><span class="s">"arr"</span> <span class="na">name=</span><span class="s">"allList"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>名字：${arr }<span class="nt">&lt;/h3&gt;</span> 
+	<span class="nt">&lt;/logic:iterate&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">Map</span><span class="err">&lt;</span><span class="na">String</span><span class="err">,</span><span class="na">String</span><span class="nt">&gt;</span> allMap = new HashMap<span class="nt">&lt;String</span><span class="err">,</span><span class="na">String</span><span class="nt">&gt;</span>() ;
+		allMap.put("name1","fmz") ;
+		allMap.put("name2","cll") ;
+		allMap.put("name3","wlm") ;
+		request.setAttribute("allMap",allMap) ;
+	 %&gt;
+	  <span class="nt">&lt;h3&gt;</span>输入Map集合：<span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;logic:iterate</span> <span class="na">id=</span><span class="s">"map"</span> <span class="na">name=</span><span class="s">"allMap"</span> <span class="na">scope=</span><span class="s">"request"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h3&gt;</span>名字${map.key } --&gt; ${map.value }<span class="nt">&lt;/h3&gt;</span> 
+	<span class="nt">&lt;/logic:iterate&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3.5">3.5 充定向标签-logic:redirect标签</h3>
+
+<p>  修改struts-config.xml，增加全局跳转，修改global-farward元素</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd"&gt;</span>
+
+<span class="nt">&lt;struts-config&gt;</span>
+  <span class="nt">&lt;form-beans</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;global-exceptions</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;global-forwards&gt;</span>
+	<span class="nt">&lt;forward</span> <span class="na">name=</span><span class="s">"hello"</span> <span class="na">path=</span><span class="s">"/hello.jsp"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/global-forwards&gt;</span>
+  <span class="nt">&lt;action-mappings</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;message-resources</span> <span class="na">parameter=</span><span class="s">"org.fmz.struts.ApplicationResources"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/struts-config&gt;</span>
+</code></pre></div></div>
+
+<p>  跳转后的页面-hello.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;logic:redirect</span> <span class="na">forward=</span><span class="s">"hello"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<p>  使用logic:redirect标签进行跳转-redirect.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;logic:redirect</span> <span class="na">forward=</span><span class="s">"hello"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+<h2 id="4">4 Html标签</h2>
+
+<p>  Html标签主要用于页面显示。</p>
+
+<h3 id="4.1">4.1 实例：编写基本表单</h3>
+
+<p>  定义输入表单-input_simple.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span> 
+		<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+	 <span class="err">%</span><span class="nt">&gt;</span>
+	 <span class="nt">&lt;html:form</span> <span class="na">action=</span><span class="s">"simple.do"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+		姓名：<span class="nt">&lt;html:text</span> <span class="na">property=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;br&gt;</span>
+		密码：<span class="nt">&lt;html:password</span> <span class="na">property=</span><span class="s">"password"</span><span class="nt">/&gt;&lt;br&gt;</span>
+		性别：<span class="nt">&lt;html:radio</span> <span class="na">property=</span><span class="s">"sex"</span> <span class="na">value=</span><span class="s">"male"</span><span class="nt">/&gt;</span>男
+		<span class="nt">&lt;html:radio</span> <span class="na">property=</span><span class="s">"sex"</span> <span class="na">value=</span><span class="s">"female"</span><span class="nt">/&gt;</span>女<span class="nt">&lt;br&gt;</span>
+		简介：<span class="nt">&lt;html:textarea</span> <span class="na">property=</span><span class="s">"note"</span> <span class="na">cols=</span><span class="s">"30"</span> <span class="na">rows=</span><span class="s">"3"</span><span class="nt">/&gt;&lt;br&gt;</span>
+		<span class="nt">&lt;html:hidden</span> <span class="na">property=</span><span class="s">"id"</span> <span class="na">value=</span><span class="s">"30"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;html:submit</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;html:reset</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">/&gt;</span>
+	 <span class="nt">&lt;/html:form&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<p>  定义ActionForm-SimpleForm.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">/*</span>
+ <span class="p">*</span> <span class="n">Generated</span> <span class="n">by</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Template</span> <span class="n">path</span><span class="p">:</span> <span class="n">templates</span><span class="p">/</span><span class="n">java</span><span class="p">/</span><span class="n">JavaClass</span><span class="p">.</span><span class="n">vtl</span>
+ <span class="p">*/</span>
+<span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletRequest</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionErrors</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForm</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionMapping</span><span class="p">;</span>
+
+<span class="p">/**</span> 
+ <span class="p">*</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Creation</span> <span class="n">date</span><span class="p">:</span> <span class="m">09</span><span class="p">-</span><span class="m">26</span><span class="p">-</span><span class="m">2015</span>
+ <span class="p">*</span> 
+ <span class="p">*</span> <span class="n">XDoclet</span> <span class="n">definition</span><span class="p">:</span>
+ <span class="p">*</span> <span class="p">@</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span> <span class="n">name</span><span class="p">=</span><span class="s2">"simpleForm"</span>
+ <span class="p">*/</span>
+<span class="k">public</span> <span class="n">class</span> <span class="n">SimpleForm</span> <span class="n">extends</span> <span class="n">ActionForm</span> <span class="p">{</span>
+	<span class="p">/*</span>
+	 <span class="p">*</span> <span class="n">Generated</span> <span class="n">fields</span>
+	 <span class="p">*/</span>
+
+	<span class="p">/**</span> <span class="n">id</span> <span class="n">property</span> <span class="p">*/</span>
+	<span class="n">private</span> <span class="n">int</span> <span class="n">id</span><span class="p">;</span>
+
+	<span class="p">/**</span> <span class="n">sex</span> <span class="n">property</span> <span class="p">*/</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">sex</span><span class="p">;</span>
+
+	<span class="p">/**</span> <span class="n">name</span> <span class="n">property</span> <span class="p">*/</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span><span class="p">;</span>
+
+	<span class="p">/**</span> <span class="n">password</span> <span class="n">property</span> <span class="p">*/</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">password</span><span class="p">;</span>
+
+	<span class="p">/**</span> <span class="n">note</span> <span class="n">property</span> <span class="p">*/</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">note</span><span class="p">;</span>
+
+	<span class="p">/*</span>
+	 <span class="p">*</span> <span class="n">Generated</span> <span class="n">Methods</span>
+	 <span class="p">*/</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Method</span> <span class="n">validate</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">mapping</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">request</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="n">ActionErrors</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">ActionErrors</span> <span class="n">validate</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span>
+			<span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="p">//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+		<span class="n">return</span> <span class="n">null</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Method</span> <span class="nb">reset</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">mapping</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">request</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="nb">reset</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="p">//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">sex</span> <span class="p">=</span> <span class="s2">"男"</span> <span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">id</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="n">int</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="nf">getId</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">id</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="k">Set</span> <span class="n">the</span> <span class="n">id</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">id</span> <span class="n">The</span> <span class="n">id</span> <span class="k">to</span> <span class="k">set</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setId</span><span class="p">(</span><span class="n">int</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">id</span> <span class="p">=</span> <span class="n">id</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">sex</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="k">String</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getSex</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">sex</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="k">Set</span> <span class="n">the</span> <span class="n">sex</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">sex</span> <span class="n">The</span> <span class="n">sex</span> <span class="k">to</span> <span class="k">set</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setSex</span><span class="p">(</span><span class="k">String</span> <span class="n">sex</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">sex</span> <span class="p">=</span> <span class="n">sex</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">name</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="k">String</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">name</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="k">Set</span> <span class="n">the</span> <span class="n">name</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">name</span> <span class="n">The</span> <span class="n">name</span> <span class="k">to</span> <span class="k">set</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">password</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="k">String</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getPassword</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">password</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="k">Set</span> <span class="n">the</span> <span class="n">password</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">password</span> <span class="n">The</span> <span class="n">password</span> <span class="k">to</span> <span class="k">set</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setPassword</span><span class="p">(</span><span class="k">String</span> <span class="n">password</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">password</span> <span class="p">=</span> <span class="n">password</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">note</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="k">String</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getNote</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">note</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="k">Set</span> <span class="n">the</span> <span class="n">note</span><span class="p">.</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">note</span> <span class="n">The</span> <span class="n">note</span> <span class="k">to</span> <span class="k">set</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setNote</span><span class="p">(</span><span class="k">String</span> <span class="n">note</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">note</span> <span class="p">=</span> <span class="n">note</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  定义Action-SimpleAction.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">/*</span>
+ <span class="p">*</span> <span class="n">Generated</span> <span class="n">by</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Template</span> <span class="n">path</span><span class="p">:</span> <span class="n">templates</span><span class="p">/</span><span class="n">java</span><span class="p">/</span><span class="n">JavaClass</span><span class="p">.</span><span class="n">vtl</span>
+ <span class="p">*/</span>
+<span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletRequest</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletResponse</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">Action</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForm</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForward</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionMapping</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span><span class="p">.</span><span class="n">SimpleForm</span><span class="p">;</span>
+
+<span class="p">/**</span> 
+ <span class="p">*</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Creation</span> <span class="n">date</span><span class="p">:</span> <span class="m">09</span><span class="p">-</span><span class="m">26</span><span class="p">-</span><span class="m">2015</span>
+ <span class="p">*</span> 
+ <span class="p">*</span> <span class="n">XDoclet</span> <span class="n">definition</span><span class="p">:</span>
+ <span class="p">*</span> <span class="p">@</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span> <span class="n">path</span><span class="p">=</span><span class="s2">"/simple"</span> <span class="n">name</span><span class="p">=</span><span class="s2">"simpleForm"</span> <span class="n">input</span><span class="p">=</span><span class="s2">"/input_simple.jsp"</span> <span class="n">scope</span><span class="p">=</span><span class="s2">"request"</span> <span class="n">validate</span><span class="p">=</span><span class="s2">"true"</span>
+ <span class="p">*/</span>
+<span class="k">public</span> <span class="n">class</span> <span class="n">SimpleAction</span> <span class="n">extends</span> <span class="n">Action</span> <span class="p">{</span>
+	<span class="p">/*</span>
+	 <span class="p">*</span> <span class="n">Generated</span> <span class="n">Methods</span>
+	 <span class="p">*/</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Method</span> <span class="n">execute</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">mapping</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">form</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">request</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">response</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="n">ActionForward</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">ActionForward</span> <span class="n">execute</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">ActionForm</span> <span class="n">form</span><span class="p">,</span>
+			<span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">request</span><span class="p">.</span><span class="n">setCharacterEncoding</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">SimpleForm</span> <span class="n">simpleForm</span> <span class="p">=</span> <span class="p">(</span><span class="n">SimpleForm</span><span class="p">)</span> <span class="n">form</span><span class="p">;//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"编号："</span><span class="p">+</span><span class="n">simpleForm</span><span class="p">.</span><span class="nf">getId</span><span class="p">())</span> <span class="p">;</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"姓名："</span><span class="p">+</span><span class="n">simpleForm</span><span class="p">.</span><span class="n">getName</span><span class="p">())</span> <span class="p">;</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"性别："</span><span class="p">+</span><span class="n">simpleForm</span><span class="p">.</span><span class="n">getSex</span><span class="p">())</span> <span class="p">;</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"密码："</span><span class="p">+</span><span class="n">simpleForm</span><span class="p">.</span><span class="n">getPassword</span><span class="p">())</span> <span class="p">;</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"简介："</span><span class="p">+</span><span class="n">simpleForm</span><span class="p">.</span><span class="n">getNote</span><span class="p">())</span> <span class="p">;</span>
+		<span class="n">return</span> <span class="n">null</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="4.2">4.2 复选框标签</h3>
+
+<p>  定义表单-input_box.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span> 
+		<span class="na">request</span><span class="err">.</span><span class="na">setCharacterEncoding</span><span class="err">("</span><span class="na">utf-8</span><span class="err">")</span> <span class="err">;</span>
+	 <span class="err">%</span><span class="nt">&gt;</span>
+	 <span class="nt">&lt;html:form</span> <span class="na">action=</span><span class="s">"box.do"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;html:checkbox</span> <span class="na">property=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"sing"</span><span class="nt">/&gt;</span>唱歌
+		<span class="nt">&lt;html:checkbox</span> <span class="na">property=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"dance"</span><span class="nt">/&gt;</span>跳舞
+		<span class="nt">&lt;html:checkbox</span> <span class="na">property=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"read"</span><span class="nt">/&gt;</span>读书
+		<span class="nt">&lt;html:checkbox</span> <span class="na">property=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"write"</span><span class="nt">/&gt;</span>写作
+		<span class="nt">&lt;html:checkbox</span> <span class="na">property=</span><span class="s">"inst"</span> <span class="na">value=</span><span class="s">"swim"</span><span class="nt">/&gt;</span>游泳<span class="nt">&lt;br&gt;</span>
+		<span class="nt">&lt;html:submit</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;html:reset</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">/&gt;</span>
+	 <span class="nt">&lt;/html:form&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<p>  定义ActionForm-BoxForm.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">/*</span>
+ <span class="p">*</span> <span class="n">Generated</span> <span class="n">by</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Template</span> <span class="n">path</span><span class="p">:</span> <span class="n">templates</span><span class="p">/</span><span class="n">java</span><span class="p">/</span><span class="n">JavaClass</span><span class="p">.</span><span class="n">vtl</span>
+ <span class="p">*/</span>
+<span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletRequest</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionErrors</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForm</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionMapping</span><span class="p">;</span>
+
+<span class="p">/**</span> 
+ <span class="p">*</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Creation</span> <span class="n">date</span><span class="p">:</span> <span class="m">09</span><span class="p">-</span><span class="m">26</span><span class="p">-</span><span class="m">2015</span>
+ <span class="p">*</span> 
+ <span class="p">*</span> <span class="n">XDoclet</span> <span class="n">definition</span><span class="p">:</span>
+ <span class="p">*</span> <span class="p">@</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span> <span class="n">name</span><span class="p">=</span><span class="s2">"boxForm"</span>
+ <span class="p">*/</span>
+<span class="k">public</span> <span class="n">class</span> <span class="n">BoxForm</span> <span class="n">extends</span> <span class="n">ActionForm</span> <span class="p">{</span>
+	
+	<span class="n">private</span> <span class="k">String</span><span class="p">[]</span> <span class="n">inst</span> <span class="p">=</span> <span class="p">{</span><span class="s2">"编程"</span><span class="p">,</span><span class="s2">"编程"</span><span class="p">,</span><span class="s2">"编程"</span><span class="p">,</span><span class="s2">"编程"</span><span class="p">,</span><span class="s2">"编程"</span><span class="p">}</span> <span class="p">;</span>
+	
+	<span class="k">public</span> <span class="n">ActionErrors</span> <span class="n">validate</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span>
+			<span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="p">//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+		<span class="n">return</span> <span class="n">null</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Method</span> <span class="nb">reset</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">mapping</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">request</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="nb">reset</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="p">//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">String</span><span class="p">[]</span> <span class="n">getInst</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">inst</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setInst</span><span class="p">(</span><span class="k">String</span><span class="p">[]</span> <span class="n">inst</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">inst</span> <span class="p">=</span> <span class="n">inst</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  定义Action-BoxAction.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">/*</span>
+ <span class="p">*</span> <span class="n">Generated</span> <span class="n">by</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Template</span> <span class="n">path</span><span class="p">:</span> <span class="n">templates</span><span class="p">/</span><span class="n">java</span><span class="p">/</span><span class="n">JavaClass</span><span class="p">.</span><span class="n">vtl</span>
+ <span class="p">*/</span>
+<span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletRequest</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletResponse</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">Action</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForm</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForward</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionMapping</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span><span class="p">.</span><span class="n">BoxForm</span><span class="p">;</span>
+
+<span class="p">/**</span> 
+ <span class="p">*</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Creation</span> <span class="n">date</span><span class="p">:</span> <span class="m">09</span><span class="p">-</span><span class="m">26</span><span class="p">-</span><span class="m">2015</span>
+ <span class="p">*</span> 
+ <span class="p">*</span> <span class="n">XDoclet</span> <span class="n">definition</span><span class="p">:</span>
+ <span class="p">*</span> <span class="p">@</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span> <span class="n">path</span><span class="p">=</span><span class="s2">"/box"</span> <span class="n">name</span><span class="p">=</span><span class="s2">"boxForm"</span> <span class="n">input</span><span class="p">=</span><span class="s2">"/input_box.jsp"</span> <span class="n">scope</span><span class="p">=</span><span class="s2">"request"</span> <span class="n">validate</span><span class="p">=</span><span class="s2">"true"</span>
+ <span class="p">*/</span>
+<span class="k">public</span> <span class="n">class</span> <span class="n">BoxAction</span> <span class="n">extends</span> <span class="n">Action</span> <span class="p">{</span>
+	<span class="p">/*</span>
+	 <span class="p">*</span> <span class="n">Generated</span> <span class="n">Methods</span>
+	 <span class="p">*/</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Method</span> <span class="n">execute</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">mapping</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">form</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">request</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">response</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="n">ActionForward</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">ActionForward</span> <span class="n">execute</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">ActionForm</span> <span class="n">form</span><span class="p">,</span>
+			<span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">try</span><span class="p">{</span>
+			<span class="n">request</span><span class="p">.</span><span class="n">setCharacterEncoding</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){</span>
+			<span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">BoxForm</span> <span class="n">boxForm</span> <span class="p">=</span> <span class="p">(</span><span class="n">BoxForm</span><span class="p">)</span> <span class="n">form</span><span class="p">;//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+		<span class="k">String</span><span class="p">[]</span> <span class="n">inst</span> <span class="p">=</span> <span class="n">boxForm</span><span class="p">.</span><span class="n">getInst</span><span class="p">()</span> <span class="p">;</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"兴趣："</span><span class="p">)</span> <span class="p">;</span>
+		<span class="n">for</span><span class="p">(</span><span class="n">int</span> <span class="n">i</span><span class="p">=</span><span class="m">0</span><span class="p">;</span><span class="n">i</span><span class="p">&lt;</span><span class="n">inst</span><span class="p">.</span><span class="n">length</span><span class="p">;</span><span class="n">i</span><span class="p">++){</span>
+			<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">inst</span><span class="p">[</span><span class="n">i</span><span class="p">]+</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span> <span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">return</span> <span class="n">null</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="4.3">4.3 下拉列表框</h3>
+
+<p>  定义vo类-city.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">vo</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="n">class</span> <span class="n">City</span> <span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">name</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="n">int</span> <span class="n">id</span> <span class="p">;</span>
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">name</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">int</span> <span class="nf">getId</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">id</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setId</span><span class="p">(</span><span class="n">int</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">id</span> <span class="p">=</span> <span class="n">id</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  编写表单文件-input_select.jsp</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"org.apache.struts.util.LabelValueBean"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.util.*,org.fmz.struts.vo.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-bean"</span> <span class="na">prefix=</span><span class="s">"bean"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-html"</span> <span class="na">prefix=</span><span class="s">"html"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-logic"</span> <span class="na">prefix=</span><span class="s">"logic"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">uri=</span><span class="s">"http://struts.apache.org/tags-tiles"</span> <span class="na">prefix=</span><span class="s">"tiles"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="nt">&lt;html:html</span> <span class="na">lang=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;html:base</span> <span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;title&gt;</span>present.jsp<span class="nt">&lt;/title&gt;</span>
+
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"pragma"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"cache-control"</span> <span class="na">content=</span><span class="s">"no-cache"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"expires"</span> <span class="na">content=</span><span class="s">"0"</span><span class="nt">&gt;</span>    
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"keyword1,keyword2,keyword3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"This is my page"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/head&gt;</span>
+  
+  <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;</span><span class="err">%</span> 
+		<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">author</span><span class="err">","</span><span class="na">fmz</span><span class="err">")</span> <span class="err">;</span>
+	 <span class="err">%</span><span class="nt">&gt;</span>
+	 <span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">List</span> <span class="na">all =</span><span class="err"> </span><span class="s">new</span> <span class="na">ArrayList</span><span class="err">()</span> <span class="err">;</span>
+		<span class="na">City</span> <span class="na">city =</span><span class="err"> </span><span class="s">new</span> <span class="na">City</span><span class="err">()</span> <span class="err">;</span>
+		<span class="na">city</span><span class="err">.</span><span class="na">setId</span><span class="err">(</span><span class="na">1</span><span class="err">)</span> <span class="err">;</span>
+		<span class="na">city</span><span class="err">.</span><span class="na">setName</span><span class="err">("南阳")</span> <span class="err">;</span>
+		<span class="na">all</span><span class="err">.</span><span class="na">add</span><span class="err">(</span><span class="na">city</span><span class="err">)</span> <span class="err">;</span>
+		<span class="na">city =</span><span class="err"> </span><span class="s">new</span> <span class="na">City</span><span class="err">()</span> <span class="err">;</span>
+		<span class="na">city</span><span class="err">.</span><span class="na">setId</span><span class="err">(</span><span class="na">2</span><span class="err">)</span> <span class="err">;</span>
+		<span class="na">city</span><span class="err">.</span><span class="na">setName</span><span class="err">("成都")</span> <span class="err">;</span>
+		<span class="na">all</span><span class="err">.</span><span class="na">add</span><span class="err">(</span><span class="na">city</span><span class="err">)</span> <span class="err">;</span>
+		<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">allCity</span><span class="err">",</span><span class="na">all</span><span class="err">)</span> <span class="err">;</span>
+	  <span class="err">%</span><span class="nt">&gt;</span>
+	  <span class="nt">&lt;</span><span class="err">%</span>
+		<span class="na">all =</span><span class="err"> </span><span class="s">new</span> <span class="na">ArrayList</span><span class="err">()</span> <span class="err">;</span>
+		<span class="na">all</span><span class="err">.</span><span class="na">add</span><span class="err">(</span><span class="na">new</span> <span class="na">LabelValueBean</span><span class="err">("管理员","</span><span class="na">admin</span><span class="err">"))</span> <span class="err">;</span>
+		<span class="na">all</span><span class="err">.</span><span class="na">add</span><span class="err">(</span><span class="na">new</span> <span class="na">LabelValueBean</span><span class="err">("游客","</span><span class="na">guest</span><span class="err">"))</span> <span class="err">;</span>
+		<span class="na">request</span><span class="err">.</span><span class="na">setAttribute</span><span class="err">("</span><span class="na">allUser</span><span class="err">",</span><span class="na">all</span><span class="err">)</span> <span class="err">;</span>
+	  <span class="err">%</span><span class="nt">&gt;</span>
+	  <span class="nt">&lt;html:form</span> <span class="na">action=</span><span class="s">"select.do"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+		水果：<span class="nt">&lt;html:select</span> <span class="na">property=</span><span class="s">"fruit"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;html:option</span> <span class="na">value=</span><span class="s">"xg"</span><span class="nt">&gt;</span>西瓜<span class="nt">&lt;/html:option&gt;</span>
+			<span class="nt">&lt;html:option</span> <span class="na">value=</span><span class="s">"pg"</span><span class="nt">&gt;</span>苹果<span class="nt">&lt;/html:option&gt;</span>
+		<span class="nt">&lt;/html:select&gt;</span>
+		城市：<span class="nt">&lt;html:select</span> <span class="na">property=</span><span class="s">"city"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;html:options</span> <span class="na">collection=</span><span class="s">"allCity"</span> <span class="na">labelProperty=</span><span class="s">"name"</span> <span class="na">property=</span><span class="s">"id"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/html:select&gt;</span>
+		用户：<span class="nt">&lt;html:select</span> <span class="na">property=</span><span class="s">"user"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;html:optionsCollection</span> <span class="na">name=</span><span class="s">"allUser"</span> <span class="na">label=</span><span class="s">"label"</span> <span class="na">value=</span><span class="s">"value"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/html:select&gt;&lt;br&gt;</span>
+		<span class="nt">&lt;html:submit</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;html:reset</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">/&gt;</span>
+	  <span class="nt">&lt;/html:form&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html:html&gt;</span>
+</code></pre></div></div>
+
+<p>  定义ActionForm-SelectForm.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">/*</span>
+ <span class="p">*</span> <span class="n">Generated</span> <span class="n">by</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Template</span> <span class="n">path</span><span class="p">:</span> <span class="n">templates</span><span class="p">/</span><span class="n">java</span><span class="p">/</span><span class="n">JavaClass</span><span class="p">.</span><span class="n">vtl</span>
+ <span class="p">*/</span>
+<span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletRequest</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionErrors</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForm</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionMapping</span><span class="p">;</span>
+
+<span class="p">/**</span> 
+ <span class="p">*</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Creation</span> <span class="n">date</span><span class="p">:</span> <span class="m">09</span><span class="p">-</span><span class="m">26</span><span class="p">-</span><span class="m">2015</span>
+ <span class="p">*</span> 
+ <span class="p">*</span> <span class="n">XDoclet</span> <span class="n">definition</span><span class="p">:</span>
+ <span class="p">*</span> <span class="p">@</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span> <span class="n">name</span><span class="p">=</span><span class="s2">"selectForm"</span>
+ <span class="p">*/</span>
+<span class="k">public</span> <span class="n">class</span> <span class="n">SelectForm</span> <span class="n">extends</span> <span class="n">ActionForm</span> <span class="p">{</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">fruit</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">city</span> <span class="p">;</span>
+	<span class="n">private</span> <span class="k">String</span> <span class="n">user</span> <span class="p">;</span>
+	<span class="p">/*</span>
+	 <span class="p">*</span> <span class="n">Generated</span> <span class="n">Methods</span>
+	 <span class="p">*/</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Method</span> <span class="n">validate</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">mapping</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">request</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="n">ActionErrors</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">ActionErrors</span> <span class="n">validate</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span>
+			<span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="p">//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+		<span class="n">return</span> <span class="n">null</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Method</span> <span class="nb">reset</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">mapping</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">request</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">void</span> <span class="nb">reset</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="p">//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getFruit</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">fruit</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setFruit</span><span class="p">(</span><span class="k">String</span> <span class="n">fruit</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">fruit</span> <span class="p">=</span> <span class="n">fruit</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getCity</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">city</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setCity</span><span class="p">(</span><span class="k">String</span> <span class="n">city</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">city</span> <span class="p">=</span> <span class="n">city</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="k">String</span> <span class="n">getUser</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">return</span> <span class="n">user</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">void</span> <span class="n">setUser</span><span class="p">(</span><span class="k">String</span> <span class="n">user</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">this</span><span class="p">.</span><span class="n">user</span> <span class="p">=</span> <span class="n">user</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  定义Action文件-SelectAction.java</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">/*</span>
+ <span class="p">*</span> <span class="n">Generated</span> <span class="n">by</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Template</span> <span class="n">path</span><span class="p">:</span> <span class="n">templates</span><span class="p">/</span><span class="n">java</span><span class="p">/</span><span class="n">JavaClass</span><span class="p">.</span><span class="n">vtl</span>
+ <span class="p">*/</span>
+<span class="k">package</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletRequest</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="n">servlet</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">HttpServletResponse</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">Action</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForm</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionForward</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span><span class="p">.</span><span class="n">ActionMapping</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="n">fmz</span><span class="p">.</span><span class="n">struts</span><span class="p">.</span><span class="n">form</span><span class="p">.</span><span class="n">SelectForm</span><span class="p">;</span>
+
+<span class="p">/**</span> 
+ <span class="p">*</span> <span class="n">MyEclipse</span> <span class="n">Struts</span>
+ <span class="p">*</span> <span class="n">Creation</span> <span class="n">date</span><span class="p">:</span> <span class="m">09</span><span class="p">-</span><span class="m">26</span><span class="p">-</span><span class="m">2015</span>
+ <span class="p">*</span> 
+ <span class="p">*</span> <span class="n">XDoclet</span> <span class="n">definition</span><span class="p">:</span>
+ <span class="p">*</span> <span class="p">@</span><span class="n">struts</span><span class="p">.</span><span class="n">action</span> <span class="n">path</span><span class="p">=</span><span class="s2">"/select"</span> <span class="n">name</span><span class="p">=</span><span class="s2">"selectForm"</span> <span class="n">input</span><span class="p">=</span><span class="s2">"/input_select.jsp"</span> <span class="n">scope</span><span class="p">=</span><span class="s2">"request"</span> <span class="n">validate</span><span class="p">=</span><span class="s2">"true"</span>
+ <span class="p">*/</span>
+<span class="k">public</span> <span class="n">class</span> <span class="n">SelectAction</span> <span class="n">extends</span> <span class="n">Action</span> <span class="p">{</span>
+	<span class="p">/*</span>
+	 <span class="p">*</span> <span class="n">Generated</span> <span class="n">Methods</span>
+	 <span class="p">*/</span>
+
+	<span class="p">/**</span> 
+	 <span class="p">*</span> <span class="n">Method</span> <span class="n">execute</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">mapping</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">form</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">request</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">param</span> <span class="n">response</span>
+	 <span class="p">*</span> <span class="p">@</span><span class="n">return</span> <span class="n">ActionForward</span>
+	 <span class="p">*/</span>
+	<span class="k">public</span> <span class="n">ActionForward</span> <span class="n">execute</span><span class="p">(</span><span class="n">ActionMapping</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">ActionForm</span> <span class="n">form</span><span class="p">,</span>
+			<span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">SelectForm</span> <span class="n">selectForm</span> <span class="p">=</span> <span class="p">(</span><span class="n">SelectForm</span><span class="p">)</span> <span class="n">form</span><span class="p">;//</span> <span class="n">TODO</span> <span class="n">Auto</span><span class="p">-</span><span class="n">generated</span> <span class="n">method</span> <span class="n">stub</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"水果："</span><span class="p">+</span><span class="n">selectForm</span><span class="p">.</span><span class="n">getFruit</span><span class="p">())</span> <span class="p">;</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"城市："</span><span class="p">+</span><span class="n">selectForm</span><span class="p">.</span><span class="n">getCity</span><span class="p">())</span> <span class="p">;</span>
+		<span class="nf">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s2">"用户："</span><span class="p">+</span><span class="n">selectForm</span><span class="p">.</span><span class="n">getUser</span><span class="p">())</span> <span class="p">;</span>
+		<span class="n">return</span> <span class="n">null</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<hr />
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

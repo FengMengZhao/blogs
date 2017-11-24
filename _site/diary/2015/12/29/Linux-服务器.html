@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - Linux服务器</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/12/29/Linux-%E6%9C%8D%E5%8A%A1%E5%99%A8.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  December 29, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">Linux服务器</h1>
+
+<div id="post">
+  <h3 id="计算机基础">计算机基础</h3>
+
+<p>计算机的体系结构</p>
+
+<ol>
+  <li>
+    <p>运算器</p>
+  </li>
+  <li>
+    <p>控制器</p>
+  </li>
+  <li>
+    <p>储存器(内存)，是一种平面编址的存储单元</p>
+  </li>
+  <li>
+    <p>输入设备</p>
+  </li>
+  <li>
+    <p>输出设备</p>
+  </li>
+</ol>
+
+<p>程序=指令+数据</p>
+
+<p>硬件架构：ARM、x86、x64、安腾、alpha、UltraSparc、Power、m68000,m68k、PowerPc，这些是常见的CPU系列</p>
+
+<p>OS：Windows、Linux、Unix</p>
+
+<p>有了操作系统之后，任何程序都不能和硬件打交道，都是通过系统调用(system call)来完成，但是由于系统调用过于复杂，于是就产生了库(API)，库是可执行程序，但是没有入口，只有调用之后才能够执行。操作系统的内核(kernel)不单独执行任何一个程序，只是将硬件的功能抽象化出来提供一个接口，能更好的实现硬件的性能</p>
+
+<p>应用程序可以直接进行内核调用，也可以进行库的调用</p>
+
+<p>内核的功能：进程管理、内存管理、文件系统、网络功能、硬件驱动、安全机制</p>
+
+<p>汇编语言是和硬件联系非常紧密的，高级语言与硬件的联系没有那么紧密，是基于API的</p>
+
+<h3 id="linux思想">Linux思想</h3>
+
+<p>Linux的基本原则：</p>
+
+<ol>
+  <li>
+    <p>由目的单一小程序组成，组合小程序完成复杂的任务</p>
+  </li>
+  <li>
+    <p>一切皆文件</p>
+  </li>
+  <li>
+    <p>尽量避免捕获用户接口</p>
+  </li>
+  <li>
+    <p>配置文件保存为纯文本格式</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>用户要想跟操作系统进行交互，必须通过shell进行实现，shell可以是图形用户界面(GUI)的，也可以是命令行模式(CLI)</p>
+</blockquote>
+
+<h3 id="linux常用命令">Linux常用命令</h3>
+
+<p>命令提示符(prompt)：普通的用户是：<code class="highlighter-rouge">$</code>，root用户是：<code class="highlighter-rouge">#</code></p>
+
+<p>命令的的格式：<code class="highlighter-rouge">命令 选项 参数</code>，选项分为短选项和长选项，短选项：<code class="highlighter-rouge">-h</code>，长选项：<code class="highlighter-rouge">--help</code>；多个选项可以组合起来，例如：<code class="highlighter-rouge">ls -a -l 或者 ls -al</code>，长选项通常不能组合</p>
+
+<p>GUI：Gnome(C语言编写)、KDE(C++语言编写)、XFace；Linux的只是一个外围的程序，与windows不同，windows不使用桌面系统就不使用，而Linux不是这样的</p>
+
+<p>CLI：sh、bash、csh、zsh、ksh、tcsh</p>
+
+<p>切换用户：<code class="highlighter-rouge">su [-l] user1</code>，表示切换到user1用户，su–&gt;swith user</p>
+
+<blockquote>
+  <p>windows环境下的dll：dynamic link library指的是动态链接库，同样在Linux环境下也有同样的库文件：<code class="highlighter-rouge">.so</code>即shared object，共享对象</p>
+</blockquote>
+
+<p>操作系统的组成结构：内核 + 库 + shell(内核是对硬件)</p>
+
+<p>认证机制：Authentication，密码、指纹…；授权：Authorization；审计：Audition(日志)</p>
+
+<p>程序之所以能够执行，是因为程序存在一个入口，在文件的开头必须有一些特殊的字符，这些字符就是程序的”魔数”，例如：<code class="highlighter-rouge"><span class="c">#!/bin/bash</span></code></p>
+
+<p>目录其实上也是一种文件，只是一种映射路径的文件。操作系统使用路径是为了层次化管理所有的文件，其实是一种数据结构(自己的理解)</p>
+
+<p>Linux的文件类型：<code class="highlighter-rouge">-</code>表示普通文件(file)；<code class="highlighter-rouge">d</code>表示目录文件(directory)；<code class="highlighter-rouge">b</code>表示块设备文件(block)；<code class="highlighter-rouge">c</code>表示字符设备文件(character)；<code class="highlighter-rouge">l</code>表示符号链接文件也就是软链接文件(symbolic link file)；<code class="highlighter-rouge">p</code>表示命令管道文件(pipe)；<code class="highlighter-rouge">s</code>表示套接字文件(socket)</p>
+
+<p><code class="highlighter-rouge">-(文件类型)rwxr-xr-x(mode也就是权限) 1(文件硬链接的次数) root(owner) root(group)       803(size，默认单位是字节byte) Apr  5  2010(时间戳timestamp，这里显示的是最近一次别修个的时间) yum</code></p>
+
+<blockquote>
+  <p>时间戳：访问(access)；修改(modify)；改变(change)，是文件的内容发生改变；matadata(元数据)也就是文件的属性</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">ls -h</code>可以记性单位换算，h是human-readable的缩写，表示人类容易读取的文件</p>
+
+<p>“缓存为王，catcher is king”，计算机中到处都能看到缓存的影子，在Linux中，第一次使用的命令，是查找的路径，当第二次再次使用的时候，直接从缓存中读取，可以通过<code class="highlighter-rouge">hash</code>来查找之前使用过的所用命令的缓存，缓存使用哈希列表来储存数据，哈希表是键值对，在哈希表中查找数据的速度是O(1)的，缓存是使系统加速的</p>
+
+<p>Linux的时间分为：系统时间 和 硬件时间</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Linux的命令分为：外部命令 和 内部命令。内部命令一般使用<code class="highlighter-rouge">help COMMAND"；外部命令一般使用</code>COMMAND –help</td>
+      <td>-h`</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>manual：<code class="highlighter-rouge">man 命令</code>，man命令显示是使用章节的；1章：用户命令(/bin；/usr/bin；/usr/local/bin)；2章：系统调用；3章：库用户；4章：特殊文件(设备文件)；5章：文件格式(配置文件的语法)；6章：语法；7章：杂项；8管理命令(/sbin，/usr/sbin，/usr/local/sbin)</p>
+
+<blockquote>
+  <p>命令中中括号表示可选，尖括弧号表示必选，竖线表示多选1，三个点表示可以出现多次。NAME表示命令名称及功能简要说明；SYNOPSIS：表示用法说明，包括可用的选项；DESCRIPTION：命令功能的详细说明，可以包括每一个选项的意义；OPTIONS：说明每一个选项的意义；Files：此命令相关的配置文件；BUGS：相关bug；EXAMPLES：相关示例；SEE ALSO：另外参照</p>
+</blockquote>
+
+<blockquote>
+  <p>翻屏：向后翻一页<code class="highlighter-rouge">SPACE</code>；想前翻一页<code class="highlighter-rouge">b</code>；向后翻一行<code class="highlighter-rouge">ENTER</code>；向前翻一行<code class="highlighter-rouge">k</code></p>
+</blockquote>
+
+<blockquote>
+  <p>查找：<code class="highlighter-rouge">/keywords</code>表示向后查找关键字；<code class="highlighter-rouge">?keywords</code>表示向前查找关键字；<code class="highlighter-rouge">n</code>表示下一个查询的关键字；<code class="highlighter-rouge">N</code>表示上一个查询的关键字</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">hwclock -s</code>将硬件的事件同步到系统系统当中；<code class="highlighter-rouge">hwclock -w</code>将系统的时间同步到硬件当中</p>
+
+<p><code class="highlighter-rouge">info COMAND</code>可以获得帮助，是man命令的增强版本</p>
+
+<p><code class="highlighter-rouge">/usr/share/doc</code>保存的文档，这里面也可以获得帮助</p>
+
+<p><code class="highlighter-rouge">cal</code>：calendar，可以显示日历</p>
+
+<p><code class="highlighter-rouge">type COMMAND</code>可以查看是内部命令还是外部命令；<code class="highlighter-rouge">echo</code>默认打印换行符；<code class="highlighter-rouge">printf</code>默认不打印换行符</p>
+
+<p><code class="highlighter-rouge">file</code>可以查看文件的格式，在Linux系统中，<code class="highlighter-rouge">ELF</code>是可执行和可链接格式(Executable and Linkable Format)</p>
+
+<h3 id="linux的文件系统">Linux的文件系统</h3>
+
+<p><code class="highlighter-rouge">/boot</code>系统启动相关的文件，如：内核、initrd，以及grub(bootloader)</p>
+
+<p><code class="highlighter-rouge">/dev</code>设备文件(Linux重要思想，一切皆文件)</p>
+
+<blockquote>
+  <p>设备文件分为两种，一种是<code class="highlighter-rouge">块设备</code>，是随机访问的，数据块(如硬盘)；另外一种是<code class="highlighter-rouge">字符设备</code>，是线性访问，按字符为单位(如硬盘，显示屏，鼠标)</p>
+</blockquote>
+
+<blockquote>
+  <p>设备文件是没有大小的，没有数据，只有元数据，是一个入口</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">/etc</code>配置文件</p>
+
+<p><code class="highlighter-rouge">/home</code>用户的家目录，每一个用户的家目录通常为<code class="highlighter-rouge">/home/USERNAME</code></p>
+
+<p><code class="highlighter-rouge">/root</code>管理员的家目录</p>
+
+<p><code class="highlighter-rouge">/lib</code>库文件，库分为静态库(.a，直接链接到程序的地址空间中，是作为程序的一部分的运行的，事件库文件包含进来的)和动态库(.so(shared object)，windows是.dll，在内存中只需要一份即可)</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">/lib/modules</code>是内核模块文件</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">/media</code>表示挂载点目录，挂载移动设备</p>
+
+<p><code class="highlighter-rouge">/mnt</code>表示挂载点目录，挂载临时文件系统</p>
+
+<p><code class="highlighter-rouge">/misc</code>表示杂项，没法归类就放在这里</p>
+
+<p><code class="highlighter-rouge">/opt</code>表示可选目录，第三方程序安装目录</p>
+
+<p><code class="highlighter-rouge">/proc</code>伪文件系统，可以理解为内核映射文件，记录了内核的行动，本身是空目录，随着系统的启动而生成</p>
+
+<p><code class="highlighter-rouge">/sys</code>伪文件系统，跟硬件设备属性相关的映射文件，本身是空目录，随着系统的启动而生成</p>
+
+<p><code class="highlighter-rouge">/tmp</code>临近文件</p>
+
+<p><code class="highlighter-rouge">/var</code>可变化的文件</p>
+
+<p><code class="highlighter-rouge">/bin</code>可执行文件，存放的是用户命令</p>
+
+<p><code class="highlighter-rouge">/sibn</code>可执行文件，存放的是管理员命令</p>
+
+<p><code class="highlighter-rouge">/usr</code>，universal shared read-only，全局的共享的只读的文件，文件下有/bin /sbin /lib</p>
+
+<p><code class="highlighter-rouge">/usr/local</code>第三方软件安装目录(非关键性的程序，是站在系统的立场上来说)</p>
+
+<h4 id="文件名的命名规则">文件名的命名规则</h4>
+
+<ol>
+  <li>
+    <p>长度不能超过255个字符</p>
+  </li>
+  <li>
+    <p>不能使用<code class="highlighter-rouge">/</code>当文件名</p>
+  </li>
+  <li>
+    <p>严格区分大小写</p>
+  </li>
+</ol>
+
+<p>Linux系统学习的内容：目录管理、运行程序、设备管理、软件管理、进程管理、网络管理</p>
+
+<h4 id="命令行展开">命令行展开</h4>
+
+<p>Linux命令中会有<code class="highlighter-rouge">{}</code>展开的操作，比如说<code class="highlighter-rouge">mkdir /mnt/test{x/m,y}</code>，会在逗号那里隔开。</p>
+
+<p>递归的创建目录：<code class="highlighter-rouge">makdir -pv /mnt/test{x/m,y}</code></p>
+
+<p><code class="highlighter-rouge">stat</code>命令，可以查看文件的时间戳</p>
+
+<p><code class="highlighter-rouge">install</code>命令可以用来复制文件和修改属性，<code class="highlighter-rouge">install -d</code>可以用来创建目录，并且可以创建多个目录</p>
+
+<p>Linux的发行版：Fedooa、RedHat(CentOS)、SUSE、Debian(Ubuntn、Mint)、Gentoo、LFS(Linux From Scratch)</p>
+
+<blockquote>
+  <p>编译时将源程序转化为硬件可以执行的二进制程序，和硬件是紧密相连的</p>
+</blockquote>
+
+<p>王国维的三重境界：昨夜西风凋碧树，独上高楼，望断天涯路；衣带渐宽终不悔，为伊消得人憔悴；众里寻他千百度，蓦然回首，那人却在灯火阑珊处</p>
+
+<p>目录管理常用命令：<code class="highlighter-rouge">ls</code>、<code class="highlighter-rouge">cd</code>、<code class="highlighter-rouge">pwd</code>、<code class="highlighter-rouge">mkdir</code>、<code class="highlighter-rouge">tree</code></p>
+
+<p>文件管理常用命令：<code class="highlighter-rouge">touch</code>、<code class="highlighter-rouge">stat</code>、<code class="highlighter-rouge">file</code>、<code class="highlighter-rouge">rm</code>、<code class="highlighter-rouge">cp</code>、<code class="highlighter-rouge">mv</code>、<code class="highlighter-rouge">nano</code></p>
+
+<p>日期时间：<code class="highlighter-rouge">date</code>、<code class="highlighter-rouge">clock</code>、<code class="highlighter-rouge">hwclock</code>、<code class="highlighter-rouge">cal</code></p>
+
+<p>查看文本：<code class="highlighter-rouge">cat</code>、<code class="highlighter-rouge">tac</code>、<code class="highlighter-rouge">more</code>、<code class="highlighter-rouge">less</code>、``head、<code class="highlighter-rouge">tail</code></p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">tail -f</code>查看文件尾部不退出，等待显示后面追加(append)的新内容</p>
+</blockquote>
+
+<p>文本处理：<code class="highlighter-rouge">cut</code>、<code class="highlighter-rouge">join</code>、<code class="highlighter-rouge">sed</code>、<code class="highlighter-rouge">awk</code></p>
+
+<p><code class="highlighter-rouge">cut</code>，<code class="highlighter-rouge">cut -d</code>表示字段分隔符，默认是空格；<code class="highlighter-rouge">cut -f</code>指定要显示的字段，其或后面可以跟数字表示第几个字段，比如(“1,3”表示第1个和第3个字段，”1-3”表示1、2、3三个字段)</p>
+
+<p>文本排序：</p>
+
+<p><code class="highlighter-rouge">sort</code>，排序(默认的排列规则是ASCII码)，<code class="highlighter-rouge">sort -n</code>对数值进行排序；<code class="highlighter-rouge">sort -r</code>逆序排列；<code class="highlighter-rouge">sort -t</code>序段分隔符；<code class="highlighter-rouge">sort -k</code>哪个字段为基准；<code class="highlighter-rouge">sort -u</code>重复内容不显示；<code class="highlighter-rouge">sort -f</code>排序时忽略大小写，也就是不区分大小写</p>
+
+<p><code class="highlighter-rouge">uniq</code>，只有相邻的重复项才会被忽略，不相邻的认为不一样；<code class="highlighter-rouge">uniq -c</code>显示每一行重复的次数</p>
+
+<p>文本统计(wc：word count)：<code class="highlighter-rouge">wc</code>统计结果分别表示：行数(-l)，单词数(-w)，字节数(-c)</p>
+
+<p>字符处理命令：<code class="highlighter-rouge">tr</code>，是逐个字符进行处理的，可以将小写字母换成大写字母，如：<code class="highlighter-rouge">tr 'ab' 'AB'</code>；<code class="highlighter-rouge">tr -d</code>表示删除字符集中出现的所有字符</p>
+
+<h3 id="bash">bash</h3>
+
+<p>进程：在每个进程看来，在主机上只存在内核和当前进程；进程是程序的副本，是程序执行的实例</p>
+
+<p>shell中也可以出现子shell，当在shell中在启动<code class="highlighter-rouge">bash</code>后，就会产生一个子shell，但是每一个shell都是一个进程，即使是父子关系，也彼此之间是不一定有关联关系的</p>
+
+<p>bash(支持)：命令历史；管道、重定向；命令别名；命令行编辑；命令行展开；文件名通配；变量；编程</p>
+
+<h4 id="命令行编辑">命令行编辑</h4>
+
+<p><code class="highlighter-rouge">ctrl + a</code>：跳到命令行首；<code class="highlighter-rouge">ctrl + e</code>：跳到命令行尾</p>
+
+<p><code class="highlighter-rouge">ctrl + u</code>：删除光标至命令行首的内容；<code class="highlighter-rouge">ctrl + k</code>：删除光标至命令行尾的内容</p>
+
+<p><code class="highlighter-rouge">ctrl + l</code>：清屏，或者使用命令：<code class="highlighter-rouge">clear</code></p>
+
+<p><code class="highlighter-rouge">history</code>，<code class="highlighter-rouge">history -w</code>保存命令历史至历史文件中</p>
+
+<p><code class="highlighter-rouge">!n</code>执行命令历史中的第n条命令；<code class="highlighter-rouge">!-n</code>执行命令历史中的倒数第n个命令；<code class="highlighter-rouge">!!</code>执行上一条命令；<code class="highlighter-rouge">!string</code>执行最近的与字符串想匹配的命令；<code class="highlighter-rouge">!$</code>引用前一个命令的最后一个参数或者使用<code class="highlighter-rouge">Esc, .</code></p>
+
+<p>命令别名：在shell中定义的别名，仅仅在当且的shell周期内有效，别名的有效范围是当前shell周期。<code class="highlighter-rouge">alias CMDALIAS='COMMAND [options] [arguements]'</code>，单独的<code class="highlighter-rouge">alias</code>能够显示当前的所有系统中定义的命令别名</p>
+
+<p>命令替换：把命令中的某个子命令替换为其执行结果的过程；使用<code class="highlighter-rouge">$(COMMAND)</code>，也可以使用反引号将命令包括起来</p>
+
+<p>bash中支持的引号：反引号是命令替换；<code class="highlighter-rouge">""</code>：弱引用，可以实现变量替换；<code class="highlighter-rouge">''</code>：强引用，不完成变量替换</p>
+
+<p>文件名通配，globbing</p>
+
+<p><code class="highlighter-rouge">*</code>表示：任意长度的任意字符；<code class="highlighter-rouge">?</code>表示：任意单个字符；<code class="highlighter-rouge">[]</code>：匹配指定范围内的任意单个字符，例如”[abc]、[a-z]、[A-Z]、[a-zA-Z]、[0-9]”；<code class="highlighter-rouge">[^]</code>表示指定范围之外的任意单个字符，例如”[^0-9]“；特殊的：<code class="highlighter-rouge">[:space:]</code>表示所有空白字符、<code class="highlighter-rouge">[:punct:]</code>表示所有的标点符号、<code class="highlighter-rouge">[:lower:]</code>表示所有的小写字母、<code class="highlighter-rouge">[:upper:]</code>表示所有的大写字母、<code class="highlighter-rouge">[:alpha:]</code>表示大小写字母、<code class="highlighter-rouge">[:digit]</code>表示数字、<code class="highlighter-rouge">[:alnum:]</code>表示数字和大小写字母</p>
+
+<h3 id="用户组和权限">用户、组和权限</h3>
+
+<p>用户操作计算机的过程实际上就是发起了一个又一个进程，这一个又一个进程是用户操作计算机的代理，每一个进程都存在自己的安全上下文(secure context)，也就是说谁发起的继承，就以谁的身份来运行</p>
+
+<h4 id="权限">权限</h4>
+
+<p>文件：<code class="highlighter-rouge">r</code>表示可读，可以使用类似cat等命令查看文件内容；<code class="highlighter-rouge">w</code>表示可写，可以编辑或者删除此文件；<code class="highlighter-rouge">x</code>表示可执行，可以在命令提示符下当做命令提交给内核运行</p>
+
+<p>文件夹：<code class="highlighter-rouge">r</code>表示可以对此目录执行ls以列出内部的所有文件；<code class="highlighter-rouge">w</code>表示可以在此目录创建文件；<code class="highlighter-rouge">x</code>表示可以使用cd切换到此目录，也可以使用ls -l查看文件的详细信息</p>
+
+<p>用户：UID，<code class="highlighter-rouge">/etc/passwd</code>；组：GID，<code class="highlighter-rouge">/etc/group</code>；影子口令：用户<code class="highlighter-rouge">/etc/shadow</code>，组<code class="highlighter-rouge">/etc/gshadow</code></p>
+
+<p>用户类别：管理员：0；普通用户：1-65535，包括系统用户(专门用来运行后台服务进程的用户)：1-499，一般用户：500-65535</p>
+
+<p>用户组类别：管理员组；普通组，包括系统组、一般组</p>
+
+<p>另外一个种用户组类别：基本组(用户的默认组)、私有组(在创建用户的时候没有为其制定所属的组，系统会自动为其创建一个用户名同名的组)、附加组(额外组，默认组以外的其他组)</p>
+
+<p><code class="highlighter-rouge">/etc/passwd</code>：account登录名、password密码、UID、GID基本组ID、comment注释、HOME DIR家目录、SHELL用户默认的shell</p>
+
+<p><code class="highlighter-rouge">/etc/shadow</code>：account登录名、encrypted加密的密码</p>
+
+<blockquote>
+  <p>加密的方法：对称加密(加密和解密使用同一个密码)、公钥加密(每一个密码都成对出现，一个为私钥(secret key)，一个为公钥(public key))、单项加密(散列加密，指纹加密，是提取数据的特征码，常用于数据完整性校验，特征是不可逆，两大特性：雪崩效应，定长输出)</p>
+</blockquote>
+
+<p>用户管理常用命令：<code class="highlighter-rouge">useradd userdel usermod passwd chsh chfn finger id chage</code></p>
+
+<p>组管理常用命令：<code class="highlighter-rouge">groupadd groupdel groupmod gpasswd</code></p>
+
+<p>权限管理常用命令：<code class="highlighter-rouge">chown chgrp chmod umask</code></p>
+
+<p><code class="highlighter-rouge">useradd</code>，<code class="highlighter-rouge">useradd -u</code>指定UID；<code class="highlighter-rouge">useradd -g GID</code>指定基本组；<code class="highlighter-rouge">useradd -G GID...</code>多个，可以有附加组；<code class="highlighter-rouge">useradd -d /path/to/somedirectory</code>指定家目录；<code class="highlighter-rouge">useradd -c</code>指定注释信息；<code class="highlighter-rouge">useradd -s /bin/bash</code>；<code class="highlighter-rouge">useradd -m</code>；<code class="highlighter-rouge">useradd -r</code>增加系统用户(没有家目录，ID号在1~499之间)</p>
+
+<p><code class="highlighter-rouge">userdel</code>，<code class="highlighter-rouge">userdel -u</code>…</p>
+
+<p><code class="highlighter-rouge">finger</code>查找用户账号信息</p>
+
+<p><code class="highlighter-rouge">usermod</code>，<code class="highlighter-rouge">usermod -u</code>修改UID；<code class="highlighter-rouge">usermod -g</code>修改基本组GID；<code class="highlighter-rouge">usermod -a -G</code>为用户追加附加组，单独使用<code class="highlighter-rouge">-G</code>会覆盖此前的附加组；<code class="highlighter-rouge">usermod -c</code>修改注释信息；<code class="highlighter-rouge">usermod -d -m</code>更改用户的家目录，并且将之前家目录中的文件复制到新的家目录；<code class="highlighter-rouge">usermod -s</code>修改shell；<code class="highlighter-rouge">usermod -L</code>禁用账户；<code class="highlighter-rouge">usermod -U</code>解锁账户；<code class="highlighter-rouge">usermod -l</code>更改用户名</p>
+
+<p><code class="highlighter-rouge">chsh</code>更改shell；<code class="highlighter-rouge">chfn</code>更改finger信息(注释信息)</p>
+
+<p><code class="highlighter-rouge">passwd</code>，<code class="highlighter-rouge">passwd --stdin</code>从标准的输入中读取；<code class="highlighter-rouge">passwd -l</code>锁定用户；<code class="highlighter-rouge">passwd -u</code>解锁用户</p>
+
+<p><code class="highlighter-rouge">pwck</code>检查用户账号的完整性</p>
+
+<p><code class="highlighter-rouge">groupadd</code>，<code class="highlighter-rouge">groupadd -g GID</code>增加组，指定GID；<code class="highlighter-rouge">group -r</code>增加系统组</p>
+
+<p><code class="highlighter-rouge">groupmod</code>，<code class="highlighter-rouge">groupmod -g</code>修改GID；<code class="highlighter-rouge">groupmod -n</code>修改GROUPNAME</p>
+
+<p><code class="highlighter-rouge">groupdel</code>删除组</p>
+
+<p><code class="highlighter-rouge">gpasswd</code>给组加密码，组不会用来登录系统；</p>
+
+<p><code class="highlighter-rouge">newgrp</code>可以所属组切换为其他组</p>
+
+<p><code class="highlighter-rouge">chage</code>修改用户密码过期信息</p>
+
+<p><code class="highlighter-rouge">chown</code>改变文件的属主(只有管理员才可以使用此命令)；<code class="highlighter-rouge">chown -R</code>修改目录及其内部文件的属主；<code class="highlighter-rouge">chown --reference=/path/to/somefile file,...</code>把这个或者这些文件修改和参考文件一样的属性；<code class="highlighter-rouge">chown OWNER:GROUP</code>可以同时改变属主和属组，也同样支持reference</p>
+
+<p><code class="highlighter-rouge">chgrp</code>修改文件的属组(只有管理员才可以使用此命令)；用法同上</p>
+
+<p><code class="highlighter-rouge">chmod</code>修改文件的权限；例子：<code class="highlighter-rouge">chmod 755 /mnt/a.txt</code>，<code class="highlighter-rouge">chmod ug="rw" /mnt/a.txt</code>，<code class="highlighter-rouge">chmod u+x,g-x /mnt/a.txt</code></p>
+
+<p>练习：</p>
+
+<ol>
+  <li>
+    <p>新建一个没有家目录的用户fmz：<code class="highlighter-rouge">useradd -M fmz</code></p>
+  </li>
+  <li>
+    <p>复制/etc/skel为/home/fmz：<code class="highlighter-rouge">cp -r /etc/skel /home/fmz</code></p>
+  </li>
+  <li>
+    <p>改变/home/fmz及其内部文件的属主属组均为fmz：<code class="highlighter-rouge">chown -R fmz:fmz /home/fmz</code></p>
+  </li>
+  <li>
+    <p>/home/fmz及其内部的文件，属组和其他用户没有任何访问权限：<code class="highlighter-rouge">chmod -R go= /home/fmz</code></p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>这个练习也提供了怎么样不通过命令行还创建一个用户，一个用户的信息只是跟三个文件有关：1.<code class="highlighter-rouge">/etc/passwd</code>、2.<code class="highlighter-rouge">/etc/shadow</code>、3.<code class="highlighter-rouge">/etc/group</code>有关</p>
+</blockquote>
+
+<p>手动添加用户fmz，基本组为fmz(5000)</p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">vi /etc/group</code>，添加<code class="highlighter-rouge">fmz:x:5000:</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">vi /etc/passwd</code>，添加<code class="highlighter-rouge">fmz:x:5000:5000:Fmz:/home/fmz:/bin/bash</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">vi /etc/shadow</code>，添加<code class="highlighter-rouge">fmz:!!:16802:0:99999:7:::</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">cp -r /etc/skel /home/fmz</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">chown -R fmz:fmz /home/fmz</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">chmod -R go= /home/fmz</code></p>
+  </li>
+  <li>
+    <p>检测是否成功：<code class="highlighter-rouge">su fmz</code></p>
+  </li>
+</ol>
+
+<p>手动生成密码：<code class="highlighter-rouge">openssl passwd -1 -salt "12345678"</code>能生成具有”salt”的密码</p>
+
+<p><code class="highlighter-rouge">umask</code>表示显示当前用户umask(遮罩码)，表示用来生成文件或者目录的默认权限，管理员的默认umask是022，所以创建文件的默认权限就是<code class="highlighter-rouge">666-022=644</code>，创建目录的默认权限是<code class="highlighter-rouge">777-022=755</code>；普通用户的默认umask是002，所以普通用户创建文件的默认权限是<code class="highlighter-rouge">666-002=664</code>，创建目录的默认权限是<code class="highlighter-rouge">777-002=775</code></p>
+
+<p>注意：文件默认不能具有执行权限，如果按照umask算的结果中具有执行权限，则将其权限加1</p>
+
+<p>站在用户的角度来说，SHELL的类型：一种是登录式的SHELL，包括正常通过终端登录或者<code class="highlighter-rouge">su - USERNAME</code>或者<code class="highlighter-rouge">su -l USERNAME</code>；另一种是非登录式SHELL，包括<code class="highlighter-rouge">su USERBNAME</code>或者图形终端下打开命令窗口或者自动执行的shell脚本</p>
+
+<h4 id="bash的配置文件分为全局配置和个人配置">bash的配置文件，分为全局配置和个人配置</h4>
+
+<p>全局配置：<code class="highlighter-rouge">/etc/profile</code>、<code class="highlighter-rouge">/etc/profile.d/*.sh</code>、<code class="highlighter-rouge">/etc/.bashrc</code></p>
+
+<p>个人配置：<code class="highlighter-rouge">~/.bash_profile</code>、<code class="highlighter-rouge">~/.bashrc</code></p>
+
+<p>profile类文件用来设定：环境变量、运行命令或者脚本</p>
+
+<p>bashrc类文件用来设定：设定本地变量、定义命令别名</p>
+
+<blockquote>
+  <p>作用范围越小的月最终生效(当两者同时存在的时候就以小范围的为主)</p>
+</blockquote>
+
+<h4 id="登录式shell如何读取配置文件">登录式SHELL如何读取配置文件</h4>
+
+<p><code class="highlighter-rouge">/etc/profile --&gt; /etc/profile.d/*.sh --&gt; ~/.bash_profile --&gt; ~/.bashrc --&gt; /etc/bashrc</code></p>
+
+<h4 id="非登录式的shell如何读取配置文件">非登录式的SHELL如何读取配置文件</h4>
+
+<p><code class="highlighter-rouge">~/.bashrc --&gt; /etc/bashrc --&gt; /etc/profile.d/*.sh</code></p>
+
+<p><code class="highlighter-rouge">bash</code>：可以理解为脚本解释器</p>
+
+<h3 id="io重定向">I/O重定向</h3>
+
+<p>系统设定：默认的输出设备叫做标准输出，STDOUT ，1；默认的输入设备叫做标准输入，STDIN，0；默认的标准错误输出，STDERR，2。</p>
+
+<p>计算机中默认的标准输入是：键盘；默认的标准输出和错误输出是：屏幕、</p>
+
+<p>如果我们想要改变默认输入或者改变默认输出以及默认的错误输出就是所谓的I/O重定向的过程</p>
+
+<h4 id="linux中io重定向">Linux中I/O重定向</h4>
+
+<p><code class="highlighter-rouge">&gt;</code>：覆盖输出，这样的命令可能是致命的。我们可以使用<code class="highlighter-rouge">set -C</code>这样就禁止对已经存在的文件使用覆盖重定向，如我在禁止覆盖重定向的情况下还想要强制覆盖就需要使用<code class="highlighter-rouge">ls /etc/passwd &gt;| /tmp/passwd</code>；<code class="highlighter-rouge">set +C</code>可以关闭上述功能</p>
+
+<p><code class="highlighter-rouge">&gt;&gt;</code>：追加输出</p>
+
+<p><code class="highlighter-rouge">2&gt;</code>：表示覆盖错误输出重定向(要认识到，标准输出和标准的错误输出是两个不同的输出流)</p>
+
+<p><code class="highlighter-rouge">2&gt;&gt;</code>：表示追加错误输出</p>
+
+<p><code class="highlighter-rouge">&amp;&gt;</code>：覆盖的方式重定向标准输出和错误输出到同一个文件</p>
+
+<p><code class="highlighter-rouge">&lt;</code>：输入重定向</p>
+
+<p><code class="highlighter-rouge">&lt;&lt;</code>：Here Document，表示输出文档。例如<code class="highlighter-rouge">cat &gt;&gt; /mnt/myfile.txt &lt;&lt; EOF</code></p>
+
+<h4 id="管道">管道</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>命令管道：把前一个命令的输出作为后一个命令输入，<code class="highlighter-rouge">命令1 | 命令2 | 命令3</code>，例如：<code class="highlighter-rouge">echo "hello,world | tr 'a-z' 'A-Z'"、</code>cut -d : -f 3 /etc/passwd</td>
+      <td>sort -n`</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Linux重要哲学思想之一：组合小命令完成复杂任务</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">tee</code>，read from standard input and write to standard output and files ，例如：<code class="highlighter-rouge">echo "Hello,Fmz." | tr /mnt/hello.out</code>这样就可以实现既在屏幕上进行标准输出又重定向输出到文件中</p>
+
+<p>练习：</p>
+
+<ol>
+  <li>
+    <p>统计/usr/bin目录下文件的个数：<code class="highlighter-rouge">ls /usr/bin | wc -l</code></p>
+  </li>
+  <li>
+    <p>取出当前系统中所有用户的shell，要求每种shell只显示一次，并且按顺序进行显示：<code class="highlighter-rouge">cut -d: -f7 /etc/passwd | sort -u</code></p>
+  </li>
+  <li>
+    <p>如何显示/var/log目录下每个文件的内容类型：<code class="highlighter-rouge">file /var/log/*</code> 或者 <code class="highlighter-rouge">cd /var/log; file </code>ls /var/log``这个命令必须切换到当前目录</p>
+  </li>
+  <li>
+    <p>取出/etc/inittab文件第六行：<code class="highlighter-rouge">head -6 /etc/inittab | tail -1</code></p>
+  </li>
+  <li>
+    <p>取出/etc/passwd文件中倒数第九个用户的用户名和shell，显示在屏幕上并将其保存在/tmp/users文件中：<code class="highlighter-rouge">tail -9 /etc/passwd | head -1 | cut -d: -f1,7 | tee /tmp/users</code></p>
+  </li>
+  <li>
+    <p>显示/etc目录下的所有以pa开头的文件，并统计其个数：<code class="highlighter-rouge">ls -d /etc/pa* |wc -l</code></p>
+  </li>
+  <li>
+    <p>不使用文本编辑器的命令，将alias cls=clear一行的内容添加至当前用户的.bash文件中：<code class="highlighter-rouge">echo "alias cls=clear &gt;&gt; ~/.bashrc"</code></p>
+  </li>
+</ol>
+
+<h3 id="文本查找">文本查找</h3>
+
+<h4 id="grep-egrep-fgrep">grep egrep fgrep</h4>
+
+<p>grep根据模式(pattern：文本字符和正则表达式的元字符组合而成匹配条件)搜索文本，并将符合模式的文本行显示出来。<code class="highlighter-rouge">grep -i</code>表明忽略大小写；<code class="highlighter-rouge">grep --color</code>匹配到的字符高亮显示；<code class="highlighter-rouge">grep -v</code>显示没有被匹配到的行；<code class="highlighter-rouge">grep -o</code>之显示匹配到的字符串</p>
+
+<p>正则表达式：REGlar EXPression，Regex(默认情况下，正则表达式工作在贪婪模式下，也就是说尽可能多的去匹配)</p>
+
+<h5 id="元字符">元字符：</h5>
+
+<p><code class="highlighter-rouge">.</code>匹配任意单个字符</p>
+
+<p><code class="highlighter-rouge">[]</code>：指定范围</p>
+
+<p><code class="highlighter-rouge">[^]</code>：指定范围外</p>
+
+<p><code class="highlighter-rouge">*</code>匹配其前面的字符任意次数</p>
+
+<p><code class="highlighter-rouge">.*</code>匹配任意长度的任意字符</p>
+
+<p><code class="highlighter-rouge">\?</code>匹配其前面的字符1次或者0次</p>
+
+<p><code class="highlighter-rouge">\{m,n\}</code>匹配其前面的字符至少m次数，至多n此</p>
+
+<h5 id="位置锚定">位置锚定</h5>
+
+<p><code class="highlighter-rouge">^</code>：锚定首行，此字符后面的任意内容必须出现在行首</p>
+
+<p><code class="highlighter-rouge">$</code>：锚定行尾，此字符前面的任意内容必须出现在行尾</p>
+
+<p><code class="highlighter-rouge">^$</code>：锚定空白行</p>
+
+<p><code class="highlighter-rouge">\&lt;或\b(放在前面)</code>：其后面的任意字符必须作为单词首部出现</p>
+
+<p><code class="highlighter-rouge">\&gt;或\b(放在后面)</code>：其前面的任意字符必须作为单词的尾部出现</p>
+
+<p><code class="highlighter-rouge">\&lt;root\&gt;</code>：表示精确的匹配”root”这个单词</p>
+
+<h5 id="分组">分组</h5>
+
+<p><code class="highlighter-rouge">\(\)</code></p>
+
+<p>后向引用：<code class="highlighter-rouge">\1</code>引用第一个左括号以及与之对应的右括号所包括的所有内容；<code class="highlighter-rouge">\2 \3 \4</code></p>
+
+<p><code class="highlighter-rouge">grep</code>使用基本正则表达式定义的模式来过滤文本的命令</p>
+
+<p><code class="highlighter-rouge">grep -A 数字</code>表示匹配到字符串所在的行后，再显示行后的数字行；<code class="highlighter-rouge">grep -B 数字</code>表示匹配到字符串所在的行后，再显示行前的数字行；<code class="highlighter-rouge">grep -C 数字</code>表示匹配到字符串所在的行前后，再显示行前的数字行</p>
+
+<h4 id="增强的正则表达式与正则表达式不同的列出来">增强的正则表达式(与正则表达式不同的列出来)</h4>
+
+<p>次数匹配：<code class="highlighter-rouge">?</code>不需要反斜杠，表示1次或者0此；<code class="highlighter-rouge">+</code>表示匹配其前面的字符至少一次</p>
+
+<p>分组：<code class="highlighter-rouge">()</code>不需要反斜杠，<code class="highlighter-rouge">|</code>表示或者(or)</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">grep -E = egrep</code>，支持扩展的正则表达式，例如：找出1-255的数字<code class="highlighter-rouge">ifconfig |egrep --color '\&lt;([1-9]|[1-9][0-9]|1[0-9][0-9]|25[0-5])\&gt;'</code>；找出ifconfig中的ip(粗略)地址：<code class="highlighter-rouge">ifconfig |egrep --color '(\&lt;([0-9]|[1-9][0-9]|1[0-9][0-9]|25[0-5])\&gt;\.){3}\&lt;([0-9]|[1-9][0-9]|1[0-9][0-9]|25[0-5])\&gt;'</code></p>
+</blockquote>
+
+<p>特殊的：<code class="highlighter-rouge">[[:space:]]</code>表示所有空白字符、<code class="highlighter-rouge">[[:punct:]]</code>表示所有的标点符号、<code class="highlighter-rouge">[[:lower:]]</code>表示所有的小写字母、<code class="highlighter-rouge">[[:upper:]]</code>表示所有的大写字母、<code class="highlighter-rouge">[[:alpha:]]</code>表示大小写字母、<code class="highlighter-rouge">[[:digit]]</code>表示数字、<code class="highlighter-rouge">[[:alnum:]]</code>表示数字和大小写字母</p>
+
+<h3 id="ip">IP</h3>
+
+<p>IPv4分为5类：A B C D E</p>
+
+<p>A类：1-127</p>
+
+<p>B类：128-191</p>
+
+<p>C类：192-223</p>
+
+<p>找出ipconfig中的IP地址：<code class="highlighter-rouge">ifconfig |egrep --color '\&lt;([1-9]|[1-9][0-9]|1[0-9][0-9]|2[01][0-9]|22[0-3])\&gt;(\.\&lt;([0-9]|[1-9][0-9]|1[0-9][0-9]|25[0-4])\&gt;){2}\.\&lt;([1-9]|[1-9][0-9]|1[0-9][0-9]|25[0-4])'</code></p>
+
+<p><code class="highlighter-rouge">fgrep</code>是一种快速查找的grep，但是不支持正则表达式</p>
+
+<h3 id="shell编程">shell编程</h3>
+
+<p>计算机语言：机器语言、汇编语言、高级语言</p>
+
+<p>高级语言分为动态语言和静态语言，动态语言是编译型语言，是一种强类型语言(变量)，事先需要转换成可执行格式，例如：C C++ Java C#语言等；动态语言是一种解释型语言，是一种弱类型语言，语言的执行是边解释边执行，例如：PHP SHELL Python Perl等</p>
+
+<p>面向过程：Shell C ；面向对象：Java Python perl C++</p>
+
+<p>内存：编址的储存单元；变量：内存空间，命名</p>
+
+<p>变量类型：事先确定数据的存储格式和长度</p>
+
+<p>Bash变量：环境变量、本地变量(局部变量)、位置变量、特殊变量</p>
+
+<p>定义环境变量：<code class="highlighter-rouge">export VARNAME=VAL</code></p>
+
+<blockquote>
+  <p>环境变量的作用域是当前shell进程及其子进程，本地变量的作用域是整个shell进程，而局部变量的作用域是其所在的代码块</p>
+</blockquote>
+
+<blockquote>
+  <p>在Bash中单引号是强引用，是要不进行变量替换的；而双引号是弱引用，是会进行变量替换的</p>
+</blockquote>
+
+<blockquote>
+  <p>脚本执行时会启动一个子shell进程；命令中启动的脚本会继承当前shell环境变量；系统自动执行的脚本(非命令行启动)就需要自我定义需要的各个环境变量</p>
+</blockquote>
+
+<p>位置变量：<code class="highlighter-rouge">$1</code> <code class="highlighter-rouge">$2</code>，指的是脚本的第一个参数，第二个参数</p>
+
+<p>特殊变量：例如：<code class="highlighter-rouge">$?</code>用于保存上一个命令执行状态的返回值(0代表执行成功，1-255表示执行不成功)，也就是说幸福加听总是一样的，而不幸的家庭各有各自的不行；例如：<code class="highlighter-rouge">id root &amp;&gt; /dev/null</code> <code class="highlighter-rouge">echo $?</code>；<code class="highlighter-rouge">$#</code>表示有多少个参数；<code class="highlighter-rouge">$*</code>表示参数列表；<code class="highlighter-rouge">$@</code>表示参数列表；<code class="highlighter-rouge">shift</code>表示在参数之间跳跃，默认跳跃到下一个，可以用<code class="highlighter-rouge">shift -n</code>来指定</p>
+
+<p>撤销变量：<code class="highlighter-rouge">unset VARNAME</code>，不仅仅是环境变量，所有的变量都可以通过unset命令来撤销；查看所有的变量(包括本地变量)：<code class="highlighter-rouge">set</code>；查看所有的环境变量：<code class="highlighter-rouge">printenv</code> 或者 <code class="highlighter-rouge">export </code></p>
+
+<p>为一个变量添加内容：<code class="highlighter-rouge">export PATH=$PATH:/usr/local/apache/bin</code></p>
+
+<p>所有的变量都是以字符串的类型来储存的，不能用来加法运算</p>
+
+<h4 id="脚本">脚本</h4>
+
+<p>脚本是命令的堆砌，按实际需求，结合命令</p>
+
+<p>练习1</p>
+
+<ol>
+  <li>
+    <p>添加5个用户，user1,…,user5</p>
+  </li>
+  <li>
+    <p>每个用户的密码同用户名，而且要求，添加密码完成后不显示passwd命令的执行结果信息</p>
+  </li>
+  <li>
+    <p>每个用户添加完成后，都要显示用户某某已经添加成功</p>
+  </li>
+</ol>
+
+<p>练习2</p>
+
+<ol>
+  <li>
+    <p>使用一个变量保存一个用户名</p>
+  </li>
+  <li>
+    <p>删除此变量中的用户，且一并删除其家目录</p>
+  </li>
+  <li>
+    <p>显示”用户删除完成”的信息</p>
+  </li>
+</ol>
+
+<h4 id="条件判断">条件判断</h4>
+
+<p>条件测试类型：整数测试(双目操作)、字符测试、文件测试</p>
+
+<p>条件测试的表达式：<code class="highlighter-rouge">[ expr ]</code> 或者 <code class="highlighter-rouge">[[ expr ]]</code> 或者 <code class="highlighter-rouge">test expr</code></p>
+
+<p>整数比较：<code class="highlighter-rouge">-eq</code>，测试两个整数是否相等，例如<code class="highlighter-rouge">$A -eq $B</code>；<code class="highlighter-rouge">-nq</code>：测试两个整数是否不相等；<code class="highlighter-rouge">-gt</code>：测试一个整数是否大于另一个数；<code class="highlighter-rouge">-lt</code>：测试小于；<code class="highlighter-rouge">-ge</code>：测试大于等于；<code class="highlighter-rouge">-le</code>：测试小于等于</p>
+
+<p>命令间的逻辑关系：逻辑与<code class="highlighter-rouge">&amp;&amp;</code>；逻辑或<code class="highlighter-rouge">||</code>，逻辑与表示当一个条件为假时，不会执行符号后面的；逻辑或表示当一个条件为真时，不会执行符号后面的</p>
+
+<p>条件判断控制语句：<code class="highlighter-rouge">if 条件判断; then statement1、statement2...</code></p>
+
+<p>shell中如何进行算数运算：</p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">let C=$A+$B</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">C=$[$A+$B]</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">C=$(($A+$B))</code></p>
+  </li>
+  <li>
+    <p>expr算数表达式，表达式中各个操作符及算数符之间要有空格，而且要使用命令引用``：C=<code class="highlighter-rouge">expr $A + $B</code></p>
+  </li>
+</ol>
+
+<p><code class="highlighter-rouge">exit #</code>可以退出脚本，后面的符号即为其状态码。如果脚本没有明确定义退出状态码，那么，最后执行的一条命令的退出码即为脚本的退出状态码</p>
+
+<h4 id="文件测试单目操作">文件测试(单目操作)</h4>
+
+<p><code class="highlighter-rouge">-e FILE</code>：测试文件是否存在；<code class="highlighter-rouge">-f FILE</code>：测试文件是否为普通文件；<code class="highlighter-rouge">-d FILE</code>：测试指定路径是否为目录；<code class="highlighter-rouge">-r FILE</code>：测试当前用户对指定文件是否有读权限；<code class="highlighter-rouge">-w FILE</code>：测试当前用户对指定文件是否有写权限；<code class="highlighter-rouge">-x FILE</code>：测试当前用户对指定文件是否有执行权限</p>
+
+<p>例如：<code class="highlighter-rouge">[ -e /etc/inittab ]</code>，测试文件是否存在； <code class="highlighter-rouge">[ -x /etc/rc.d/rc.sysinit ]</code>，测试当前用户对文件是否具有执行权限</p>
+
+<p>测试脚本是否有语法错误：<code class="highlighter-rouge">bash -n file</code></p>
+
+<p><code class="highlighter-rouge">bash -x</code>可以一步一步的执行程序，这样可以排除bug</p>
+
+<h4 id="sedstream-editor">sed(Stream EDitor)</h4>
+
+<p>sed是行编辑器，是逐行处理文本的，把每一行读取到内存(模式空间)当中，在内存中进行处理，处理后再输出到屏幕中。</p>
+
+<p>sed在默认不编辑原文件，仅仅对模式空间内的数据进行处理，处理结束后，将模式空间打印到屏幕上。</p>
+
+<p>sed命令：<code class="highlighter-rouge">sed 'AddressCommand' file...</code></p>
+
+<p>Address：1.StartLine~EndLine；2./RegExp/，例如：<code class="highlighter-rouge">/^root/</code>；3./pattern1/,/pattern2/表示第一次被pattern1匹配到的行开始，至第一次被pattern2匹配到行结束；4.LineNumber表示精确指定的行，<code class="highlighter-rouge">$</code>表示最后一行，<code class="highlighter-rouge">$-1</code>表示；5.StartLine,+N表示从startline开始，向后的N行，工N+1行</p>
+
+<p>Command：<code class="highlighter-rouge">d</code>表示删除符合条件的行；<code class="highlighter-rouge">p</code>表示打印符合条件的行；<code class="highlighter-rouge">a \string</code>表示在指定的行后追加新行，内容为string，注意a后面有空格；<code class="highlighter-rouge">i \string</code>表示在指定的行前面增加新行；<code class="highlighter-rouge">r FILE</code>将指定文件的内容添加至符合条件的行处；<code class="highlighter-rouge">w FILE</code>将地址指定范围内的内容另存至指定的文件中；<code class="highlighter-rouge">s/pattern/string/修饰符</code>表示查找并且替换，默认只替换每一行第一次被模式匹配到的字符串，修饰符<code class="highlighter-rouge">g</code>表示全局替换，<code class="highlighter-rouge">i</code>表示忽略大小写，不仅仅可以使用<code class="highlighter-rouge">s///</code>可以使用<code class="highlighter-rouge">s###</code>等等只要三个符号形同即可</p>
+
+<p>sed选项：<code class="highlighter-rouge">sed -n</code>表示不是处空间模式；<code class="highlighter-rouge">sed -i</code>表示直接修饰原文件；<code class="highlighter-rouge">sed -e</code>可以同时执行多个脚本；<code class="highlighter-rouge">sed -f /path/to/scripts FILE</code>表示将一个个脚本执行到后面的文件中；<code class="highlighter-rouge">sed -r</code>表示使用扩展的正则表达式</p>
+
+<p>sed练习</p>
+
+<ol>
+  <li>
+    <p>删除/etc/grub.conf文件中行首的空白符：<code class="highlighter-rouge">sed -r 's/^[[:space:]]//g' /etc/grub.conf</code>(-r的意思是使用增强的正则表达式)</p>
+  </li>
+  <li>
+    <p>替换/etc/inittab文件中”id:3:initdefault:”一行中数字为5：<code class="highlighter-rouge">sed 's/\(id:\)[0-9]\(:initdefault:\)/\15\2/' /etc/inittab</code></p>
+  </li>
+  <li>
+    <p>删除/etc/inittab文件中的空白行：<code class="highlighter-rouge">sed '^$d' /etc/inittab</code></p>
+  </li>
+  <li>
+    <p>删除/etc/inittab文件开头的#号：<code class="highlighter-rouge">sed 's/^#//g' /etc/inittab</code></p>
+  </li>
+  <li>
+    <p>删除某文件开头的#号，以及后面的空白字符，但要求#号后面必须有空白字符：<code class="highlighter-rouge">sed -r 's/^#[[:space:]]+//g' /etc/inittab</code></p>
+  </li>
+  <li>
+    <p>取出一个文件路径的目录名称：</p>
+  </li>
+</ol>
+
+<p>字符测试：<code class="highlighter-rouge">==</code>是否等于；<code class="highlighter-rouge">!=</code>是否不等于；<code class="highlighter-rouge">&gt;</code>；<code class="highlighter-rouge">&lt;</code>；<code class="highlighter-rouge">-n string</code>测试字符串是否为空；<code class="highlighter-rouge">-z string</code>测试字符串是否不为空</p>
+
+<p><code class="highlighter-rouge">bc &lt;&lt;&lt; "scale=2;111/2;"</code>计算也可以这样使用</p>
+
+<h4 id="循环进入条件退出条件">循环：进入条件，退出条件</h4>
+
+<p><code class="highlighter-rouge">for</code> <code class="highlighter-rouge">while</code> <code class="highlighter-rouge">until</code></p>
+
+<p>整数列表：<code class="highlighter-rouge">seq 开始值 等差值 最终值</code>，默认开始值和等差值都是1，可以缺省</p>
+
+<p>默认情况的命令复制是字符串；声明变量用<code class="highlighter-rouge">declare</code>，<code class="highlighter-rouge">declare -i</code>表示声明整数；<code class="highlighter-rouge">declare -x</code>表示声明环境变量</p>
+
+<h3 id="vi编辑器">VI编辑器</h3>
+
+<p><code class="highlighter-rouge">vi +# FILE</code>加一个数字表示直接光标处在第#行，<code class="highlighter-rouge">vi + FIlE</code>直接处在文件的尾行；<code class="highlighter-rouge">vi +/PATTERN</code>打开文件，定位到第一次被PATTEERN匹配的行首</p>
+
+<p>vi模式：编辑模式(命令模式)；输入模式；末行模式</p>
+
+<p><code class="highlighter-rouge">ZZ</code>可以编辑模式下推出；<code class="highlighter-rouge">#hljk</code>可以定义光标移动的距离</p>
+
+<p>编辑模式下：<code class="highlighter-rouge">w</code>表示移到下一个单词的词首；<code class="highlighter-rouge">e</code>表示移到当前或者下一个单词的词尾；<code class="highlighter-rouge">b</code>表示移动到当前或者上一个单词的词尾</p>
+
+<p>行内跳转：<code class="highlighter-rouge">0</code>表示跳到严格行首；<code class="highlighter-rouge">^</code>表示跳到非严格行首；<code class="highlighter-rouge">$</code>表示跳到行尾</p>
+
+<p>行间跳转：<code class="highlighter-rouge">#G</code>调至#行，<code class="highlighter-rouge">G</code>表示跳到最后一行；末行模式下直接给出行号即可：<code class="highlighter-rouge">:#</code></p>
+
+<p>翻屏操作：<code class="highlighter-rouge">ctrl+f</code>：向上翻一屏；<code class="highlighter-rouge">ctrl+b</code>：向上翻一屏幕；<code class="highlighter-rouge">ctrl+d</code>：向上翻半屏；<code class="highlighter-rouge">ctrl+u</code>：向下翻半屏</p>
+
+<p>删除单个字符：<code class="highlighter-rouge">x</code>；<code class="highlighter-rouge">#x</code>表示删除光标所在处以及向后的#个字符</p>
+
+<p>删除命令：<code class="highlighter-rouge">d</code>命令要和跳转命令结合使用，<code class="highlighter-rouge">dw</code> <code class="highlighter-rouge">de</code> <code class="highlighter-rouge">db</code>；<code class="highlighter-rouge">dd</code>表示删除光标所在行，<code class="highlighter-rouge">#dd</code>表示删除光标所在行以及其后面的行共#行；末行模式下：<code class="highlighter-rouge">.</code>表示当前行；<code class="highlighter-rouge">$</code>表示最后一行，<code class="highlighter-rouge">+#</code>表示向下的#行</p>
+
+<blockquote>
+  <p>删除的内容是别保存在缓冲区当中的，可以用来粘贴</p>
+</blockquote>
+
+<p>粘贴命令：<code class="highlighter-rouge">p</code>：如果删除的或者复制的为整行的内容，则粘贴到光标的下一行；否则粘贴到光标字符的后面；<code class="highlighter-rouge">P</code>：如果删除的或者复制的为整行的内容，则粘贴到光标的上一行；否则粘贴到光标字符的前面，支持数字。</p>
+
+<p>复制命令：<code class="highlighter-rouge">y</code>：同<code class="highlighter-rouge">p</code>；<code class="highlighter-rouge">Y</code>：<code class="highlighter-rouge">P</code>，支持数字</p>
+
+<p>先删除内容，在转换为数据模式，也就是修改：<code class="highlighter-rouge">c</code>，用法同<code class="highlighter-rouge">d</code></p>
+
+<p>替换单个字符：<code class="highlighter-rouge">r </code>；<code class="highlighter-rouge">R</code>直接进入替换模式，敲击的内容就替换了</p>
+
+<p>撤销编辑操作：<code class="highlighter-rouge">u</code>撤销前一次的编辑操作(最多50次)，支持数字：<code class="highlighter-rouge">#u</code>撤销#此操作</p>
+
+<p>撤销自己的撤销操作：<code class="highlighter-rouge">ctrl + r</code></p>
+
+<p>重复前一次的编辑操作：<code class="highlighter-rouge">.</code></p>
+
+<p>可视化模式：<code class="highlighter-rouge">v</code>按字符选取；<code class="highlighter-rouge">V</code>按矩形选取</p>
+
+<p>查找：<code class="highlighter-rouge">/</code>从首部开始找；<code class="highlighter-rouge">?</code>从尾部开始找；<code class="highlighter-rouge">n</code>下一个；<code class="highlighter-rouge">N</code>上一个</p>
+
+<p>查找并替换：末行模式下使用<code class="highlighter-rouge">s</code>命令；如果是全文查找并且替换<code class="highlighter-rouge">1,$s///</code>或者<code class="highlighter-rouge">%s///</code></p>
+
+<p>使用vi编辑多个文件：<code class="highlighter-rouge">vi file1 file2 file3</code>，在末行模式下输入<code class="highlighter-rouge">:next</code>表示切换至下一个文件；<code class="highlighter-rouge">:prev</code>；<code class="highlighter-rouge">:last</code>；<code class="highlighter-rouge">first</code>；<code class="highlighter-rouge">:qa</code>表示全部退出</p>
+
+<p>分屏显示一个文件：<code class="highlighter-rouge">ctrl+w,s</code>水平拆分窗口；<code class="highlighter-rouge">ctrl+w,v</code>垂直拆分窗口；在窗口之间切换光标：<code class="highlighter-rouge">ctrl+w,ARROW</code></p>
+
+<p>分窗口编辑多个文件：<code class="highlighter-rouge">vi -o file1 file2</code>水平显示；<code class="highlighter-rouge">vi -O file1 file2</code>垂直显示</p>
+
+<p>将当前文件的部分内容另存到另一个文件中：末行模式中使用<code class="highlighter-rouge">w</code>命令，<code class="highlighter-rouge">:ADDR1,ADDR2w /path/to/somewhere</code></p>
+
+<p>将另一文件的内容填充到当前的文件中：<code class="highlighter-rouge">:r /path/to/somefile</code></p>
+
+<p>跟shell交互：<code class="highlighter-rouge">:! COMMAND</code>，例如：<code class="highlighter-rouge">:! ls /var</code></p>
+
+<h4 id="高级话题">高级话题</h4>
+
+<p>显示或者取消行号：<code class="highlighter-rouge">:set nu</code>，<code class="highlighter-rouge">:set nonu</code></p>
+
+<p>显示或略或者区分字符大小写：<code class="highlighter-rouge">:set ignorecase</code> <code class="highlighter-rouge">:set ic</code> 或者 <code class="highlighter-rouge">:set noic</code></p>
+
+<p>设置自动缩进：<code class="highlighter-rouge">:set ai</code> <code class="highlighter-rouge">:set autoindent</code> 或者 <code class="highlighter-rouge">:set noai</code></p>
+
+<p>查找文本高亮显示或者取消：<code class="highlighter-rouge">:set hlsearch</code> 或者 <code class="highlighter-rouge">set nohlsearch</code></p>
+
+<p>设置语法高亮：<code class="highlighter-rouge">:syntax on</code> 或者 <code class="highlighter-rouge">syntax off</code></p>
+
+<p>配置文件：<code class="highlighter-rouge">/etc/vimrc</code>这个配置文件对所有的用户都生效；<code class="highlighter-rouge">~/.vimrc</code>只是对自己生效</p>
+
+<blockquote>
+  <p>vi在非法退出的时候，会在同一个目录下生成一个隐藏文件，这时候打开文件会有警告，如果想去掉警告，只需要删除这个文件即可</p>
+</blockquote>
+
+<p>组合测试条件：<code class="highlighter-rouge">-a</code>表示与关系；<code class="highlighter-rouge">-o</code>表示或关系；<code class="highlighter-rouge">-!</code>表示非关系 或者 <code class="highlighter-rouge">if [ $# -gt 1 ] &amp;&amp; if [ $# -lt 5]</code></p>
+
+<h3 id="文件查找">文件查找</h3>
+
+<p><code class="highlighter-rouge">locate</code>：非实时，模糊匹配，查找是根据全系统文件数据库进行的，<code class="highlighter-rouge">updatedb</code>，手动生成文件数据库</p>
+
+<p><code class="highlighter-rouge">find</code>：实时，精确，支持众多查找标准，遍历指定目录中的所有文件完成查找，速度慢</p>
+
+<p><code class="highlighter-rouge">find 查找路径 查找标准 查找到以后的处理运作</code>，查找路径默认为当前目录，查找标准默认路径下的所有文件，查找以后的处理结果默认为显示</p>
+
+<p>匹配标准：<code class="highlighter-rouge">-name 'FILENAME'</code>文件名统配：<code class="highlighter-rouge">*</code>任意长度的任意字符 <code class="highlighter-rouge">?</code> <code class="highlighter-rouge">[]</code>；<code class="highlighter-rouge">-iname 'FILENAME'</code>文件匹配时不区分大小写；<code class="highlighter-rouge">-regex PATTERN</code>基于正则表达式进行文件匹配；<code class="highlighter-rouge">-user USERNAME</code>根据属主进行查找；<code class="highlighter-rouge">-group GROUPNAME</code>根据属组进行查找；<code class="highlighter-rouge">-uid UID</code>根据UID进行查找；<code class="highlighter-rouge">-gid GID</code>根据GID记性查找；<code class="highlighter-rouge">-nouser</code>查找没有属主的文件；<code class="highlighter-rouge">-nogroup</code>查找没有属性的文件；<code class="highlighter-rouge">-type TYPE</code>根据文件类型记性查找；<code class="highlighter-rouge">-size SIZE</code>，例如：<code class="highlighter-rouge">find /etc -size 10k</code>会找出9k到10k的文件</p>
+
+<p>文件查找可以组合条件：<code class="highlighter-rouge">-a</code>表示与关系；<code class="highlighter-rouge">-o</code>表示或关系；<code class="highlighter-rouge">-not</code>表示非关系</p>
+
+<p>根据文件的时间戳来查找：<code class="highlighter-rouge">-mtime</code>修改时间；<code class="highlighter-rouge">-ctime</code>改变时间；<code class="highlighter-rouge">-atime</code>访问时间；<code class="highlighter-rouge">[+|-]#</code>：<code class="highlighter-rouge">#</code>表示刚好有#天；<code class="highlighter-rouge">-#</code>表示#天之内；<code class="highlighter-rouge">#5</code>表示大于#天；还可以将time换为min表示分钟：<code class="highlighter-rouge">-mmin</code>或者<code class="highlighter-rouge">-cmin</code>或者<code class="highlighter-rouge">-amin</code></p>
+
+<p>根据文件的权限进行查找：<code class="highlighter-rouge">-perm -MODE</code>表示精确查找；<code class="highlighter-rouge">-perm /MODE</code>表示只要有一个匹配即可；<code class="highlighter-rouge">-perm -MODE</code>表示对应的位必须完全包含MODE才可以显示</p>
+
+<p>运作：<code class="highlighter-rouge">-print</code>默认是打印出来；<code class="highlighter-rouge">-ls</code>：类似于<code class="highlighter-rouge">ls -l</code>的形式显示每一文件的详细信息；<code class="highlighter-rouge">-ok COMMAND {} \</code>每一个操作都需要用户确认，表示对找到的这些文件执行COMMAND命令；<code class="highlighter-rouge">-exec COMMAND {} \</code>每一个操作不需要用户确认，只要引用这个文件的文件名就需要使用<code class="highlighter-rouge">{}</code></p>
+
+<p>到对运作的结果进行操作还可以使用：<code class="highlighter-rouge">| xargs COMMAND</code></p>
+
+<p>练习：</p>
+
+<ol>
+  <li>
+    <p>查找/var目录下属主为root并且属组为mail的所有文件：<code class="highlighter-rouge">find /var -user root -a -group mail</code></p>
+  </li>
+  <li>
+    <p>查找/user目录下不属于root，bin或student的文件：<code class="highlighter-rouge">find /usr -not -user root -a -user bin -a -user student</code> 或者 <code class="highlighter-rouge">find /usr -not \( -user root -o -user student \)</code></p>
+  </li>
+  <li>
+    <p>查找/etc目录下最近一周内修改过且不属于root及student用户的文件：<code class="highlighter-rouge">find /etc mtime -7 -a -not \( -user root -o -user student \)</code> 或者 <code class="highlighter-rouge">find /etc mtine -7 -a -not -user root -a -not -user student</code></p>
+  </li>
+  <li>
+    <p>查找当前系统上没有属主或者属组且最近一天内曾经被访问过的文件，并将其属主属组均改为root：<code class="highlighter-rouge">find / -not \( -nouser -o -nogroup \) -a -atime -1 -exec chown root:root {} \;</code></p>
+  </li>
+  <li>
+    <p>查找/etc目录大大于1M的文件，并且将其文件名写入/tmp/etc.largfiles文件中：<code class="highlighter-rouge">find /etc -size +1M &gt;&gt; /tmp/etc.largefiles</code></p>
+  </li>
+  <li>
+    <p>查找/etc目录下所有用户没有写权限的文件，显示出其详细信息：<code class="highlighter-rouge">find /etc -not -perm /222 -exec -ls</code> 或者 <code class="highlighter-rouge">find /etc -not -perm /222 -exec ls -la {} \;</code></p>
+  </li>
+</ol>
+
+<h4 id="特殊权限">特殊权限</h4>
+
+<p>SUID：运行某程序时，相应的进程的属主是程序文件自身的属主，而不是启动者；<code class="highlighter-rouge">chmod u+s FILE</code>；<code class="highlighter-rouge">chmod u-s FILE</code></p>
+
+<p>SGID：运行某程序时，相应的进程的属组是程序文件自身的属组，而不是启动者；<code class="highlighter-rouge">chmod g+s FILE</code>；<code class="highlighter-rouge">chmod g-s FILE</code></p>
+
+<p>Sticky：在一个公共目录，每一个可以创建文件，删除自己的文件，但不能删除别人的文件；<code class="highlighter-rouge">chmod o+s FILE</code>；<code class="highlighter-rouge">chmod o-s FILE</code></p>
+
+<blockquote>
+  <p>三者可以组合成二进制的八位数</p>
+</blockquote>
+
+<p>练习：</p>
+
+<p>root用户创建一个/tmp/project的目录，属主为root，属组为developteam；创建两个用户，用户的属主和属组都是用户名；附加组为developteam，这样两个用户的身份都可以在/tmp/project下创建文件；但是两个用户如法方位对方的文件，这时候要给/tmp/project SGID 特殊权限，也就是通过这个目录创建的文件具有这个目录的属组是这个目录的属组而不是默认的用户属组；这样对彼此的文件就具有的编辑的权限，但是同样也能删除，为了放置别人删除，要对/etc/project 加上Sticky权限</p>
+
+<p><code class="highlighter-rouge">useradd hadoop</code> <code class="highlighter-rouge">useradd hbase</code> <code class="highlighter-rouge">passwd hadoop</code> <code class="highlighter-rouge">passwd hbase</code></p>
+
+<p><code class="highlighter-rouge">groupadd developteam</code></p>
+
+<p><code class="highlighter-rouge">mkdir /tmp/project</code> <code class="highlighter-rouge">chown -R :developteam /tmp/project</code></p>
+
+<p><code class="highlighter-rouge">usermod -a -G developteam hadoop</code>  <code class="highlighter-rouge">usermod -a -G developteam hbase</code></p>
+
+<blockquote>
+  <p>这个时候两个用户分别在自己登陆情况下可以在/tmp/project下创建文件，但是不能笔记对方的文件，如果想要笔记对方的问价需要对目录价SGID权限</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">chmod g+s /tmp/project</code></p>
+
+<blockquote>
+  <p>这个时候两个用户在自己登陆时候可以编辑对方文件，但是也可以删除对方文件，如果想要只能删除自己的文件，而不能删除别人的文件，需要对目录加Sticky权限</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">chmod o+t /tmp/project</code></p>
+
+<blockquote>
+  <p>这个时候就完成了项目的管理</p>
+</blockquote>
+
+<h4 id="faclfilesystem-access-control-list文件系统访问列表">FACL(Filesystem Access Control List，文件系统访问列表)</h4>
+
+<p>FACL是利用文件扩展保存额外的访问控制权限</p>
+
+<p><code class="highlighter-rouge">setfacl</code>，<code class="highlighter-rouge">setfacl -m</code>表示设定，<code class="highlighter-rouge">setfacl -m u:UID:perm</code>；<code class="highlighter-rouge">setfacl -x u:UID</code>表示取消设定；<code class="highlighter-rouge">setfacl -m g:GID:perm</code>表示设定设定组的访问权限</p>
+
+<blockquote>
+  <p>在没有facl特殊设定的情况下，当一个进程来访问一个文件的时候权限判断的过程：首先，判断该文件的属主是否和进程的属主一致，如果一致说明这个文件就是自己的文件，则会以属主的身份进行运行；如果文件的属主进程的属主并不一致，则会判断进程的属主是否属于文件的属组，如果属于就以属组的名义进行；如果进程的属主不属于文件的属组，则会以文件其他组的身份进行</p>
+</blockquote>
+
+<blockquote>
+  <p>在设定了facl特殊权限之后，当一个进程来访问一个文件的时候权限的判断过程在上一个过程当中加了两部：文件的属主和进程的属组是否相同 –&gt; 文件的facl中的特殊user是否和进程的属主相同 –&gt; 进程的属主是否属于文件的属组 –&gt; 进程的属主是否属于文件的facl中特殊规定的属组 –&gt; 都不是，以文件的其他组名义进行</p>
+</blockquote>
+
+<blockquote>
+  <p>我们也可以给目录设定默认的访问控制列表，在此目录下创建的文件就自动从目录中继承了对该文件的访问控制列表，语法：<code class="highlighter-rouge">setfacl -m d:u:UID:perm</code>或者<code class="highlighter-rouge">setfacl -m g:u:GID:perm</code></p>
+</blockquote>
+
+<p>终端类型</p>
+
+<ol>
+  <li>
+    <p>控制台(console)，一定是连接到主机上的硬件设备(键盘、显示屏)，控制台不是终端，一般情况下，物理终端(pty)就是控制台；</p>
+  </li>
+  <li>
+    <p>pty，物理终端控制台；</p>
+  </li>
+  <li>
+    <p>tty/#，虚拟终端控制台，通常是附属在物理控制台上加上软件虚拟出来的；</p>
+  </li>
+  <li>
+    <p>ttyS，串行终端；</p>
+  </li>
+  <li>
+    <p>pts/#，伪终端；</p>
+  </li>
+</ol>
+
+<p>常用命令</p>
+
+<p><code class="highlighter-rouge">who</code></p>
+
+<p><code class="highlighter-rouge">whoami</code></p>
+
+<p><code class="highlighter-rouge">w</code></p>
+
+<p><code class="highlighter-rouge">last</code>：显示当前系统的登录日志；<code class="highlighter-rouge">last -n #</code>显示最近几次的登录信息；查看的文件是<code class="highlighter-rouge">/var/log/wtmp</code></p>
+
+<p><code class="highlighter-rouge">lastb</code>：显示错误的的登录尝试，显示的文件是<code class="highlighter-rouge">/var/log/btmp</code></p>
+
+<p><code class="highlighter-rouge">lastlog</code>：显示每一个用户最近一次成功登录的信息；<code class="highlighter-rouge">lastlog -u USERNAME</code>显示特定用户最近一次成功登陆的信息</p>
+
+<p><code class="highlighter-rouge">basename</code>：取得文件的基名；<code class="highlighter-rouge">$0</code>执行脚本时，脚本路径的名称</p>
+
+<p><code class="highlighter-rouge">mail</code>：发邮件<code class="highlighter-rouge">cat /etc/fstab |mail -s "/etc/fstab" root</code>或者<code class="highlighter-rouge">mail -s "/etc/fstab" root &lt; /etc/fstab</code>，这里的<code class="highlighter-rouge">-s</code>指的是邮件的标题是什么</p>
+
+<p><code class="highlighter-rouge">RANDOM</code>：0-32768</p>
+
+<p>随机数生成器(熵池)：/dev/random(真正的随机数)；<code class="highlighter-rouge">/dev/urandom(熵池中随机数用完之后就用然间自动生成随机数)</code></p>
+
+<blockquote>
+  <p>软件生成的随机数是伪随机数</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">bash -x SCRIPTS</code>可以查看脚本执行的过程</p>
+</blockquote>
+
+<p>bash脚本</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/basih
+#
+DEBUG=0
+ADD=0
+DEL=0
+for I in `seq 0 $#`;do
+	if [ $# -gt 0 ];then
+		case $1 in
+		-v|--verbose)
+			DEBUG=1
+			shift
+			;;
+		-h|--help)
+			echo "Usage `basename $0` --add user1,user2... --del user1,user2... -v|--verbose -h|--help"
+			shift
+			;;
+		-add)
+			ADD=1
+			ADDUSER=$2
+			shift 2
+			;;
+		-del)
+			DEL=1
+			DELUSER=$2
+			shift 2
+			;;
+		*)
+			echo "Usage `basename $0` --add user1,user2... --del user1,user2... -v|--verbose -h|--help"
+			shift
+			exit 7
+			;;
+		-add)
+		esac
+	fi
+done
+if [ $ADD -eq 1 ];then
+	for USER in `echo $ADDUSER |sed 's/,/ /g'`;do
+		if id $USER &amp;&gt; /dev/null;then
+			[ $DEBUG -eq 1 ] &amp;&amp; echo "$USER exits."
+		else
+			useradd $USER
+			[ $DEBUG -eq 1 ] &amp;&amp; echo "user $USER add finished."
+		fi
+	done
+fi
+if [ $DEL -eq 1 ];then
+	for USER in `echo $DELUSER |sed 's/,/ /g'`;do
+		if id $USER &amp;&gt; /dev/null;then
+			userdel -r $USER
+			[ $DEBUG -eq 1 ] &amp;&amp; echo "user $USER delete finished."
+		else
+			[ $DEBUG -eq 1 ] &amp;&amp; echo "user $USER not exits."
+		fi
+	done
+fi
+</code></pre></div></div>
+
+<h3 id="磁盘管理">磁盘管理</h3>
+
+<p>机械式硬盘：U盘、光盘、软盘、硬件、磁带</p>
+
+<p>MBR：master Boot Record，称为主引导记录，在硬盘的0盘面0磁道0扇区共有512bytes，这区域不属于任何操作系统，是全局的，不被操作系统使用的，是独立于操作系统之外的</p>
+
+<p>MBR分为3个段：</p>
+
+<ol>
+  <li>
+    <p>bootloader(466bytes)，是一段程序，是启动操作系统的重中之重</p>
+  </li>
+  <li>
+    <p>64bytes，每16个字节可以标识一个主分区</p>
+  </li>
+  <li>
+    <p>2bytes，magic number，主要是用来标记MBR是否有效</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>当电脑刚刚开机的时候，我们的电脑的内存是空的，BIOS中的代码可以映射到内存的最低端，然后根据BIOS中的代码完成计算的自检；当BIOS的指令完成之后(自检完成之后)，计算机会根据BIOS中设定的设备的启动次序(如启动顺序是：光盘 –&gt; 硬盘 –&gt; 软盘)，依次去寻找各个设备的MBR，可能会去读取硬盘的MBR，硬盘的MBR是一段程序，于是这段程序又会被BIOS加载到内存当中，内存当中显示读取的bootloader，bootloader会去读取分区表，根据分区表，去加载有操作系统的分区，然后读取操作系统的内核，内核开始启动自身，然后启动文件系统和程序</p>
+</blockquote>
+
+<blockquote>
+  <p>主分区加扩展分区一般不能超过4个，其实扩展分区只是指针，在一个操作系统中只能有一个</p>
+</blockquote>
+
+<p>对磁盘应该按照柱面进行的，因为文件的存储就是按照柱面记性储存的</p>
+
+<p>笔记本的硬盘的盘片的转速一般是4500转的，而台式机的一般是7200转的</p>
+
+<p>硬盘上完成分区之后就可以在磁盘上进行文件储存了，这就是文件系统的意义了</p>
+
+<p>文件系统：文件系统实际上也是一个软件，也是储存在磁盘上的某个位置的，并不是直接在这个分区上的，但是文件系统的数据是在这个分区上面的，将磁盘分为两段：元数据存储区和数据存储区(是由块组成的)，文件系统是内核应该提供的功能</p>
+
+<p>元数据中存储的内容是：文件的访问权限、文件的大小、时间戳，文件存储的路径</p>
+
+<p>元数据区里面有一块区域称之为：块位图(bitmap)，目的是为了能够更有效率的找到哪些是没有使用块，每一个块只对应块位图中的一位</p>
+
+<p>元数据区里面有另一快位图，使用来储存每一个文件的条目的，也是为了加速寻找哪些空间的空闲的</p>
+
+<p>inode，每一个inode都有一个全局唯一的编号，iNode标识的有：iNode号、文件的权限、属主属组、扩展属性、时间戳、大小以及所储存在磁盘块的地址，但是没有文件名</p>
+
+<p>inode有间接目录，可以多级指向文件</p>
+
+<p>Linux会自己引用到根，也就是在Linux中，根是自引用的</p>
+
+<p>原来文件的名字是在目录中储存的，目录不是容器，目录也就是一个磁盘块，其中有一块区域成为dentry，将之分为两块，第一个块为目录下文件的iNode号，第二块是该目录下可以找到的文件名</p>
+
+<p>block group：块组，实际的硬盘工作的时，使用块组，更加复杂</p>
+
+<p>在一个文件系统中寻找一个文件的过程：</p>
+
+<p>例如：需找<code class="highlighter-rouge">/etc/passwd</code>文件</p>
+
+<ol>
+  <li>
+    <p>由于根是自引用的，所有我们可以在iNode去也中找个根的iNode，进而找到数据区域中对应的根的block，在根的block上储存的有dentry，也就是目录条目，从目录条目中我们可以知道，根下到底有哪些文件，找到对应名字为etc的问价的iNode</p>
+  </li>
+  <li>
+    <p>根据etc文件的iNode返回元数据区域总的iNode块，去寻找etc文件对应的数据区域的block，在根据block中的dentry找到password文件的iNode</p>
+  </li>
+  <li>
+    <p>根据passwd的iNode去找到password对应数据区域中的block，也就可以直接访问文件了</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>这样就更加深刻的理解了为什么说目录也是文件，只不过是一个映射路径，因为目录也对应有自己的iNode和block以及block中的dentry</p>
+</blockquote>
+
+<p>在一个文件系统中创建一个新的文件的过程：</p>
+
+<p>例如：假设创建的是一个文件而不是一个目录，也就是一个非目录的文件</p>
+
+<ol>
+  <li>
+    <p>扫描bitemap，找到一个未被占用的iNode</p>
+  </li>
+  <li>
+    <p>根据根和目录路径找到文件父目录的Block中dentry，在dentry中写入创建文件文件名称和上一步找到的空闲iNode</p>
+  </li>
+  <li>
+    <p>将数据写入iNode对应的block中，或者说数据写入block之后，iNode将之记录下来</p>
+  </li>
+</ol>
+
+<p>在一个文件系统中复制一个文件过程：</p>
+
+<p>其实，复制一文件的过程和新生成一个文件的过程是差不多的，只不过是将原始文件block中的数据写入新的block当中</p>
+
+<p>在一个文件系统中删除一个文件过程</p>
+
+<p>在一个文件系统中删除一根文件只需要两部：1，将block中的dentry中的对应文件的条目删除；2，在bitemap中将iNode的标记状态标记为空闲即可</p>
+
+<p>在一个文件系统中剪切一个文件的过程</p>
+
+<p>在一个文件系统中剪切一个文件，只是将block中dentry对应的路径发生了改变，其他没有放生任何改变，所有在一个文件系统中剪切一个文件会非常的快</p>
+
+<p>硬链接：</p>
+
+<ol>
+  <li>
+    <p>只能对文件创建，不能应用于目录</p>
+  </li>
+  <li>
+    <p>不能跨文件系统</p>
+  </li>
+  <li>
+    <p>创建硬链接会增加文件被链接的次数</p>
+  </li>
+</ol>
+
+<p>符号链接：</p>
+
+<ol>
+  <li>
+    <p>可应用于目录</p>
+  </li>
+  <li>
+    <p>可以跨文件系统</p>
+  </li>
+  <li>
+    <p>不会增加被链接文件的链接次数</p>
+  </li>
+  <li>
+    <p>其大小为指定路径所包含的字符个数</p>
+  </li>
+</ol>
+
+<p>设备文件：</p>
+
+<p>每一个设备都有两个数字，第一个是主设备号(major number)，用来标识设备类型；第二个是此设备号(minor number)，用于标识同一种设备的不同类型</p>
+
+<p>创建设备文件：<code class="highlighter-rouge">mknod</code>，<code class="highlighter-rouge">mknod -m</code>用来指定权限</p>
+
+<p>硬盘设别的设别文件名：</p>
+
+<p>IDE、ATA：hd</p>
+
+<p>SATA：sd</p>
+
+<p>IDE：第一个IDE口：主(/dev/hda)、从(/dev/hdb)；第二个IDE口：主(/dev/hdc)，从(/dev/hdd)</p>
+
+<p>hda：hda1(第一个主分区)、hda2(第二个主分区)…hda5(第一个扩展分区)…，注：扩展分区一定是从5开始的</p>
+
+<p>查看当前的系统识别了多少块硬盘：<code class="highlighter-rouge">fdisk -l [/dev/to/some_divice_file]</code></p>
+
+<p>VFS：Virtual FileSystem，正是由于VFS的存在，才能够使得Linux支持中多的文件系统，它弥合了不同文件系统之间的不同</p>
+
+<blockquote>
+  <p>windows上常用的文件系统：FAT32(linux中叫)、NTFS、ISO9660、CIFS</p>
+</blockquote>
+
+<blockquote>
+  <p>Linux上常用的文件系统：ext2、ext3、ext4、xfs、reiserfs、jfs、nfs、ocfs2、gfs2</p>
+</blockquote>
+
+<blockquote>
+  <p>低级格式化是分磁道，而高级的格式化是：<code class="highlighter-rouge">mkfs -t ext3</code>，高级格式化其实就是创建文件系统的</p>
+</blockquote>
+
+<p>管理磁盘分区：</p>
+
+<p><code class="highlighter-rouge">fdisk /dev/sda</code>，会出现交互式的命令，<code class="highlighter-rouge">p</code>表示显示当前的硬件分区；<code class="highlighter-rouge">n</code>表示创建新分区；<code class="highlighter-rouge">d</code>表示删除一个分区；<code class="highlighter-rouge">w</code>表示保存退出；<code class="highlighter-rouge">q</code>表示不保存退出；<code class="highlighter-rouge">t</code>表示修改分区类型，<code class="highlighter-rouge">l</code>表示显示所支持的所有类型</p>
+
+<blockquote>
+  <p>一块硬盘在出厂的时候一般是经过低级的格式化的，也就是划分好了不同的磁道、扇区等，但是并没有分区；在我们买来之后，需要根据磁道进行不同的分区，分区是根据磁道进行的，越是外围的磁道其旋转的速度也就也快，当然读写文件的速度也是越快的，一般的分区都是从外向内进行的，也就是最开始分的分区是磁盘最外围的磁道，然后往内扩展，这也就是为什么总是把c盘作为操作系统的系统盘的原因。在磁盘完成分区之后，需要对其进行格式化，这种格式格式化也称为高级格式化，也就是建立文件系统的过程。格式化之后通过分区的挂载才能够使用</p>
+</blockquote>
+
+<blockquote>
+  <p>在磁盘进行分区的过程中，最多可以分为4个主分区，如果4个都分成了主分区，那么这4个主分区之外剩余的磁盘空间就不能利用了。也可以是3个主分区加上一个逻辑分区，逻辑分区就是一个指针，在逻辑分区内，我们可以再进行分区，通常可以分很多个</p>
+</blockquote>
+
+<p>磁盘：盘片(platter)、磁道(track，位于不同盘面上的相同编号的磁道我们称之为柱面，)、柱面(cylinder)、扇区(sector，store user data along with its own location data:sector number、head number、platter number and track number，每个扇区的大小一般是512bytes)、磁头、磁性材料、同心圆</p>
+
+<p>如果我们划分了分区，每个分区都可以使用一个文件系统，如果没有划分分区，则只能存在一种文件系统。分区也就是将磁盘划分成多种不同的逻辑结构</p>
+
+<p>在文件系统中存在<code class="highlighter-rouge">超级块(super block)</code>的概念，超级块使用来储存整个分区的全局信息：1，一共有多少个块组(block group)；2，每个块组当中有多少个块；3，块大小；4，空闲磁盘块、已用磁盘块；5，空闲iNode、已用iNode</p>
+
+<blockquote>
+  <p>超级块在文件系统中非常重要，因此会有多个备份</p>
+</blockquote>
+
+<p>在文件系统中还存在<code class="highlighter-rouge">块组描述符表</code>的概念，描述的信息是每一个块组是从哪一个块开始到哪一个块结束的、存在多少个块组等等，同样也很重要，也就是存在多个备份</p>
+
+<blockquote>
+  <p>在每个块组中同样存在iNode区域，iNode位图(iNode bitmap)，block位图(block bitmap)以及数据区域</p>
+</blockquote>
+
+<p>MBR是跟分区没有关系的，是存在扇区当中的</p>
+
+<p>一个分区当中最开始是<code class="highlighter-rouge">boot block</code>，这个是不能用的。其他空间分成不同的块组(block group)</p>
+
+<p>在每一个块组总存在以下信息：1. Super Block(超级块)；2. GDT(Groupblock Description Table，块组描述表)；3. BlockBitmap(块位图)；4.iNodeBitmap(iNode位图)；5.Data Blocks</p>
+
+<p>上面所讲的文件系统是<code class="highlighter-rouge">ext2</code>；<code class="highlighter-rouge">ext3</code>是一种日志文件系统(journal file system)，这样就大大减小了开机需要修复文件的时间(需要修复的文件是由于非法断电造成的)；工作原理是先将iNode信息写入日志文件，如果没有问题就在写入元数据区域中</p>
+
+<p>如果想要知道CPU是否识别了分区需要使用命令：<code class="highlighter-rouge">cat /proc/patitions</code>；而如果我们刚刚新建了一个分区，CPU并不能识别，需要我们让CPU来重新读一下分区表，我们使用命令：<code class="highlighter-rouge">partprobe [/dev/sda1]</code></p>
+
+<h4 id="创建文件系统">创建文件系统</h4>
+
+<blockquote>
+  <p>重新创建文件系统会损坏原有的文件</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">mkfs</code>：make file system；<code class="highlighter-rouge">mkfs -t FSTYPE</code>，例如：<code class="highlighter-rouge">mkfs -t ext2 /dev/sdb5</code>；<code class="highlighter-rouge">mksf -t FSTYPE</code> = <code class="highlighter-rouge">mksf.ext2</code></p>
+
+<p>还可以使用：<code class="highlighter-rouge">mke2fs</code>来创建<code class="highlighter-rouge">ext2</code>格式的文件系统；也可以使用<code class="highlighter-rouge">mke2fs -j</code>来创建<code class="highlighter-rouge">ext3</code>的文件系统；<code class="highlighter-rouge">mke2fs -b 1024|2048|4096</code>可以用来指定块大小；<code class="highlighter-rouge">mke2fs -L</code>可以从来指定卷标；<code class="highlighter-rouge">mke2fs -M #</code>可以用来指定预留给超级用户的块数的百分比；<code class="highlighter-rouge">mke2fs -i #</code>用于指定为对少个字节的的空间创建一个iNode，默认为8192，这里给出的大小应该是块的2^倍；<code class="highlighter-rouge">mke2fs -N #</code>指定的iNode的个数；<code class="highlighter-rouge">mke2fs -F</code>表示强制创建文件系统；<code class="highlighter-rouge">mke2fs -E</code>用于指定额外的文件系统的属性</p>
+
+<p><code class="highlighter-rouge">blkid DEV</code>查询或查看磁盘设别的相关属性，<code class="highlighter-rouge">e2label</code>用于查看或者定义卷标，<code class="highlighter-rouge">e2label 设备文件 卷标</code>表示设定卷标</p>
+
+<p><code class="highlighter-rouge">cat /proc/filesystems</code>可以查看当前的CPU都支持哪些文件系统</p>
+
+<h4 id="调整文件系统的相关属性">调整文件系统的相关属性</h4>
+
+<p><code class="highlighter-rouge">tune2fs -j DEV</code>，在不损害原有数据的前提下，将ext2升级为ext3；<code class="highlighter-rouge">tune2fs -L LABEL</code>可以设定和修改卷标；<code class="highlighter-rouge">tune2fs -m #</code>调整预留百分比；<code class="highlighter-rouge">tune2fs -r #</code>可以指定预留块数；<code class="highlighter-rouge">tune2fs -o</code>和挂载选项相关的；<code class="highlighter-rouge">tune2fs -C #</code>指定挂载次数达到#次数后进行自检，0或者-1表示关闭此功能；<code class="highlighter-rouge">tune2fs -i #</code>表示每挂载使用多少天之后开始自检，0或者-1表示关闭此功能；<code class="highlighter-rouge">tune2fs -l</code>表示显示超级块中的信息</p>
+
+<p><code class="highlighter-rouge">dumpe2fs</code>，也可以用来显示文件系统的属性；<code class="highlighter-rouge">dumpe2fs -h</code>只显示超级块的信息</p>
+
+<p><code class="highlighter-rouge">fsck</code>，用于检查并修复文件系统；<code class="highlighter-rouge">fsck -t FSTYPE</code>；<code class="highlighter-rouge">fsck -a</code>表示不询问，自动进行修复</p>
+
+<p><code class="highlighter-rouge">e2fsck</code>，专门用于修复ext2、ext3文件系统；<code class="highlighter-rouge">e2fsck -p</code>表示自动修复；<code class="highlighter-rouge">e2fsck -f</code>表示强制进行检查</p>
+
+<h4 id="挂载卸载">挂载、卸载</h4>
+
+<p>挂载：将新的文件系统关联至当前根文件系统</p>
+
+<p>卸载：将某文件系统与当前根文件系统的关联关系移除</p>
+
+<p><code class="highlighter-rouge">mount 设备 挂载点</code>；设备可以是设备文件(/dev/sdb5)、卷标(label=””)、UUID(UUID=””)；挂载点：目录，要求：1，此目录没有被其他进程使用；2，目录得实现存在；3，目录中原有的文件会暂时隐藏</p>
+
+<p><code class="highlighter-rouge">umount</code>；<code class="highlighter-rouge">umount 设备</code>或者<code class="highlighter-rouge">umount 挂载点</code></p>
+
+<p><code class="highlighter-rouge">mount [options] [-o options] DEVICE MOUNT_POINT</code>:</p>
+
+<p><code class="highlighter-rouge">mount -a</code>表示挂载/etc/fstab文件中定义的所有文件系统</p>
+
+<p><code class="highlighter-rouge">mount -n</code>默认情况下，mount命令每挂载一个设备，它都会把挂载的设备信息保存到/etc/mtab文件；使用-n选项意味着挂载设备时，不把信息写入此文件；<code class="highlighter-rouge">mount -t FSTYPE</code>指定正在挂载设备上的文件系统的类型；不使用此选项时，mount会调用blkid命令获取对应文件系统的类型；<code class="highlighter-rouge">mount -r</code>只读挂载，挂载光盘的时候常用此选项；<code class="highlighter-rouge">mount -w</code>读写挂载</p>
+
+<p><code class="highlighter-rouge">moutn -o</code>指定额外的挂载选项，也即文件系统启用的属性；<code class="highlighter-rouge">async</code>表示异步；<code class="highlighter-rouge">atime</code>表示每一次访问都更改时间戳；<code class="highlighter-rouge">remount</code>表示重新挂载；<code class="highlighter-rouge">ro</code>表示只读</p>
+
+<h4 id="swap分区">swap分区</h4>
+
+<p>在储存器当中：寄存器是最快的，相当于1纳秒的级别；其次是CPU的一级二级三级缓存相当于10纳秒左右；而对于内存来说是10毫秒左右；而对于磁盘来说是秒的级别</p>
+
+<p>查看本机的物理内存和交换内存：<code class="highlighter-rouge">free</code>，如果想要将单位换算成M，则使用命令：<code class="highlighter-rouge">free -m</code></p>
+
+<blockquote>
+  <p>缓冲(buffers)和缓存(catch)，缓冲是为了解决速度快的一方对速度慢的一方造成的冲击；而缓存是为了重复使用</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">swap -a</code>可以用来定义在/etc/fstab文件中的交换设备</p>
+
+<blockquote>
+  <p>一般来说，在计算机中缓存用来存放数据的，而缓冲是用来存放元数据的；例如，在文件系统中查找文件的时候，当我们找到文件的时候就将路径储存在缓存中，以后就从这里寻找；而那些block的数据就存放在缓存中，以备重复使用</p>
+</blockquote>
+
+<h4 id="创建一个新的swap的过程">创建一个新的swap的过程</h4>
+
+<ol>
+  <li>
+    <p>在磁盘空间上分处1G的分区，分区的类型为<code class="highlighter-rouge">Linux swap</code>，编号为<code class="highlighter-rouge">82</code>；命令<code class="highlighter-rouge">fdisk /dev/sdb</code>，根据交互式命令进行操作</p>
+  </li>
+  <li>
+    <p>将分区格式化，同普通的分区格式化的命令不同：<code class="highlighter-rouge">mkswap /dev/sdb5</code>，也就是将第二个磁盘上的第5个分区格式化为swap分区</p>
+  </li>
+  <li>
+    <p>将格式化后的分区进行挂载使用，同一般的挂载也不相同：<code class="highlighter-rouge">swapon /dev/sdb5</code>，如果想要卸载，就是用命令：<code class="highlighter-rouge">swapoff /dev/sdb5</code></p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>挂载成功之后，可以使用命令：<code class="highlighter-rouge">free -m</code>查看是否swap的空间变大</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">dd</code>，可以用来复制文件，<code class="highlighter-rouge">dd if=数据来源 of=数据存储目标</code></p>
+
+<p>dd命令可以实现MBR的复制，<code class="highlighter-rouge">dd if=/dev/sda of=/mnt/mbr.backup bs=512 count=1</code>，这样就可完成MBR的备份；同样的dd命令可以完成将MBR进行替换：<code class="highlighter-rouge">dd if=/mnt/mbr.backup of=/dev/sda sb=512 count=1</code></p>
+
+<p>dd命令可以完成创建一个假的文件：<code class="highlighter-rouge">dd if=/dev/zero of=/mnt/virtualfile seek=1023 bs=1M count=1</code>，这样创建的文件看起来有1G，但是实际的大小只有1M，因为跳过了1023个block。跟虚拟机的创建原理差不多</p>
+
+<p><code class="highlighter-rouge">dd seek=#</code>表示创建数据文件时，跳过空间的大小</p>
+
+<p>mount命令，可以挂载ISO镜像</p>
+
+<p><code class="highlighter-rouge">mount DEVICE MOUNT_POINT</code>，<code class="highlighter-rouge">mount -o loop</code>挂载本地回环设备</p>
+
+<h4 id="文件系统配置文件etcfstab">文件系统配置文件<code class="highlighter-rouge">/etc/fstab</code></h4>
+
+<p>OS在初始时，会自动挂载/etc/fstab文件中定义的每一个文件系统</p>
+
+<p>/etc/fstab文件中每一个字段的意思：要挂载的设备  挂载点  文件系统类型  挂载选项  转储频率(每多少天备份一次)  文件系统检测测序(只有根为1，其他的可以同时进行检查，0表示不检查)</p>
+
+<p><code class="highlighter-rouge">fuser</code>验证进程正在使用的文件或套接字文件；<code class="highlighter-rouge">fuser -v</code>可以用来查看；<code class="highlighter-rouge">fuser -km MOUNT_POINT</code>终止正在访问此挂载点的所有进程</p>
+
+<h3 id="压缩">压缩</h3>
+
+<p>压缩格式：gz，bz2，xz，zip，Z</p>
+
+<p>压缩算法：算法不同，压缩比也不相同</p>
+
+<p><code class="highlighter-rouge">gzip /PATH/TO/SOMEFILE</code>：默认压缩完成之后会删除源文件；<code class="highlighter-rouge">gzip -k</code>压缩后保留源文件；<code class="highlighter-rouge">gzip -d</code>相当于<code class="highlighter-rouge">gunzip</code>；<code class="highlighter-rouge">gzip -#</code>可以用来指定压缩比；<code class="highlighter-rouge">zcat /PATH/TO/SOMEFILE.gz</code>表示在不解压的情况下查看压缩文件的内容；<code class="highlighter-rouge">gunzip /PATH/TO/SOMEGIPFILE</code>用于解压缩文件</p>
+
+<p><code class="highlighter-rouge">bzip2 /PATH/TO/SOMEFILE</code>同上述gzip用法相同；<code class="highlighter-rouge">bunzip2 /PATH/TO/SOMEFILE.bz2</code>同样可以用于解压缩</p>
+
+<p><code class="highlighter-rouge">xz /PATH/TO/SOMEFILE</code>；<code class="highlighter-rouge">unxz /PATH/TO/SOMEFILE.xz</code>可以用来解压缩xz文件<code class="highlighter-rouge">；xzdec</code>也可以用来解压缩(不常用)</p>
+
+<p><code class="highlighter-rouge">zip</code>可以用来压缩目录，是一种既归档又压缩的工具。上述的其他命令不能用压缩目录；<code class="highlighter-rouge">zip FILENAME.zip FILE1 FILE2...</code>；<code class="highlighter-rouge">unzip /PATH/TO/SOMEFILE.zip</code></p>
+
+<blockquote>
+  <p>archive：归档，归档本身并不意味着压缩</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">tar</code>，是一种只归档不压缩的工具；<code class="highlighter-rouge">tar -c</code>表示创建归档文件；<code class="highlighter-rouge">tar -f FILE.tar</code>操作的归档文件；<code class="highlighter-rouge">tar -x</code>表示还原归档；<code class="highlighter-rouge">tar --xattrs</code>表示在归档时，保留文件的扩展属性信息；<code class="highlighter-rouge">tar -tf FILE.tar</code>表示不展开归档，查看归档了哪些文件；<code class="highlighter-rouge">tar -zcf FILE.tar.gz</code>归档并且调用gzip压缩；<code class="highlighter-rouge">tar -zxf FILE.tar.gz</code>调用gzip解压缩并展开归档文件，<code class="highlighter-rouge">-z</code>选项可以省略，会根据你的文件后缀自动调用工具；<code class="highlighter-rouge">tar -jcf FILE.tar.bz2</code>可以用来归档并且调用bzip2来压缩文件；<code class="highlighter-rouge">tar -jxf FILE.tar.bz2</code>可以用来解压并且还原压缩文件，当然了<code class="highlighter-rouge">-j</code>的选项可以省略，会根据文件的后缀名称来自动调用解压工具</p>
+
+<p><code class="highlighter-rouge">tar -C</code>表示解压后可以重定向目录，例如：<code class="highlighter-rouge">tar xf /tmp/users.tar.gz -C ./</code>表示将解压后的文件展开在当前目录中</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">tar</code>命令中的<code class="highlighter-rouge">-</code>是可以省略的</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">cpio</code>，也是一个归档工具，是一种更加古老的工具</p>
+
+<p><code class="highlighter-rouge">read -p "prompt"</code>可以用来给出提示；<code class="highlighter-rouge">read -t #</code>可以用来指定等待时间，这样就要给出默认值</p>
+
+<p><code class="highlighter-rouge">echo</code>还可以用来进行颜色的标记，以及字体的设置：<code class="highlighter-rouge">echo -e "\033[1mHello\033[0m,world."</code>在这里，1表示将字体加粗，还可以用3来引导前景色，也就是字体颜色，用4来引导背景色，例如：<code class="highlighter-rouge">echo -e "\033[31mHello\033[0m,world."</code>，其中31表示前景色为颜色1，也就是红色。共有7中颜色；背景色只需要用4来引导就可以了；另外，前景色和背景色可以同时使用，二者之间需要用<code class="highlighter-rouge">;</code>隔开，例如：<code class="highlighter-rouge">echo -e "\033[31;42mHello\033[0m,world."</code>表示背景色为绿色，前景色为红色</p>
+
+<p>控制器、适配器、协议</p>
+
+<p>IDE：133Mbps，并行；SATA：300Mbps，600Mbps,6Gbps，串行；USB3.0：480Mbps，串行；SCSI(320Mbps)：Small Computer System Interface，SCSI的扩展能力是非常强的，并行工作；SAS</p>
+
+<p>RAID控制器：Redundant array of inexpensive disks；RAID的级别仅仅代表磁盘的组织方式不同，没有速度快慢之分；在组织RAID的时候，不能够只能够考虑速度，还要考虑数据的可用性</p>
+
+<p>保证数据的可用性：1.磁盘镜像技术(mirror)；2.校验码</p>
+
+<p>调带(RAID0)，性能提升n倍数，但是没有冗余能力(容错能力)，空间利用率是全部；镜像(RAID1)，写性能是下降的，但是读性能是提升的，有冗余能力，空间使用率只是1/2；RAID10，先镜像后调带，这是有钱的企业使用的方法，读写能力都提升，有冗余能力，空间利用率是(n-2)/n；RAID5是使用校验码，读写都提升了，有冗余能力，空间利用率是(n-1)/n；JBOD技术：是简单的将多快盘当做一块盘使用(Hadoop使用)，读写能力无提升，无冗余能力，空间利用率是100%</p>
+
+<p>####怎么去实现RAID</p>
+
+<p>RAID分为硬件RAID和软件RAID</p>
+
+<p>硬件RAID：BIOS</p>
+
+<p>软件RAID：模拟成了一个假的RAID，任何一个硬件设备都是可以用软件来模拟的。这个软件就是MD(multi disks)模块。</p>
+
+<blockquote>
+  <p>在实际生产当中尽量使用硬件RAID，不要使用软件RAID</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">mdadm</code>：可以将任何设备做成RAID，是一种模式化命令：</p>
+
+<p>创建模式：<code class="highlighter-rouge">-C</code>创建模式，<code class="highlighter-rouge">-C -l</code>指定级别；<code class="highlighter-rouge">-C -n</code>设备的个数；<code class="highlighter-rouge">-C -a yse|no</code>表示自动为其创建设备文件，是否为其创建；<code class="highlighter-rouge">-C -c</code>表示CHUNK大小，默认为64k，可以自己指定，一般为2^n倍；<code class="highlighter-rouge">-C -x #</code>表示空闲盘的个数</p>
+
+<p>管理模式：<code class="highlighter-rouge">mdadm --add|-a</code>，<code class="highlighter-rouge">mdadm --remove|-r</code>；<code class="highlighter-rouge">mdadm /dev/md1 --fail /dev/sd7</code>表示将阵列md1中的设备/dev/sd7分区模拟损坏(并不是真的损坏了)</p>
+
+<p>监控模式：<code class="highlighter-rouge">mdadm -F</code></p>
+
+<p>增长模式：<code class="highlighter-rouge">mdadm -G</code></p>
+
+<p>装配模式：<code class="highlighter-rouge">mdadm -A</code>，主要用来当我们停用(<code class="highlighter-rouge">mdadm -S|--stop /dev/md1</code>)掉一个RAID之后，如果设备文件没有被删除，那么直接可用装配模式来加载新的磁盘：<code class="highlighter-rouge">mdadm -A /dev/md1 /dev/sdb7 /dev/sdb8</code></p>
+
+<p>查看RAID阵列的详细信息：<code class="highlighter-rouge">mdadm -D /dev/md0</code></p>
+
+<h4 id="创建一个用两个1g的分区创建一个raid0">创建一个用两个1G的分区创建一个RAID0</h4>
+
+<ol>
+  <li>
+    <p>创建设别：<code class="highlighter-rouge"> mdadm -C /dev/md0 -a yes -l 0 -n 2 /dev/sdb{5,6}</code></p>
+  </li>
+  <li>
+    <p>格式化分区：<code class="highlighter-rouge">mke2fs -j /dev/md0</code></p>
+  </li>
+  <li>
+    <p>挂载使用：<code class="highlighter-rouge">mount /dev/md0 /mnt</code>。查看是否成功：<code class="highlighter-rouge">ls /mnt</code>，如果发现lost+fount目录，则表示挂载成功，可以使用</p>
+  </li>
+</ol>
+
+<h4 id="模拟raid的一个配置过程">模拟RAID的一个配置过程</h4>
+
+<ol>
+  <li>
+    <p>将RAID1中的一个磁盘模拟损坏：<code class="highlighter-rouge">mdadm /dev/md1 -f|--fail /dev/sdb7</code></p>
+  </li>
+  <li>
+    <p>将损坏的磁盘移除RAID：<code class="highlighter-rouge">mdadm /dev/md1 -r|--remove /dev/sdb7</code></p>
+  </li>
+  <li>
+    <p>将一块同样大小的好的磁盘加进来：<code class="highlighter-rouge">mdadm /dev/md1 -a /dev/sdb9</code>；可以用<code class="highlighter-rouge">mdadm -D /dev/md1</code>开查看RAID的详细信息，也可以使用<code class="highlighter-rouge">cat /proc/mdstat</code>来查看RAID的状态</p>
+  </li>
+</ol>
+
+<h4 id="将raid1中加一块空闲盘当其中的一块盘换掉之后空闲盘可以自动顶替上去">将RAID1中加一块空闲盘，当其中的一块盘换掉之后，空闲盘可以自动顶替上去</h4>
+
+<p><code class="highlighter-rouge">mdadm /dev/md1 -a /dev/sdb9</code>，这样就可以新加了一块空闲的盘进去</p>
+
+<h4 id="将当前的raid信息保存至配置文件以便以后进行自动装配直接从配置文件中读取装配哪些设备">将当前的RAID信息保存至配置文件，以便以后进行自动装配(直接从配置文件中读取装配哪些设备)</h4>
+
+<p><code class="highlighter-rouge">mdadm -D --scan &gt; /etc/mdadm.conf</code>，这样，在我们停用一个RAID1之后，直接可以重新装配：<code class="highlighter-rouge">mdadm -S /dev/md1</code>、<code class="highlighter-rouge">mdadm -A /dev/md1</code></p>
+
+<h4 id="用四个磁盘创建一个raid5的过程其中一个是空闲盘">用四个磁盘创建一个RAID5的过程，其中一个是空闲盘</h4>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">fdisk</code>创建分区，格式化<code class="highlighter-rouge">mke2fs</code>，CPU重读分区表<code class="highlighter-rouge">partprob</code></p>
+  </li>
+  <li>
+    <p>创建设别文件/dev/md0：<code class="highlighter-rouge">mdadm -C /dev/md0 -a yes -l 5 -n 3 /dev/sdb{5,6,7} -x 1 /dev/sdb8</code></p>
+  </li>
+  <li>
+    <p>查看详细信息：<code class="highlighter-rouge">mdadm -D /dev/md0</code>；或者使用<code class="highlighter-rouge">mdadm -D --scan</code></p>
+  </li>
+</ol>
+
+<p>###监控</p>
+
+<p><code class="highlighter-rouge">watch</code>可以用来周期性的执行指定命令，并以全屏的方式显示；<code class="highlighter-rouge">watch -n #</code>指定周期长度，单位为秒，默认为2；格式：<code class="highlighter-rouge">watch -n # ‘COMMAND’</code></p>
+
+<h4 id="调带过程优化">调带过程优化</h4>
+
+<p>当我们在进行磁盘格式化的时候，而已指定调带的大小，所谓的调带的大小也就是：CHUNK的大小除以block的倍数，例如：<code class="highlighter-rouge">mde2fs -j -E stride=16 -b 4096</code>，那么默认的CHUNK大小就是64k，这样就避免了CPU在进行调带的过程中要记性计算每一个CHUNK包含多少的block</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>MD：multi disks</td>
+      <td>meta device，可以将多个物理设备映射成一个逻辑设备；DM：device mapper，也可以将多个物理设备映射成一个逻辑设备，DM和MD是有些功能是相同的，但是不完全相同。 MD和DM都是Linux中的实现将多个多个物理设备抽象化成一个逻辑设备的模块，以后我们访问设备文件就是访问这些设备入口</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>DM：是LVM2的基础；快照、多路径</p>
+
+<p>PV(physical Volume，物理卷) –&gt; VG(Volume Group，卷组) –&gt; LV(Logicall Volume，逻辑卷)，PV要分成PE(Physical Extent)，LV要分成LE(Logical Extent)</p>
+
+<p>pv相关的命令是以pv开头的：<code class="highlighter-rouge">pvcreate</code>、<code class="highlighter-rouge">pvremove</code>、<code class="highlighter-rouge">pvscan</code>、<code class="highlighter-rouge">pvdisplay</code>、<code class="highlighter-rouge">pvmove</code>将PV中的数据移到其他PV当中，目的是可以从vg中删除pv、<code class="highlighter-rouge">pvs</code></p>
+
+<p>vg相关的命令是以vg开头的：<code class="highlighter-rouge">vgcreate</code>，<code class="highlighter-rouge">vgcreate VG_NAME /PATH/TO/PV -s #</code>，s选项可以指定PE的大小，默认是4M，例如：<code class="highlighter-rouge">vgcreate myvg /dev/sdb{5,6,7}</code>、<code class="highlighter-rouge">vgremove</code>可以用来将整个vg删除、<code class="highlighter-rouge">vgextend</code>、<code class="highlighter-rouge">vgreduce</code>可以用来将卷组中的某个PV删除，例如：<code class="highlighter-rouge">vgreduce myvg /dev/sdb5</code></p>
+
+<p>lv相关的命令是以lv开头的：<code class="highlighter-rouge">lvcreate</code>，<code class="highlighter-rouge">lvcreate -n NAME -L #G VOLUME_GROPE_NAME</code>、<code class="highlighter-rouge">lvremove</code>，例如：<code class="highlighter-rouge">lvremove /dev/myvg/logicaltest</code></p>
+
+<blockquote>
+  <p>fdisk最多只能创建15个分区</p>
+</blockquote>
+
+<h4 id="怎么去扩展逻辑卷">怎么去扩展逻辑卷</h4>
+
+<ol>
+  <li>
+    <p>创建逻辑1G的逻辑分区：<code class="highlighter-rouge">lvcreate -n testlv -L 1G myvg</code></p>
+  </li>
+  <li>
+    <p>格式化、挂载：<code class="highlighter-rouge">mk2sfs -j /dev/myvg/testlv</code>、<code class="highlighter-rouge">mount /dev/myvg/testlv /mnt</code></p>
+  </li>
+  <li>
+    <p>扩展逻辑卷的物理边界：<code class="highlighter-rouge">lvextend -L 2G /dev/myvg/testlv</code></p>
+  </li>
+  <li>
+    <p>扩展逻辑卷的逻辑边界：<code class="highlighter-rouge">resize2fs /dev/myvg/testlv 2G</code></p>
+  </li>
+</ol>
+
+<p><code class="highlighter-rouge">lvextend</code>，用来扩展物理边界，<code class="highlighter-rouge">lvextend -L [+]#G /PATH/TO/LV</code></p>
+
+<p><code class="highlighter-rouge">resize2fs</code>，用来扩展或者缩小逻辑边界，<code class="highlighter-rouge">resize2fs /PATH/TO/LV #G</code>，<code class="highlighter-rouge">resize2fs -p /PATH/TO/LV</code>，直接扩展到物理边界那么大</p>
+
+<h4 id="怎么去缩减逻辑卷">怎么去缩减逻辑卷</h4>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">df -lh</code>，查看当前即将缩减的逻辑卷挂载情况</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">umount /mnt</code>：卸载正在挂载的逻辑卷</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">e2fsck -f /dev/myvg/testlv</code>：强行记性逻辑卷文件格式的检验</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">resize /dev/myvg/testlv 1G</code>：将逻辑卷的逻辑边间缩小到1G</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">lvreduce -L 1G /dev/myvg/testlv</code>：将逻辑卷的物理边界缩小到1G</p>
+  </li>
+  <li>
+    <p>重新挂载就可以使用了</p>
+  </li>
+</ol>
+
+<p><code class="highlighter-rouge">lvreduce</code>，用来缩小逻辑卷的物理边界，<code class="highlighter-rouge">lvreduce -L [-]#G /PATH/TO/LV</code></p>
+
+<blockquote>
+  <p>注意：1.不能在线缩减，得现卸载；2.确保缩减后的空间大小依然能够储存原有的所有数据；3.在缩减之前应该强行检查文件，以确保文件系统处于一致性的状态</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">resize2fs /PATH/TO/LV #G</code></p>
+
+<h4 id="快照卷">快照卷</h4>
+
+<ol>
+  <li>
+    <p>快照卷的主要目的是为了备份，声明周期为真个数据时长：在这段时长内，数据的增长量不能超过快照卷的大小</p>
+  </li>
+  <li>
+    <p>快照卷应该是只读的</p>
+  </li>
+  <li>
+    <p>跟原卷应该在一个卷组中，原卷就是要对哪个逻辑卷记性快照</p>
+  </li>
+</ol>
+
+<h4 id="快照卷过程">快照卷过程</h4>
+
+<ol>
+  <li>
+    <p>将逻辑卷挂载，使用，复制文件到逻辑卷中，用来演示</p>
+  </li>
+  <li>
+    <p>创建快照卷：<code class="highlighter-rouge">lvcreate -s</code>；例如：<code class="highlighter-rouge">lvcreate -s -n testlv-snap -p r -L 50M /dev/myvg/testlv</code>表示对myvg卷组下的testlv逻辑卷创建一个大小为50M，权限为只读，卷标为test-snap的快照卷</p>
+  </li>
+  <li>
+    <p>快照卷一旦创建成功，则其生命周期结束，也就是完成了备份功能。将快照卷中的内容压缩归档：<code class="highlighter-rouge">tar -zcf /tmp/users.tar.gz inittab fstab</code></p>
+  </li>
+  <li>
+    <p>一旦逻辑卷中的内容被误删除了，我们可以通过解压的方式来进行还原：<code class="highlighter-rouge">tar xf /tmp/users.tar.gz -C /media</code></p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>常见分区的过程是创建物理边界的过程；格式化的过程是创建逻辑边界的过程</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">bash -x SCRIPT</code>可以用来显示脚本的执行过程</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">ping</code>，<code class="highlighter-rouge">ping -c</code>；<code class="highlighter-rouge">ping -w</code></p>
+
+<h3 id="awk">awk</h3>
+
+<p><code class="highlighter-rouge">awk</code>更强大的文本处理工具：<code class="highlighter-rouge">awj -F '{COMMAND}'</code></p>
+
+<p>练习：</p>
+
+<p>写一个脚本(前提：请为虚拟机新增一块硬盘，假设它为/dev/sdb)，为指定的硬盘创建分区：</p>
+
+<ol>
+  <li>
+    <p>列出当前系统的所有磁盘，让用户选择，如果选择quit则退出脚本；如果用户选择错误，让用户从新选择</p>
+  </li>
+  <li>
+    <p>当用户选择后，提醒用户确认接下来的操作可能会损坏数据，并请用户确认；如果用户选择了y就继续，否则，让用户重新选择</p>
+  </li>
+  <li>
+    <p>抹除那块硬盘上的所有分区(提示：抹除所有分区后执行sync命令，并让脚本睡眠3秒钟后再分区)；并为其创建三个主分区，第一个为20M，第二个为512M，第三个为128M，且第三个为swamp分区类型(提示：将命令分区通过echo传送给fdisk即可完成)</p>
+  </li>
+</ol>
+
+<p>代码：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c">#</span>
+fdisk <span class="nt">-l</span> 2&gt; /dev/null |grep <span class="s1">'^Disk /dev/s[dh][a-z]'</span> |awk <span class="nt">-F</span>: <span class="s1">'{print $1}'</span>
+<span class="nb">read</span> <span class="nt">-p</span> <span class="s2">"Please select above one Disk File:"</span> DISK
+<span class="k">case</span> <span class="nv">$DISK</span> <span class="k">in
+</span>quit<span class="p">)</span>
+	<span class="nb">exit </span>7<span class="p">;;</span>
+/dev/sda<span class="p">)</span>
+	<span class="nb">echo</span> <span class="s1">'Warning:This disk has the system,you can not repart it.'</span>
+	<span class="nb">exit </span>8<span class="p">;;</span>
+/dev/sdb<span class="p">)</span>
+	<span class="nb">echo</span> <span class="s1">'Warning:This action may destroy your file in this disk.'</span>
+	<span class="nb">read</span> <span class="nt">-p</span> <span class="s2">"Please confirm your selection(y/n)"</span> SELECTION
+	<span class="k">if</span> <span class="o">[</span> <span class="nv">$SELECTION</span> <span class="o">==</span> <span class="s1">'y'</span> <span class="o">]</span><span class="p">;</span><span class="k">then
+	</span>dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/sdb <span class="nv">bs</span><span class="o">=</span>512M <span class="nv">count</span><span class="o">=</span>1
+	sync
+	sleep 3
+	<span class="nb">echo</span> <span class="s1">'n
+	p
+	1
+
+	+128M
+	n
+	p
+	2
+
+	+512M
+	n
+	p
+	3
+
+	+20M
+	t
+	3
+	82
+	w'</span> |fdisk /dev/sdb
+	<span class="k">else
+	</span><span class="nb">read</span> <span class="nt">-p</span> <span class="s2">"Please select above one Disk File:"</span> DISK
+	<span class="k">fi</span> <span class="p">;;</span>
+<span class="k">*</span><span class="p">)</span>
+	<span class="nb">echo</span> <span class="s1">'You must input the existing disk above.'</span><span class="p">;;</span>
+<span class="k">esac</span>
+</code></pre></div></div>
+
+<h3 id="network网络">NETWORK(网络)</h3>
+
+<p>总线型网络</p>
+
+<p>环装网络(IBM)</p>
+
+<p>星形网络(HUB)，逻辑上还是一种总线型网络</p>
+
+<blockquote>
+  <p>电子是从负极流向正极的，电子在运动过程中会产生碰撞，遭遇到阻力，一部分转化为热能，一部分转化为动能，于是就产生了电阻</p>
+</blockquote>
+
+<h4 id="ethernet-network">Ethernet network</h4>
+
+<p>CSMA/CD：Carrier Sense Multi Access Collision Detection，载波侦听多路访问，冲突检验。是一种边发送边侦听的方式，是一种线路仲裁机制</p>
+
+<p>网桥，已用网桥可以将一个大网划分为多个小网，隔离了冲突域。多个接口的网桥就是交换机，冲突域是网桥的口和网桥所连的主机</p>
+
+<p>MAC地址、广播，广播的主要目的是由逻辑地址找出来MAC地址，这个过程是ARP(Address Rosolve Protocol)地址解析；有MAC地址找到IP地址我们成为RARP，是反向地址解析</p>
+
+<p>逻辑地址是分为两段：一个是网络地址，另一个是本地地址，这是由子网掩码来确定的，主要是根据IP地址来取它的网络地址的</p>
+
+<p>任何时候本机地址的IP一定要和网关在同一个网络地址，不然的网关就无法转发其他网络的报文</p>
+
+<p>路由器中维护着一张表，这张表要说明哪一个网络通过哪一个接口到达，这张表称之为路由表，交换机中维护的表称之为MAC表</p>
+
+<p>网桥：用来隔离冲突，但是对于广播现象是无能为力的</p>
+
+<p>用多个交换机来解决广播现象，于是就在MAC地址的基础上产生了逻辑地址，作用是将一个交换网络的报文转发给另外一个交换网络，我们称之为路由器</p>
+
+<p>端口号：来识别同一个主机上的不同进程。监听：一个进程只能分配一个端口</p>
+
+<p>端口和IP的绑定称为套接字(Socket)，ip：port</p>
+
+<p>协议分为7个分层(OSI模型)：物理层(Physical Layer) –&gt;链路层(Data Link Layer) –&gt;网络层(Network Layer) –&gt;传输层(Transport Layer) –&gt;会话层(Session Layer) –&gt;表示层(Presentation Layer) –&gt;应用层(Application Layer)</p>
+
+<p>TCP/IP：物理层 –&gt;链路层 –&gt; 网络层–&gt;传输层 –&gt;应用层(现实中正在使用的模型)</p>
+
+<p>IP Header</p>
+
+<p>IP地址是点分十进制表示，32位</p>
+
+<p>IP地址是分为网络地址和主机地址</p>
+
+<p>IP地址分为：A类、B类、C类、D类；A类地址的掩码：255.0.0.0</p>
+
+<p>A类：8位中首位是0，共有1-127，127用作回环地址。故共有126个，0 000 0001 - 0 111 1111；剩下的全0表示网路地址，全1表示广播地址，共可以连接2^24-2个主机</p>
+
+<p>B类：首位从128-191，10 00 0000 - 10 11 1111，共有2^14个</p>
+
+<p>C类：首位从192-223，110 0 0000 - 110 1 1111，共有2^21个</p>
+
+<p>D类：首位从1110 0000 - 1110 1111，224-239</p>
+
+<p>私有地址：</p>
+
+<p>A类：10.0.0.0/8</p>
+
+<p>B类：172.16.0.0/16-172.31.0.0/16</p>
+
+<p>C类：192.168.0.0/24-192.168.255.0/24</p>
+
+<p>路由表中的entry分为：主机路由和网络路由，其中0.0.0.0表示默认路由</p>
+
+<p>子网和超网</p>
+
+<p>ICANN</p>
+
+<p>报文</p>
+
+<p>TCP：Transfer Control Protocol(互联网的大多数应用都是用TCP)；UDP：User Dategram Protocol(即时通讯工具使用UDP、DNS查询)</p>
+
+<p>TCP传输关系的建立需要”三次握手”；TCP传输关系的断开需要”四次断开”</p>
+
+<p>Linux分为：User Space 和 Kernel Space，而对于Linux来说，网络是内核的功能；地址是内核的不是网卡的(虽然看似配置在网卡上)</p>
+
+<h4 id="主机接入网络">主机接入网络</h4>
+
+<p>IP</p>
+
+<p>手动指定DHCP：Dynamic Host Configuration Protocol(“169.254.0.0/8”)</p>
+
+<p>NETMASK</p>
+
+<p>GATEWAY</p>
+
+<p>HOSTNAME</p>
+
+<p>DNS1</p>
+
+<p>DNS2</p>
+
+<p>DNS3</p>
+
+<p>路由</p>
+
+<p>网卡接口：</p>
+
+<p>lo：本地回环</p>
+
+<p>ethX：以太网网卡</p>
+
+<p>CentOS5：/etc/modprobe.conf；CentOS6：/etc/udev/rules.d/70-persistent-net.rules</p>
+
+<p><code class="highlighter-rouge">ifconfig ethX IP/MASK [up|down]</code></p>
+
+<p>网络服务：</p>
+
+<p>RHEL5：/etc/init.d/network</p>
+
+<p>RHEL6：/etc/init.d/NetworkManager</p>
+
+<p>网关：</p>
+
+<p><code class="highlighter-rouge">route</code>，<code class="highlighter-rouge">route -n</code>表示以数字信息来查看相关路由信息；</p>
+
+<p><code class="highlighter-rouge">route add -net DEST gw NEXTHOP</code>表示添加网络路由；<code class="highlighter-rouge">route add -host DEST gw NEXTHOP</code>表示添加本地路由；<code class="highlighter-rouge">route add default gw NEXTHOP</code></p>
+
+<p>例如：<code class="highlighter-rouge">route add -net 10.0.0.0/8 gw 192.168.100.1</code>、<code class="highlighter-rouge">route add default gw 192.168.100.3</code></p>
+
+<p><code class="highlighter-rouge">route del</code>，用来删除路由；<code class="highlighter-rouge">route del -net 0.0.0.0</code></p>
+
+<h4 id="永久配置网络">永久配置网络</h4>
+
+<p><code class="highlighter-rouge">/etc/sysconfig/network-scripts</code></p>
+
+<p>DEVICE表示关联的设别名称，要与文件名的后半部分”INTERFACE_NAME”保持一致</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>BOOTPROTO={static</td>
+      <td>none</td>
+      <td>dhcp</td>
+      <td>bootcp}：引导协议；要使用静态地址，使用static或者none；dhcp表示使用DHCP服务器获取地址</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>IPADDRESS；IP地址</p>
+
+<p>NETMASK；子网掩码</p>
+
+<p>GATEWAY；设定默认网关</p>
+
+<p>ONBOOT；开机时是否自动激活此网络接口</p>
+
+<p>HWADDR；硬件地址，要与硬件的地址保持一致；可省</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>USERCTL={yes</td>
+      <td>no}：是否允许普通用户控制此接口</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>PEERDNS={yes</td>
+      <td>no}：是否在BOOTPROTO为dhcp时接受由DHCP服务器指定的DNS地址</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="设置路由">设置路由</h4>
+
+<p><code class="highlighter-rouge">/etc/sysconfig/network-scripts/</code>下增加文件<code class="highlighter-rouge">/etc/sysconfig/network-scripts/route-ethX</code></p>
+
+<p>添加的格式1为：<code class="highlighter-rouge">DEST via NEXTHOP</code>；例如：<code class="highlighter-rouge">192.168.10.0/24 via 10.10.10.254</code></p>
+
+<p>添加格式2为：</p>
+
+<p>ADDRESS0=192.168.100.0</p>
+
+<p>NETMASK0=255.255.255.0</p>
+
+<p>GATEWAY0=10.10.10.254</p>
+
+<blockquote>
+  <p>两种格式都可以使用，但是如果添加的是对个条目，要使用统一的格式</p>
+</blockquote>
+
+<blockquote>
+  <p>上述两个设定，可以通过命令设定，也可以通过配置文件设定；命令设定立即生效，但重启无效；配置文件设定不会立即生效，需要重启服务才能生效</p>
+</blockquote>
+
+<h4 id="dns服务器指定方法只有一种只能修改配置文件">DNS服务器指定(方法只有一种，只能修改配置文件)</h4>
+
+<p><code class="highlighter-rouge">/etc/resolv.conf</code></p>
+
+<p>nameserver DNS_IP_1</p>
+
+<p>nameserver DNS_IP_s</p>
+
+<h4 id="指定本地解析">指定本地解析</h4>
+
+<p><code class="highlighter-rouge">/etc/hosts</code></p>
+
+<p>主机IP 主机名 主机别名，例如：<code class="highlighter-rouge">172.16.0.1 www.magedu.com  www</code></p>
+
+<p>DNS–&gt;/etc/hosts–&gt;DNS</p>
+
+<h4 id="修改主机名">修改主机名</h4>
+
+<p><code class="highlighter-rouge">/etc/sysconfig/network</code></p>
+
+<p>iproute2</p>
+
+<p>ip，<code class="highlighter-rouge">ip link</code>：配置网络接口属性，常用<code class="highlighter-rouge">ip -s link show</code>，<code class="highlighter-rouge">ip link set</code>；<code class="highlighter-rouge">ip addr</code>：协议地址，<code class="highlighter-rouge">ip addr show</code>，<code class="highlighter-rouge">ip addr add ADDRESS dev DEV </code>，例如：<code class="highlighter-rouge">ip addr add 192.168.100.4 dev eth0 label eth0:1</code>，<code class="highlighter-rouge">ip addr del ADDRESS dev DEV</code>，例如：<code class="highlighter-rouge">ip addr del 192.168.100.4/24 dev eth0</code>；<code class="highlighter-rouge">ip addr show dev DEV to prefix</code>显示到哪个网卡接口上的所有匹配前缀地址；<code class="highlighter-rouge">ip addr flush dev DEV to prefis</code>删除某个网卡接口上匹配前缀的所有网络地址；<code class="highlighter-rouge">ip route show</code>…</p>
+
+<p>一个网卡可以使用多个地址，网络设别可以有别名(eth0)：ethX:X，例如eth0:0、eth0:1、eth0:2</p>
+
+<p>给一个网卡配置多个ip地址的方法：<code class="highlighter-rouge">ifconfig ethX:X IP/NETMASK</code>(命令配置，立即生效，重启无效)；修改配置文件：<code class="highlighter-rouge">/etc/sysconfig/network-scripts/ifcfg-ethX:X</code>，将配置文件中的设别改为DEVICE=ethX:X</p>
+
+<blockquote>
+  <p>若是给一块网卡配置了多个地址，非主要地址不能使用DHCP动态获取</p>
+</blockquote>
+
+<h3 id="软件包管理">软件包管理</h3>
+
+<p>源代码–&gt;编译–&gt;链接–&gt;运行</p>
+
+<p>程序的组成部分(核心的4部分)：二进制程序 + 库 + 配置文件 + 帮助文件</p>
+
+<p><code class="highlighter-rouge">/etc /bin /sbin /lib</code>是系统启动就需要用到的程序，这个目录不能挂载到额外的分区，必须在根文件系统的分区上</p>
+
+<p><code class="highlighter-rouge">/usr/bin /usr/sbin /usr/lib</code>是为系统提供基本(核心)的功能，可以单独分区</p>
+
+<p><code class="highlighter-rouge">/usr/local/bin /usr/local/sbin /usr/local/lib /usr/local/etc /usr/local/share/man</code>是第三方软件安装的地方，可以是一个独立的分区，和根的关系不太紧密</p>
+
+<p><code class="highlighter-rouge">/proc /sys</code>不能单独分区，默认为空</p>
+
+<p><code class="highlighter-rouge">/dev</code>设备文件，不能单独分区；<code class="highlighter-rouge">udev</code>在Linux kernel2.4以前，/dev目录中存放着上万个目录，这些目录是你所可能使用的硬件的设备文件，因此我们无法根据设备文件判断出对应的硬件是否存在；再Linux Kernel2.6是时候增加了udev的功能，udev能够根据内核识别的硬件信息动态的创建相应的设备文件，并且取一个别致的名字，这样我们就可以根据设备文件来判断出对应的硬件设别是否存在</p>
+
+<p><code class="highlighter-rouge">/home</code>建议单独分区，不是操作系统的核心</p>
+
+<p><code class="highlighter-rouge">/root</code>不是操作系统的核心，如果存在的话，要放在根分区内</p>
+
+<p><code class="highlighter-rouge">/var</code>不是操作系统的核心，如果存在，应该单独分区，是为了Linux系统管理更加顺畅</p>
+
+<p><code class="highlighter-rouge">/boot</code>存在内核，和系统的启动过程没有关系，一般来说需要将根做成一个LVM(可以动态扩展)，而/boot就做成一个单独的分区</p>
+
+<p>系统的启动过程：POST(系统自检)–&gt;BIOS(HW)–&gt;(MBR)bootloader(文件系统结构，ex2、ex3、xfs)–&gt;内核(文件系统的创建是内核的功能)</p>
+
+<p>程序：指令+数据；指令：最终调用的是调用芯片的指令集；CPU：分为普通指令和特权指令</p>
+
+<blockquote>
+  <p>编译的过程是将程序指令转化为汇编指令，汇编指令在装换为CPU所能够识别的指令(机器指令)；编译器实际上是转化为汇编和转化为对应CPU指令集的过程</p>
+</blockquote>
+
+<p>软件包管理器功能：</p>
+
+<ol>
+  <li>
+    <p>将二进制程序、库文件、配置文件、帮助文件打包成一个文件</p>
+  </li>
+  <li>
+    <p>生成数据库，追踪所安装的每一个文件</p>
+  </li>
+</ol>
+
+<p>软件包管理器应该提供的的核心功能：</p>
+
+<ol>
+  <li>
+    <p>制作软件包</p>
+  </li>
+  <li>
+    <p>安装、卸载、升级、查询、校验</p>
+  </li>
+</ol>
+
+<p>RPM(后端工具)：Redhat Package Manager –&gt; RPM is Package Manager</p>
+
+<p>YUM(前端工具)：Yellowdog Update Modifier</p>
+
+<p>rpm命令：</p>
+
+<p><code class="highlighter-rouge">rpm</code>：数据库，<code class="highlighter-rouge">/var/lib/rpm</code></p>
+
+<p><code class="highlighter-rouge">rpmbuild</code></p>
+
+<p>rpm命名：<code class="highlighter-rouge">name-version-release.arch.rpm</code>，例如：<code class="highlighter-rouge">bind.9.7.1-1.el5.i586.rpm</code>；version：<code class="highlighter-rouge">major.minor.release</code>，major：重大改进，minor：某个子功能发生重大变化，release：修正了部分bug，调整了一些功能</p>
+
+<p>rpm包：分为二进制格式(例如：bind.9.7.1.tar.bz)和源码格式(更好的发挥本机硬件的功能)</p>
+
+<ol>
+  <li>
+    <p>rpm安装：<code class="highlighter-rouge">rpm -i /PATH/TO/PACKAGE_FILE</code>；<code class="highlighter-rouge">rpm -h</code>表示以#显示进度，一个#是2%的进度；<code class="highlighter-rouge">rpm -v</code>显示详细过程；<code class="highlighter-rouge">rpm -vv</code>显示更加详细的过程；通常我们这样使用：<code class="highlighter-rouge">rpm -ivh /PATH/TO/PACKAGE_FILE</code>；<code class="highlighter-rouge">rpm --nodeps</code>忽略依赖关系；<code class="highlighter-rouge">rpm --replacepkgs</code>表示从新安装，替换原有的安装；<code class="highlighter-rouge">rpm --force</code>强行安装，可以实现重装或者降级；<code class="highlighter-rouge">rpm --test</code>可以实现测试，但是不安装</p>
+  </li>
+  <li>
+    <p>rpm查询：<code class="highlighter-rouge">rpm -q PACKAGE_NAME</code>表示查询指定的包是否安装；<code class="highlighter-rouge">rpm -qa</code>显示当前系统下安装的所有rpm包；<code class="highlighter-rouge">rpm -qi PACKAGE_NAME</code>查询指定包的说明信息；<code class="highlighter-rouge">rpm -ql PACKAGE_NAME</code>查询安装后生成的文件列表；<code class="highlighter-rouge">rpm -qf /PATH/TO/SOMEFILE</code>：查询指定的文件是由哪个rpm包安装生成的；<code class="highlighter-rouge">rpm -qc PACKAGE_NAME</code>查询指定软件包安装的配置文件；<code class="highlighter-rouge">rpm -qd PACKAGE_NAME</code>查询指定软件包的帮助文件；<code class="highlighter-rouge">rpm -q --scripts PACKAGE_NAME</code>查询指定包中包含的脚本</p>
+  </li>
+</ol>
+
+<p>如果rpm包尚未安装，我们需要查询说明信息，安装以后生成的文件等：<code class="highlighter-rouge">rpm -qpi /PAHT/TO/PACKAGE_FILE</code>，将上述的命令中加一个<code class="highlighter-rouge">p</code>，表示指定路径</p>
+
+<ol>
+  <li>
+    <p>升级：<code class="highlighter-rouge">rpm -Uvh /PATH/TO/NEW_PACKAGE_FILE</code>如果装有老版本，则升级，否则，安装；<code class="highlighter-rouge">rpm -Fvh /PATH/TO/NEW_PACKAGE_FILE</code>表示如果装有老版本，则升级，否则，退出；<code class="highlighter-rouge">rpm -Uvh --oldpackage</code>表示强制降级安装</p>
+  </li>
+  <li>
+    <p>卸载：<code class="highlighter-rouge">rpm -e PACKAGE_NAME</code>表示卸载；<code class="highlighter-rouge">rpm -e --nodeps PACKAGE_NAME</code>表示没有解除依赖关系卸载</p>
+  </li>
+  <li>
+    <p>校验(帮助我们查看是否被非法改动过)：<code class="highlighter-rouge">rpm -V PACKAGE_NAME</code></p>
+  </li>
+  <li>
+    <p>重建数据库：<code class="highlighter-rouge">rpm --rebuilddb</code>重新重建数据库，一定会重新建立的；<code class="highlighter-rouge">rpm --initbd</code>初始化数据库(没有就建立，有就不用建立了)</p>
+  </li>
+  <li>
+    <p>检验来源的合法性和软件的完成性</p>
+  </li>
+</ol>
+
+<p>加密类型：对称，加密解密使用同一个秘钥；公钥：一对秘钥，用公钥来加密，用私钥来解密，公钥隐藏在私钥当中，可以提取出来，并公布出去；单向</p>
+
+<p>1)<code class="highlighter-rouge">rpm --import /etc/pki/RPM-GPG-KEY-CentOS-6</code>表示导入秘钥文件，只有导入了秘钥文件之后，才能进行相应的验证合法性和完整型操作</p>
+
+<p>2)<code class="highlighter-rouge">rpm -k /PATH/TO/PACKAGE_FILE</code>；dsa，gpg是验证来源的合法性，也就是验证签名；可以使用–nosignature，略过此项；sha1，md5使用来验证软件包的完整性；可以使用–nodigest略过此项</p>
+
+<h4 id="yum">yum</h4>
+
+<p>yum是C/S构架，也就是服务器/客户端类型</p>
+
+<p>yum仓库中的元数据文件(repodata目录下)：</p>
+
+<p><code class="highlighter-rouge">primary.xml.gz</code>：当前仓库的所有rpm包的列表；包之间的依赖关系；每个rpm包安装生成的文件列表</p>
+
+<p><code class="highlighter-rouge">filelists.xml.gz</code>：当前仓库总所有rpm包所有的文件列表</p>
+
+<p><code class="highlighter-rouge">oter.xml.gz</code>：额外信息，rpm包的修改日志</p>
+
+<p><code class="highlighter-rouge">repomd.xml</code>：记录的是上面三个文件的时间戳和校验和</p>
+
+<p><code class="highlighter-rouge">comps*.xml</code>：rpm包的分组信息</p>
+
+<p>如何为yum定义repo文件</p>
+
+<p>[REPO_ID]
+name=Descrption
+baseurl={ http:// | ftp:// | file:/// }
+enable={0|1}：是否允许使用yum仓库
+gpgcheck={0|1}：用来检验rpm包的数据的完整性和来源的可靠性
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6；如果<code class="highlighter-rouge">gpgcheck=1</code>则必须导入<code class="highlighter-rouge">gpgkey</code></p>
+
+<p><code class="highlighter-rouge">yum list</code>，<code class="highlighter-rouge">yum list avaiable</code>：可用的(仓库中有，但是尚未安装的)；<code class="highlighter-rouge">yum list installed</code>：已经安装的；<code class="highlighter-rouge">yum list update</code>可用的升级</p>
+
+<p><code class="highlighter-rouge">yum clean</code>：表示清理yum缓存；<code class="highlighter-rouge">yum clean [ packages | headers | metadata | dbcache | all ]</code></p>
+
+<p><code class="highlighter-rouge">yum repolist</code>：表示显示repo列表及简要信息；<code class="highlighter-rouge">yum repolist [ all | enabled | disabled ]</code></p>
+
+<p><code class="highlighter-rouge">yum install { -y | --nogpgcheck } PACKAGE_NAME</code>：yum安装</p>
+
+<p><code class="highlighter-rouge">yum localinstall PACKAGE_FILE</code>，本地安装的时候使用这个命令，可以自动从yum源当中查找依赖关系并下载，但是本地安装必须指定rpm包的路径而不是名称(yum安装直接指定名称即可)</p>
+
+<p><code class="highlighter-rouge">yum update</code>：升级；<code class="highlighter-rouge">yum update_to</code>升级为指定版本</p>
+
+<p><code class="highlighter-rouge">yum remove|erase</code>：卸载</p>
+
+<p><code class="highlighter-rouge">yum info PACKAGE_NAME</code>：查询程序的信息</p>
+
+<p><code class="highlighter-rouge">yum provides|whatprovides FILE</code>查看指定的文件是由哪个</p>
+
+<p><code class="highlighter-rouge">yum groupinfo</code></p>
+
+<p><code class="highlighter-rouge">yum grouplist</code></p>
+
+<p><code class="highlighter-rouge">yum groupinstall</code></p>
+
+<p><code class="highlighter-rouge">yum groupremove</code></p>
+
+<p><code class="highlighter-rouge">yum groupupdate</code></p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">mkdir -pv</code></p>
+</blockquote>
+
+<p>如何自己制作yum仓库：</p>
+
+<ol>
+  <li>
+    <p>在/etc/repos.d/下创建配置文件</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">createrepo rpm包所在的目录</code>：创建包之间的依赖关系，但是没有组合关系</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">createrepo -g compose*.xml rpm包所在的目录</code>，创建组合关系</p>
+  </li>
+</ol>
+
+<p>rpm的安装：</p>
+
+<ol>
+  <li>
+    <p>二进制格式：源程序–&gt;编译–&gt;二进制格式。存在问题：有些特性是编译选定的，如果编译时没有选定此特性，将无法使用；rpm包的版本会落后于源码包，甚至落后很多</p>
+  </li>
+  <li>
+    <p>定制：手动编译安装</p>
+  </li>
+</ol>
+
+<p>gcc编译器：GNU C Compiler</p>
+
+<p>make：项目管理工具，makefile：定义了make(gcc,g++)按何种次序去编译这些源程序文件中的源程序</p>
+
+<p>编译安装的三步骤：</p>
+
+<p>前提：准备开发环境(编译环境)，安装”Development Tools”和”Development Libraries”</p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">./configure</code>，<code class="highlighter-rouge">./configure --help</code>可以查看帮助命令。<code class="highlighter-rouge">--prefix=/path/to/somewhere</code>；<code class="highlighter-rouge">--sysconfdir=/PATH/TO/CONFFILE_PATH</code>；功能：1.让用户选定编译特性；2.检查编译环境</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">make</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">make install</code></p>
+  </li>
+</ol>
+
+<p>例如：</p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">./config --prefis=/usr/local/tengine --conf-path=/etc/tegine/tegine.conf</code>，会生成一个makefile文件，也就是项目管理文件</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">make</code>，执行makefile文件，进行编译</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">make install</code>，将编译后的文件复制到指定的目录内</p>
+  </li>
+</ol>
+
+<p>这种情况会出现以下问题：</p>
+
+<ol>
+  <li>
+    <p>将路径添加到PATH中：<code class="highlighter-rouge">vim /etc/profile</code>，<code class="highlighter-rouge">PATH=$PAHT:/usr/local/engine/sbin</code>(在export语句的前面添加)；还可以在<code class="highlighter-rouge">/etc/profile.d/</code>目录建立一个以.sh为名称后缀的文件，在里面定义<code class="highlighter-rouge">exprot PATH=$PATH:/path/to/somewhere</code></p>
+  </li>
+  <li>
+    <p>默认情况下，系统搜素库文件的路径是<code class="highlighter-rouge">/lib</code>，<code class="highlighter-rouge">/usr/lib</code>，如果我们要增添额外的搜索路径，需要在<code class="highlighter-rouge">/etc/ld.so.conf.d/</code>中创建以.conf为后缀的文件，而后要把添加的路径直接写到此文件中，例如：<code class="highlighter-rouge">/usr/local/apache/lib</code>；<code class="highlighter-rouge">ldconfig</code>命令表示通知系统重新搜索库文件，<code class="highlighter-rouge">ldconfig -v</code>显示重新搜索库的过程</p>
+  </li>
+  <li>
+    <p>头文件：输出给系统(默认：<code class="highlighter-rouge">/usr/include</code>)，如果想让系统搜索到安装程序的头文件需要使用链接进行，两种方式：<code class="highlighter-rouge">ln -s /usr/local/tengine/include/* /usr/include/</code>(表示将第三方安装的程序的头文件链接到默认的头文件目录中)或者<code class="highlighter-rouge">ln -s /usr/local/tengine/include /usr/include/tengine</code>(表示将第三方安 装程序的头文件的目录链接到默认头文件目录下的一个文件当中)</p>
+  </li>
+  <li>
+    <p>man文件路径：安装在–prefix指定的目录下的man目录；而默认的搜索路径是：<code class="highlighter-rouge">/usr/share/man</code>。有两种解决办法：1.<code class="highlighter-rouge">man -M /PATH/TO/MAN_DIR COMMAND</code>，例如：<code class="highlighter-rouge"> man -M /usr/local/apache/man apachectl</code>，2.在<code class="highlighter-rouge">/etc/man.config</code>中添加一条MANPATH</p>
+  </li>
+</ol>
+
+<h4 id="netstat命令网络相关">netstat命令(网络相关)</h4>
+
+<p><code class="highlighter-rouge">netstat -r</code>显示路由表；<code class="highlighter-rouge">netstat -rn</code>以数字的形式显示路由表</p>
+
+<p><code class="highlighter-rouge">netstat -t</code>显示建立的tcp连接</p>
+
+<p><code class="highlighter-rouge">netstat -u</code>显示udp连接</p>
+
+<p><code class="highlighter-rouge">netstat -l</code>显示监听状态的连接</p>
+
+<p><code class="highlighter-rouge">netstat -p</code>显示监听指定的套接字的进程的进程号及进程名</p>
+
+<h3 id="脚本编程之函数功能">脚本编程之函数(功能)</h3>
+
+<p>函数是实现结构是实现结构化编程的重要方法，目的是实现代码的重用</p>
+
+<p><code class="highlighter-rouge">function FUNCTION{COMMAND}</code>或者<code class="highlighter-rouge">FUNCTIONNAME(){COMMAND}</code></p>
+
+<p><code class="highlighter-rouge">return</code>可以自定义执行状态返回值，在函数中无论在什么位置遇到<code class="highlighter-rouge">return</code>语句，函数就终止了</p>
+
+<p>函数也可以传递参数($1、$2…)</p>
+
+<h3 id="进程管理">进程管理</h3>
+
+<p>现在的操作系统实际上就是由内核和运行在内核之上的许多进程来实现的，内核的功能：文件系统、网络功能、驱动程序、安全功能、进程管理…</p>
+
+<p>进程是一个逻辑概念；内存分为：用户空间(进程使用)和内核空间(Kernel使用)，进程在执行的过程当中，进程的指令和数据本身是储存在用户空间的当中的，而进程的描述信息(进程ID，进程父ID、进程名字、进程执行到哪里)是保存在内核空间中”task structure”的。进程从CPU退回到内存的过程，我们称之为”现场保存”；而进程从内存重新载入到CPU当中，我们称之为”恢复现场”</p>
+
+<p>x86系列的CPU的运行是分环的，和内核相关的命令(也就是直接操作硬件的，如清空寄存器、缓存等)是在0环上执行的；而和用户相关的进程命令是操作在第3环上的(操作系统的历史原因导致)</p>
+
+<p>为了避免内存的恶意占用或者bug等不可预知情况，内存分为线性内存(虚拟内存)和物理内存，虚拟内存分为：process virtual Memory 和 kernel virtual memory两段。所谓的线性内存是指：在进程看来，内存空间当中只有内核和自己，对于32位的操作系统来说，内核占有1G内存，而进程最多可占有3G内存。线性内存从下到上依次为：forbidden(禁用的)；initialized data(已经初始化了的数据)；uninitialized data(未初始化的数据)；runtime heap(堆内存，所谓的堆内存是指在物理内存空间中，是根据需要来动态申请的内存空间)；Memory mapped region for shared library(共享库的映射地址)；stack(栈，主要是储存本地变量，堆和栈互相朝着对方的方向增长，因为堆和栈的内存是不断地变化的。上面的这些称之为进程内存空间)；</p>
+
+<p>在物理内存空间当中也分为两部分：用户内存空间和内核内存空间，实际上只有内核内存空间是连续的，而用户内存空间往往不是连续的，用户内存空间被分成了一个的叶匡，当一个进程发起的时候，内核会为进程分配几个叶匡的内存，这些内存的地址信息会被映射到虚拟内存的进程内存空间当中，最开始进程的堆、栈虚拟内存和物理内存之间只是存在一个映射关系，随着堆栈内存空间的不断变换，内核会动态的分配物理内存当中的叶匡给映射的虚拟堆栈内存，所以物理内存当中同一个进程的内存内置很可能是离散的碎片化</p>
+
+<p>实际上一个进程虚拟内存当中的页面和物理内存当中叶匡的对应关系是储存在物理内核空间当中的，在虚拟内存和物理内存相对应的过程，为了更加有效率的执行是由一个芯片来执行的，这个芯片叫做”MMU(Memory Management Unit)”，利用缓存的办法来解决重复查找、查找缓慢等问题，当缓存满了的时候，清楚”最近的、最长时间没有使用的”可以填入新的内存(这个过程称之为TLB)</p>
+
+<p>进程的切换也称为上下文的切换(进程的环境切换)</p>
+
+<p>VSZ：是进程的虚拟内存大小，包括进程的text(指令文件)、data(已初始化变量)、bss(未初始化变量)、heap(堆内存空间)、shared libraries(共享库)、stack(占内存空间)等</p>
+
+<p>RSS：是进程在物理内存空间当中出去可以交换到swap分区的内存空间</p>
+
+<p>当CPU是多核的时候，如果程序不是并行开发的程序，实际上是没有太大的作用的。如果是并行开发的程序，那么同样一个进程的多个线程可以在同时在多个CPU上同时进行，那么执行效率就会非常的高，另外还可以共享资源，那么就可以节省内存空间</p>
+
+<p>多进程模型和单进程多线程模型，二者没有好坏之分，单进程多线程模型也存在问题：多个线程之间需要同步，而且会发生”死锁”等情况</p>
+
+<p>进程是由状态的：stoped(停止状态)、ready(排队状态)、executing(执行状态，获得CPU资源)、uninterruptible(不可中断睡眠状态，当进程在通过系统调用访问I/O的时候，没有其他事情可以做了，暂时睡眠)、interruputible(可中断状态，当一个进程执行完毕，但是不能退出的时候，执行可中断休眠状态)、Zombie(僵尸状态，继承执行完毕，但是无法回收的进程)</p>
+
+<p>在进程状态中，<code class="highlighter-rouge">D</code>表示不可中断的睡眠；<code class="highlighter-rouge">R</code>运行或者就绪；<code class="highlighter-rouge">S</code>可中断的睡眠；<code class="highlighter-rouge">T</code>表示停止；<code class="highlighter-rouge">Z</code>表示僵死；<code class="highlighter-rouge">&lt;</code>表示高优先级进程；<code class="highlighter-rouge">N</code>表示低优先级进程；<code class="highlighter-rouge">+</code>表示前台进程组中的进程；<code class="highlighter-rouge">l</code>表示多线程进程；<code class="highlighter-rouge">s</code>表示会话进程首进程</p>
+
+<blockquote>
+  <p>加了总括号的COMMAND，表示”内核线程”</p>
+</blockquote>
+
+<p>进程是有父子关系的，任何进程都是<code class="highlighter-rouge">init</code>的子进程</p>
+
+<p>进程是有优先级关系的：Linux的优先级是从<code class="highlighter-rouge">0-139</code>之间变换，共有140个优先级，其中<code class="highlighter-rouge">100-139</code>是用户可控的，而<code class="highlighter-rouge">0-99</code>是内核可控的</p>
+
+<blockquote>
+  <p>进程的优先级越高，可以1.获得更多的CPU运行时间；2.更优先获得运行机会。</p>
+</blockquote>
+
+<blockquote>
+  <p>每一个进程都有一个<code class="highlighter-rouge">nice</code>值，nice值在<code class="highlighter-rouge">-20~19</code>之间进行变换，对应用户可调CPU的优先级<code class="highlighter-rouge">100~139</code>；普通用户只能够调大自己进程的nice值，也就是只能减低自己进程的优先级</p>
+</blockquote>
+
+<p>进程相关命令：</p>
+
+<blockquote>
+  <p>liunx的命令有两种风格，第一种是system V，又叫做SysV风格(这种风格的命令选项有<code class="highlighter-rouge">-</code>)，另外的一种风格是BSD风格(这种风格的命令选项没有<code class="highlighter-rouge">-</code>)</p>
+</blockquote>
+
+<blockquote>
+  <p>进程分类：跟终端相关的进程和跟终端无关的进程(随着系统的启动而启动)</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">ps</code>，process state，BSD风格：<code class="highlighter-rouge">ps a</code>表示跟终端相关的进程；<code class="highlighter-rouge">ps u</code>显示更过的信息；<code class="highlighter-rouge">ps x</code>表示与终端无关的进程；经常结合使用<code class="highlighter-rouge">ps aux</code>可以用来查看进程的发起者、进程号、CPU占用比、内存占用比、虚拟内存占用的大小、物理内存占用大小、和哪个终端相关、状态、在CPU上实际运行的时间、是由哪个命令发起的(带中括号表示进程是由内核线程发起的)。
+SysV风格：<code class="highlighter-rouge">ps -e</code>表示所有进程；<code class="highlighter-rouge">ps -f</code>表示多个字段；<code class="highlighter-rouge">ps -eF|ef</code>经常组合来使用；<code class="highlighter-rouge">ps -o</code>可以用来指定要显示的字段，例如：<code class="highlighter-rouge">ps -axo command,ni</code></p>
+
+<p><code class="highlighter-rouge">pgrep</code>，<code class="highlighter-rouge">pgrep -u USERNAME PROCESS</code>查找是用户USERNAME发起的进程</p>
+
+<p><code class="highlighter-rouge">pidof PROCESS</code>可以用根据进程名来查找相关进程的ID号</p>
+
+<p><code class="highlighter-rouge">pstree</code>用来显示进程树</p>
+
+<p><code class="highlighter-rouge">top</code>：过去的一分钟、五分钟、十五分钟的平均队列长度，值越小，表示CPU的平均负载越低</p>
+
+<p><code class="highlighter-rouge">top</code>还有一些交互式的命令：<code class="highlighter-rouge">M</code>根据主流内存大小进行排序；<code class="highlighter-rouge">P</code>根据CPU使用的百分比进行排序；<code class="highlighter-rouge">T</code>根据累计时间进行排序；<code class="highlighter-rouge">l</code>表示是否显示平均负载启动时间；<code class="highlighter-rouge">t</code>是否显示进行和CPU状态相关信息；<code class="highlighter-rouge">m</code>是否显示内存相关信息；<code class="highlighter-rouge">c</code>是否显示完整的命令行信息；<code class="highlighter-rouge">q</code>退出top；<code class="highlighter-rouge">k</code>终止某个进程</p>
+
+<p><code class="highlighter-rouge">top -d</code>可以指定延迟时长；<code class="highlighter-rouge">top -b</code>批处理模式；<code class="highlighter-rouge">top -n</code>在批模式下，一共显示多少屏</p>
+
+<h4 id="进程间通信ipcinner-process-communication">进程间通信(IPC：Inner Process Communication)</h4>
+
+<p>共享内存</p>
+
+<p>信号：signal，用<code class="highlighter-rouge">kill -l</code>来显示所有可用信号；重要的信号</p>
+
+<p><code class="highlighter-rouge">1:SIGHUP</code>：让一个进程不用重启，就可以重读其配置文件，让新的配置文件生效</p>
+
+<p><code class="highlighter-rouge">2:SIGINT</code>：中断一个进程，例如：<code class="highlighter-rouge">Ctrl + c</code></p>
+
+<p><code class="highlighter-rouge">9:SIGKILL</code>：杀死一个进程(强行杀死一个进程)</p>
+
+<p><code class="highlighter-rouge">15:SIGTREM</code>：终止一个进程(比较人道的死亡办法)，是默认信号</p>
+
+<p>指定一个信号：1.信号号码：<code class="highlighter-rouge">-1</code>；2.信号名称：<code class="highlighter-rouge">-SIGKILL</code>；3.信号名称简写<code class="highlighter-rouge">-KILL</code></p>
+
+<p><code class="highlighter-rouge">kill PID</code>，kill后面只能跟上PID，<code class="highlighter-rouge">killall COMMAND</code>，killall后面可以跟命令</p>
+
+<p>Semaphore</p>
+
+<h4 id="调整nice值">调整nice值</h4>
+
+<p>调整已经启动的进程的nice值：<code class="highlighter-rouge">renice NI PID</code>；在启动时指定nice值：<code class="highlighter-rouge">nice -n NI COMMAND</code></p>
+
+<p>前台作业：占据了命令提示符；后台作业：启动之后，释放命令提示符，后续的操作在后台完成</p>
+
+<p>把作业从前提送到后台：<code class="highlighter-rouge">Ctrl + z</code>(默认是stop状态) 或者 <code class="highlighter-rouge">COMMAND &amp;</code></p>
+
+<p><code class="highlighter-rouge">jobs</code>可以查看当前系统的所有作业号；+号表示默认要执行的作业，-表示下一个要执行的作业</p>
+
+<p><code class="highlighter-rouge">bg</code>，可以让后台停止的作业继续进行，<code class="highlighter-rouge">bg JOBID</code></p>
+
+<p><code class="highlighter-rouge">fg</code>，调回后台的作业到前台来，<code class="highlighter-rouge">fg JOBID</code></p>
+
+<p><code class="highlighter-rouge">kill %JOBID</code>表示终止某个作业，<code class="highlighter-rouge">bg</code>和<code class="highlighter-rouge">fg</code>不用加”%”号</p>
+
+<p><code class="highlighter-rouge">vmstat</code>，表示虚拟内存状态，<code class="highlighter-rouge">vmstat 1</code>表示每隔1秒显示一次；<code class="highlighter-rouge">vmstat 1 5</code>表示每隔一秒显示一次，但是只显示5次</p>
+
+<p><code class="highlighter-rouge">uptime</code>显示一些时间、用户、平均负载信息</p>
+
+<p><code class="highlighter-rouge">/proc/meminfo</code>可以用来查看内存信息</p>
+
+<h3 id="系统的启动流程pcoslinux">系统的启动流程(PC：OS(linux))</h3>
+
+<p>POST(加电自检)(ROM芯片)–&gt;BIOS(Boot Sequence)–&gt;MBR(bootloader,446)–&gt;Kernel(内核空间)–&gt;initrd–&gt;(ROOTFS)/sbin/init(用户空间)(/etc/inittab)</p>
+
+<p>内核设计风格：</p>
+
+<p>单内核：Linux；包括核心：ko(kernel object)和内核模块(动态加载)，储存在<code class="highlighter-rouge">/lib/moudules/"内核版本号命令的目录"</code></p>
+
+<p>微内核：Windows，Solaris(线程支持好)</p>
+
+<p>内核文件：vmlinuz-2.6.32</p>
+
+<p>RedHat5：ramdisk–&gt;initrd；RedHat6：ramfs–&gt;initramfs</p>
+
+<p><code class="highlighter-rouge">du -sh du -sh /lib/modules/2.6.32-573.el6.i686/</code>用于查询目录下所有文件的大小</p>
+
+<p><code class="highlighter-rouge">ldd</code>可以查询文件依赖于哪些库文件</p>
+
+<p><code class="highlighter-rouge">chroot</code>可以用来实现一个小根，<code class="highlighter-rouge">chroot /PATH/TO/TEMPROOT [COMMAND...]</code></p>
+
+<h4 id="运行级别">运行级别</h4>
+
+<p>启动的服务不同，导致运行级别不同；<code class="highlighter-rouge">0</code>:halt；<code class="highlighter-rouge">6</code>:reboot；<code class="highlighter-rouge">1</code>:single user mode，直接以管理员身份切入；<code class="highlighter-rouge">2</code>:multi user mode,NO NFS；<code class="highlighter-rouge">3</code>:multi usre mode,text mode；<code class="highlighter-rouge">5</code>:multi user mode,graphic mode；<code class="highlighter-rouge">4</code>:reserved,保留级别</p>
+
+<h4 id="bootloadermbr">bootloader(MBR)</h4>
+
+<p>linux的bootloader</p>
+
+<ol>
+  <li>
+    <p>LILO：LInux LOader</p>
+  </li>
+  <li>
+    <p>GRUB：GRand Unified Bootloader，Stage1：MBR；Stage1.5；stage2：/boot/grub/</p>
+  </li>
+</ol>
+
+<p><code class="highlighter-rouge">/etc/grup.conf</code>：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>default=0	#设定默认启动的title的编号，从0开始
+timeout=5	#等待用户选择的超长时间，单位是秒
+splashimage=(hd0,0)/grub/splash.xpm.gz	#grub的背景图片
+hiddenmenu	#隐藏菜单
+password redhat #明文的方式加密
+password --md5	$1$smXTe$jYAhrBxo5Nh19pfM6/vnE0	#加密的方式加密
+title CentOS 6 (2.6.32-573.el6.i686)	#内核标题，或操作系统名称，字符串，可自由修改
+	root (hd0,0)	#内核文件所在的设备，对grub而言，所有类型硬盘一律为hd；hd#表示第几块磁盘，最后的0表示对应磁盘的分区，格式为:(hd#,#)
+	kernel /vmlinuz-2.6.32-573.el6.i686 ro root=/dev/mapper/VolGroup-lv_root	#指定内核文件路径，及传递给内核的参数，grub访问内核文件的时候，尚未有文件系统，因此是在根下
+	rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcy                                  
+	rheb-sun16 crashkernel=auto rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE                                  
+	=us rd_NO_DM rhgb quiet
+	initrd /initramfs-2.6.32-573.el6.i686.img	#ramdisk文件路径，操作系统安装的最后一步生成的
+</code></pre></div></div>
+
+<blockquote>
+  <p>使用加密的方式进行加密需要使用密令：<code class="highlighter-rouge">grub-md5-crypt</code>，输入密码就能生成加密的密码</p>
+</blockquote>
+
+<hr />
+
+<hr />
+
+<h2 id="linxu-的一些常见的问题补充">Linxu 的一些常见的问题补充</h2>
+
+<h3 id="如何使用普通用户的sudo功能">如何使用普通用户的<code class="highlighter-rouge">sudo</code>功能</h3>
+
+<ol>
+  <li>添加一个普通用户：<code class="highlighter-rouge">user add cll</code></li>
+  <li>添加用户密码：<code class="highlighter-rouge">passwd cll</code></li>
+  <li>将wheel用户改为具有所有权限：<code class="highlighter-rouge">vim /etc/sudoers</code>找到其中的一个entry，将注释去掉 –&gt; <code class="highlighter-rouge">wheel ALL=(ALL) NOPASSWD: ALL</code>，</li>
+  <li>将用户cll添加一个附属组wheel：<code class="highlighter-rouge">usermod -a -G wheel cll</code></li>
+</ol>
+
+<blockquote>
+  <p>这样用户cll不用输入密码的情况下可以实现sudo开完成一些需要管理员才能完成的指令</p>
+</blockquote>
+
+<h3 id="如何定义一个自动完成的周期任务">如何定义一个自动完成的周期任务</h3>
+
+<ol>
+  <li>周期任务需要在文件中定义：<code class="highlighter-rouge">crontab -e</code>即可以打开一个文件，在里面定义任务</li>
+  <li>任务的格式在文件中说明：<code class="highlighter-rouge">cat /etc/crontab</code></li>
+  <li>可以将需要的任务写成一个脚本，放在其他地方，定义路径即可</li>
+  <li>任务的执行是在后台进行，在标准的输出上并不会有任何变化</li>
+</ol>
+
+<p>例如定义的git自动pull和push脚本</p>
+
+<p>crontab文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 * * * /home/fmz/language_learn/shell_learn/auto_git_pull.sh
+2 10 0 * * * /home/fmz/language_learn/shell_learn/auto_git/push.sh
+</code></pre></div></div>
+
+<p>auto_git_pull.sh</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+adddate<span class="o">(){</span>
+        <span class="k">while </span><span class="nv">IFS</span><span class="o">=</span> <span class="nb">read</span> <span class="nt">-r</span> line<span class="p">;</span> <span class="k">do
+                </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">$(</span>date<span class="k">)</span><span class="s2"> </span><span class="nv">$line</span><span class="s2">"</span>
+        <span class="k">done</span>
+<span class="o">}</span>
+
+
+<span class="nb">cd</span> /home/fmz/git_repo/fengmengzhao.github.io/
+git pull origin master | adddate <span class="o">&gt;&gt;</span> /home/fmz/git_auto.log
+</code></pre></div></div>
+
+<p>auto_git_push.sh</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+
+adddate<span class="o">(){</span>
+        <span class="k">while </span><span class="nv">IFS</span><span class="o">=</span> <span class="nb">read</span> <span class="nt">-r</span> line<span class="p">;</span> <span class="k">do
+                </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">$(</span>date<span class="k">)</span><span class="s2"> </span><span class="nv">$line</span><span class="s2">"</span>
+        <span class="k">done</span>
+<span class="o">}</span>
+
+<span class="nb">cd</span> /home/fmz/git_repo/fengmengzhao.github.io/
+git add <span class="nb">.</span> | adddate <span class="o">&gt;&gt;</span> /home/fmz/git_auto.log
+git commit <span class="nt">-m</span><span class="s2">"auto push"</span> | adddate <span class="o">&gt;&gt;</span> /home/fmz/git_auto.log
+git push origin master | adddate <span class="o">&gt;&gt;</span> /home/fmz/git_auto.log
+</code></pre></div></div>
+
+<h4 id="如何在不同的linux服务器之间进行文件的copy">如何在不同的Linux服务器之间进行文件的copy</h4>
+
+<ol>
+  <li>查看是否有<code class="highlighter-rouge">scp</code>命令，如果没有需要进行安装<code class="highlighter-rouge">opensshl</code></li>
+  <li><code class="highlighter-rouge">scp /file/to/some_path username@localhost:/file/to/some_path</code>，例如：<code class="highlighter-rouge">scp /home/fmz/.vimrc fmz@192.168.1.2:</code>，缺省的目录是用户的家目录，也就是文件复制到了<code class="highlighter-rouge">/home/fmz/</code>文件夹中</li>
+  <li>也可以从其他的服务器中复制文件到本地：<code class="highlighter-rouge">scp username@localhost:/file/to/some_path /file/to/some_path</code>，例如：<code class="highlighter-rouge">scp root@192.168.1.4:dead.letter .</code>，这样就把其他服务器上的文件复制到了本地的目录中，这里的<code class="highlighter-rouge">.</code>指的是当前敲入命令的家目录</li>
+</ol>
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>

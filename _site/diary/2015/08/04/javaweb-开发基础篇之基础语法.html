@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麦羞 - javaweb 开发基础篇之基础语法</title>
+  <meta name="author" content="麦羞" />
+  <meta name="description" content="The blog of 麦羞" />
+  <link rel="canonical" href="/blogs/diary/2015/08/04/javaweb-%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%AF%87%E4%B9%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.html" />
+  <!-- <script type="text/javascript" src="//use.typekit.net/jxo0xyj.js"></script> -->
+  <!-- <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/blogs/assets/images/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="麦羞" href="/blogs/atom.xml" />
+  <link rel="stylesheet" href="/blogs/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>博客</h1>
+  <a href="/">
+      <img src="/blogs/assets/images/fmz-logo2.png" id="logo" alt="Blog logo"/>
+  </a>
+  <h2>@ <a href="/blogs/resume">麦羞</a>.</h2>
+  <hr/>
+  <ul>
+  <p>在这里我分享我的每一步成长 </p>
+  <p>
+    我是一名在读研究生
+  </p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="FengMengZhao on Github" href="https://github.com/FengMengZhao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+  <a title="fengmengzhao on Twitter" href="https://twitter.com/fengmengzhao">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Facebook" href="https://facebook.com/100008350779619">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+  <a title="麦羞 on Google Plus" href="https://plus.google.com/105478354193409781551">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+        <p class="meta">
+  August 04, 2015
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">javaweb 开发基础篇之基础语法</h1>
+
+<div id="post">
+  <h2 id="注释及scriptlet">注释及Scriptlet</h2>
+
+<h3 id="注释">注释</h3>
+
+<ol>
+  <li>
+    <p>显式注释，客户端是允许看见的。<code class="highlighter-rouge">&lt;!--注释内容--&gt;</code></p>
+  </li>
+  <li>
+    <p>隐式注释，格式一：<code class="highlighter-rouge">//单行注释</code>；格式二：<code class="highlighter-rouge">/*多行注释*/</code>；格式三：<code class="highlighter-rouge">&lt;%--注释--%&gt;</code>，jsp注释</p>
+  </li>
+</ol>
+
+<p>注释代码示例</p>
+
+<p>&lt;!doctype html&gt;</p>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<!-- 这个注释客户端是可见的 -->
+		&lt;%-- 这个事jsp独有的注释，客户端是不可见的 --%&gt;
+		&lt;%
+			//java单行注释，客户端不可见
+			/*
+				java多行注释，客户端不可见
+			*/
+		%&gt;
+	</body>
+</html>
+
+<h3 id="scriptlet脚本小程序">Scriptlet(脚本小程序)</h3>
+
+<blockquote>
+  <p>所有嵌入在HTML代码中的java程序必须使用Scriptlet标记出来</p>
+</blockquote>
+
+<p>在JSP中共有3种Scriptlet代码</p>
+
+<ol>
+  <li>
+    <p>第一种：<code class="highlighter-rouge">&lt;% %&gt;</code></p>
+  </li>
+  <li>
+    <p>第二种：<code class="highlighter-rouge">&lt;%! %&gt;</code></p>
+  </li>
+  <li>
+    <p>第三种：<code class="highlighter-rouge">&lt;%= %&gt;</code></p>
+  </li>
+</ol>
+
+<h4 id="-"><code class="highlighter-rouge">&lt;% %&gt;</code></h4>
+
+<blockquote>
+  <p>在此Scriptlet中可以定义局部变量、编写语句等</p>
+</blockquote>
+
+<p>代码示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%
+	int x = 10 ;
+	String str = "fmz" ;
+	out.println("&lt;h2&gt;x="+(++x)+"&lt;/h2&gt;") ;
+	out.println("&lt;h2&gt;str="+str+"&lt;/h2&gt;") ;
+%&gt;
+</code></pre></div></div>
+
+<h4 id="--1"><code class="highlighter-rouge">&lt;%! %&gt;</code></h4>
+
+<blockquote>
+  <p>在此Scriptlet中可以定义全局变量、方法、类等</p>
+</blockquote>
+
+<p>代码示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%!
+	public static final String str = "fmz" ;
+%&gt;
+&lt;%!
+	int x = 10 ;
+%&gt;
+&lt;%!
+	public int add(int x,int y){
+		return x+y ;
+	}
+%&gt;
+&lt;%!
+	public class Person{
+		private String name ;
+		private int age ;
+
+		public Person(String name,int age){
+			this.name = name ;
+			this.age = age ;
+		}
+
+		public String toString(){
+			return "姓名："+this.name+"，年龄："+this.age ;
+		}
+	}
+%&gt;
+
+&lt;%//编写普通的Scriptlet
+	out.println(str) ;
+	out.println("5 + 3 = "+add(5,3)) ;
+	out.println(new Person("冯孟昭",25)) ;
+	out.println("x= "+(x++)) ;
+%&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>尽量不要在JSP中定义类或者方法，虽然上述可以定义，但是从正确的开发思路来看，当JSP中需要类或者方法时，往往通过JavaBean的形式调用</p>
+</blockquote>
+
+<h4 id="--2"><code class="highlighter-rouge">&lt;%= %&gt;</code></h4>
+
+<blockquote>
+  <p>此Scriptlet的主要功能是输出一个变量或者一个具体内容</p>
+</blockquote>
+
+<p>代码示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%
+	String name = "fmz" ;
+	int age = 25 ;
+%&gt;
+&lt;h2&gt;&lt;%= name %&gt;&lt;/h2&gt;
+&lt;h3&gt;&lt;%= age %&gt;&lt;/h3&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>使用这种代码的好处是可以更好的将HTML代码和java代码相分离</p>
+</blockquote>
+
+<p>两种输出代码：<code class="highlighter-rouge">out.println()</code>和<code class="highlighter-rouge">&lt;%= %&gt;</code>那种方式更好？</p>
+
+<p>在JSP的开发中，实际上是在HTML代码中加入了一些控制和输出语句，所以在输出时，为了使HTML代码和java代码相分离，最好的做法就是只输出由JSP产生的变量，那么就是用<code class="highlighter-rouge">&lt;%= %&gt;</code>输出更方便</p>
+
+<h5 id="比较两者输出">比较两者输出</h5>
+
+<p>使用out.println()输出</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">int</span> <span class="na">rows =</span><span class="err"> </span><span class="s">10</span> <span class="err">;</span>
+			<span class="na">int</span> <span class="na">cols =</span><span class="err"> </span><span class="s">10</span> <span class="err">;</span>
+			<span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">("&lt;</span><span class="na">table</span> <span class="na">border=</span><span class="s">\"1\"</span> <span class="na">width=</span><span class="s">\"100%\"</span><span class="nt">&gt;</span>") ;
+			for(int i=0;i<span class="nt">&lt;rows</span><span class="err">;</span><span class="na">i</span><span class="err">++){</span>
+				<span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">("&lt;</span><span class="na">tr</span><span class="nt">&gt;</span>") ;
+				for(int j=0;j<span class="nt">&lt;cols</span><span class="err">;</span><span class="na">j</span><span class="err">++){</span>
+					<span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">("&lt;</span><span class="na">td</span><span class="nt">&gt;</span>"+(i*j)+"<span class="nt">&lt;/td&gt;</span>") ;
+				}
+				out.println("<span class="nt">&lt;/tr&gt;</span>") ;
+			}
+			out.println("<span class="nt">&lt;/table&gt;</span>") ;
+		%&gt;
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>这样将HTML代码和java代码混合在一起很混乱，不好调试</p>
+</blockquote>
+
+<p>使用&lt;%= %&gt;输出</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">width=</span><span class="s">"100%"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">int</span> <span class="na">rows =</span><span class="err"> </span><span class="s">10</span> <span class="err">;</span>
+			<span class="na">int</span> <span class="na">cols =</span><span class="err"> </span><span class="s">10</span> <span class="err">;</span>
+			<span class="na">for</span><span class="err">(</span><span class="na">int</span> <span class="na">i=</span><span class="s">0;i&lt;rows;i++){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="na">for</span><span class="err">(</span><span class="na">int</span> <span class="na">j=</span><span class="s">0;j&lt;cols;j++){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span> <span class="na">i</span><span class="err">*</span><span class="na">j</span> <span class="err">%</span><span class="nt">&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>切记：一定不要使用out.println()进行输出</p>
+</blockquote>
+
+<p>利用交互性打印表格</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>html文件
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"print_table.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"0"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>请输入打印表格行数：<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"rows"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>请输入打印表格列数：<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"cols"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>jsp文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">width=</span><span class="s">"100%"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">int</span> <span class="na">rows =</span><span class="err"> </span><span class="s">0</span> <span class="err">;</span>
+			<span class="na">int</span> <span class="na">cols =</span><span class="err"> </span><span class="s">0</span> <span class="err">;</span>
+			<span class="na">rows =</span><span class="err"> </span><span class="s">Integer.parseInt(request.getParameter("rows"))</span> <span class="err">;</span>
+			<span class="na">cols =</span><span class="err"> </span><span class="s">Integer.parseInt(request.getParameter("cols"))</span> <span class="err">;</span>
+			<span class="na">for</span><span class="err">(</span><span class="na">int</span> <span class="na">i=</span><span class="s">0;i&lt;rows;i++){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="na">for</span><span class="err">(</span><span class="na">int</span> <span class="na">j=</span><span class="s">0;j&lt;cols;j++){</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span> <span class="na">i</span><span class="err">*</span><span class="na">j</span> <span class="err">%</span><span class="nt">&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+				<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="err">}</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h4 id="scriptlet标签">Scriptlet标签</h4>
+
+<p>在程序汇总可以用<code class="highlighter-rouge">&lt;jsp:scriptlet&gt;java代码&lt;/jsp:scriptlet&gt;</code>，相当于<code class="highlighter-rouge">&lt;% %&gt;</code></p>
+
+<blockquote>
+  <p>注意此标签必须完结，即成对出现</p>
+</blockquote>
+
+<h2 id="page指令">page指令</h2>
+
+<p>page指令在JSP开发中较为重要，使用此属性，可以定义一个JSP页面的相关属性，包括设置MIME类型、定义需要导入的包、错误页指定等</p>
+
+<blockquote>
+  <p>page指令有很多，只有import指令可以重复出现多次，而对于其他属性只能出现一次，比较常用的指令有四个：<code class="highlighter-rouge">contentType</code>、<code class="highlighter-rouge">pageEncoding</code>、<code class="highlighter-rouge">errorPage/isErrorPage</code>和<code class="highlighter-rouge">import</code>这四个指令</p>
+</blockquote>
+
+<p>page指令语法：<code class="highlighter-rouge">&lt;%@ page 属性="内容"%</code>&gt;</p>
+
+<h3 id="设置mime">设置MIME</h3>
+
+<blockquote>
+  <p>在page指令中，contentType属性是使用最多的一个属性，如果想让一个JSP文件显示中文，则必须对整个页面指定MIME编码。MIME(Multipurpose Internet Mail Extensions,多功能Internet邮件扩充服务)就是指定某个扩展名文件将使用何种应用程序打开的一个说明，当该扩展名文件被访问时，浏览器会自动指定应用程序来打开。</p>
+</blockquote>
+
+<p>为JSP页面指定编码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%@ page language="java" contentType="text/html;charset=GBK"%&gt;
+&lt;center&gt;
+	&lt;h2&gt;冯孟昭博客&lt;/h2&gt;
+	&lt;h3&gt;http://fengmengzhao.github.io&lt;/h3&gt;
+&lt;/center&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>显示中文时，编码的方式可以为utf-8或者GBK，注意文件的编码必须和设置的contentType属性编码方式一致，否则会出现乱码</p>
+</blockquote>
+
+<p>如果想要将在网页上显示的内容以 *.word 的形式下载下载，只需要将contentType中的<code class="highlighter-rouge">text/html</code>改为<code class="highlighter-rouge">application/msword</code>即可，来源于conf\web.xml中的文件配置代码：<code class="highlighter-rouge">&lt;mime-mapping&gt;&lt;extension&gt;doc&lt;/extension&gt;&lt;mime-type&gt;application/msword&lt;/mime-type&gt;&lt;/mime-mapping&gt;&lt;mime-mapping&gt;</code>。
+同时可以通过<code class="highlighter-rouge">reponse</code>对象完成对下载文件名称的设置，设置方法如下：</p>
+
+<p>在jsp文件中加入代码：<code class="highlighter-rouge">&lt;%reponse.setHeader("Content-Disposition","attachment;filename=*.doc");%&gt;</code></p>
+
+<h4 id="通过交互性打印表格并完成下载及命名的实现">通过交互性打印表格，并完成下载及命名的实现</h4>
+
+<p>HTML代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"print_table.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"0"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>请输入打印表格行数：<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"rows"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>请输入打印表格列数：<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"cols"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">"重置"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>JSP代码</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%@ page language="java" contentType="application/msword;charset=utf-8"%&gt;
+
+	&lt;% 
+		response.setHeader("Content-Disposition","attachment;filename=tableDownload.doc");
+	%&gt;
+
+&lt;table border="1" width="100%"&gt;
+
+	&lt;%
+		int rows = 0 ;
+		int cols = 0 ;
+		rows = Integer.parseInt(request.getParameter("rows")) ;
+		cols = Integer.parseInt(request.getParameter("cols")) ;
+		for(int i=0;i&lt;rows;i++){
+	%&gt;
+		&lt;tr&gt;
+	&lt;%
+			for(int j=0;j&lt;cols;j++){
+	%&gt;
+				&lt;td&gt;&lt;%= i*j %&gt;&lt;/td&gt;
+	&lt;%
+			}
+	%&gt;
+		&lt;/tr&gt;
+	&lt;%
+		}
+	%&gt;
+&lt;/table&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意：上述代码能够完成输入行和列打印出对应功能的表格，并且能够转化为指定文件名称的doc文件进行下载。代码中是<code class="highlighter-rouge">Disposition</code>,而不是<code class="highlighter-rouge">Dispositon</code></p>
+</blockquote>
+
+<blockquote>
+  <p>后缀为<em>.htm和</em>.html的文档二者完全相同，可以通过conf\web.xml查看其处理类型也完全一样</p>
+</blockquote>
+
+<h3 id="设置文件编码">设置文件编码</h3>
+
+<p>还可以通过<code class="highlighter-rouge">pageEncoding="编码"</code>的属性设置来设置编码，例如：<code class="highlighter-rouge">&lt;%@ page contentType="text/html;" pageEncoding="编码"%&gt;</code>。</p>
+
+<blockquote>
+  <p>pageEncoding 和 ContentType中的charset 都可以设置编码，前者是JSP文件本身的编码，后者是服务器发给客户端的内容编码，前者存在JSP文件编码为前者，否则为后者编码，二者都不存在未默认编码 ISO-8859-1 。</p>
+</blockquote>
+
+<h3 id="错误页的设置">错误页的设置</h3>
+
+<ol>
+  <li>
+    <p>指定错误出现时跳转页，通过<code class="highlighter-rouge">errorPage</code>属性指定</p>
+  </li>
+  <li>
+    <p>错误处理也必须有明确的标识，通过<code class="highlighter-rouge">isErrorPage</code>属性设定</p>
+  </li>
+</ol>
+
+<p>出错网页(跳转页)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%@ page language="java" contentType="text/html" pageEncoding="utf-8"%&gt;
+&lt;%@ page errorPage="error.jsp"%&gt;&lt;%-- 一旦出现错误就会跳转到error.jsp --%&gt;
+
+&lt;%
+	int x = 10 / 0 ;
+%&gt;
+
+&lt;h2&gt;fmz&lt;/h2&gt;
+</code></pre></div></div>
+
+<p>处理出错页</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%@ page language="java" contentType="text/html" pageEncoding="utf-8"%&gt;
+&lt;%@ page isErrorPage="true"%&gt;
+&lt;% response.setStatus(200) ; %&gt;&lt;%-- 表示此页正确，可以处理错误 --%&gt;
+&lt;h2&gt;程序出现错误&lt;/h2&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>跳转页跳转后，地址栏并没有发生改变，显示内容却变成了处理错误页的内容，这样的跳转在程序中称为“服务器端跳转”，与此相对的程序跳转后，地址栏发生了改变，则此种跳转称为“客户端跳转”，例如：超练级就是客户端跳转。</p>
+</blockquote>
+
+<p>要想在整个虚拟目录中指定全局的错误处理，必须修个虚拟文件中的web.xml文件，在其中加入错误页的操作</p>
+
+<p>全局的错误处理可以分为两种：HTTP代码错误，如：404、500,和异常的错误，如：NullPointerException</p>
+
+<h4 id="修改webxml文件在其中加入如下代码">修改web.xml文件，在其中加入如下代码</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;error-page&gt;
+	&lt;error-code&gt;500&lt;/error-code&gt;
+	&lt;location&gt;/ch05error.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+&lt;error-page&gt;
+	&lt;error-code&gt;404&lt;/error-code&gt;
+	&lt;location&gt;/ch05error.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+&lt;error-page&gt;
+	&lt;error-code&gt;java.lang.NullPointerException&lt;/error-code&gt;
+	&lt;location&gt;/ch05error.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+</code></pre></div></div>
+
+<h3 id="数据库的连接操作">数据库的连接操作</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>数据库连接代码：`mysql -uroot -pmysqladmin`
+
+创建数据库的脚本
+
+/*======================= 删除数据库 =======================*/
+DROP DATABASE IF EXISTS mldn ;
+/*======================= 创建数据库 =======================*/
+CREATE DATABASE mldn ;
+/*======================= 使用数据库 =======================*/
+USE mldn ;
+/*======================= 删除数据表 =======================*/
+DROP TABLE IF EXISTS emp ;
+/*======================= 创建数据表 =======================*/
+CREATE TABLE emp(
+   empno			INT(4)			PRIMARY KEY,
+   ename			VARCHAR(10),
+   job				VARCHAR(9),
+   hiredate			DATE,
+   sal				FLOAT(7,2)
+) ;
+/*======================= 插入测试数据 =======================*/
+INSERT INTO emp (empno,ename,job,hiredate,sal) VALUES (6060,'李兴华','经理','2001-09-16',2000.30) ;
+INSERT INTO emp (empno,ename,job,hiredate,sal) VALUES (7369,'董鸣楠','销售','2003-10-09',1500.90) ;
+INSERT INTO emp (empno,ename,job,hiredate,sal) VALUES (8964,'李祺','分析员','2003-10-01',3000) ;
+INSERT INTO emp (empno,ename,job,hiredate,sal) VALUES (7698,'张惠','销售','2005-03-12',800) ;
+INSERT INTO emp (empno,ename,job,hiredate,sal) VALUES (7782,'杨军','分析员','2005-01-12',2500) ;
+INSERT INTO emp (empno,ename,job,hiredate,sal) VALUES (7762,'刘明','销售','2005-03-09',1000) ;
+INSERT INTO emp (empno,ename,job,hiredate,sal) VALUES (7839,'王月','经理','2006-09-01',2500) ;
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意：Mysql的连接需要额外的驱动程序，将mysql的驱动程序(jar包)放入Tomcat8.0\lib中即可</p>
+</blockquote>
+
+<p>将上述数据库脚本创建的数据库表格进行输出，代码如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"java.sql.*"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;title&gt;</span>JSP连接数据库<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;</span><span class="err">%!</span>
+	<span class="err">//定义数据库驱动程序</span>
+	<span class="na">public</span> <span class="na">static</span> <span class="na">final</span> <span class="na">String</span> <span class="na">DBDRIVER =</span><span class="err"> </span><span class="s">"org.gjt.mm.mysql.Driver"</span> <span class="err">;</span>
+	<span class="err">//数据库连接地址</span>
+	<span class="na">public</span> <span class="na">static</span> <span class="na">final</span> <span class="na">String</span> <span class="na">DBURL =</span><span class="err"> </span><span class="s">"jdbc:mysql://localhost:3306/mldn"</span> <span class="err">;</span>
+	<span class="na">public</span> <span class="na">static</span> <span class="na">final</span> <span class="na">String</span> <span class="na">DBUSER =</span><span class="err"> </span><span class="s">"root"</span> <span class="err">;//数据库连接用户名</span>
+	<span class="na">public</span> <span class="na">static</span> <span class="na">final</span> <span class="na">String</span> <span class="na">DBPASS =</span><span class="err"> </span><span class="s">"mysqladmin"</span> <span class="err">;//数据库连接密码</span>
+<span class="err">%</span><span class="nt">&gt;</span>	
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="na">Connection</span> <span class="na">conn =</span><span class="err"> </span><span class="s">null</span> <span class="err">;//声明数据库连接对象</span>
+	<span class="na">PreparedStatement</span> <span class="na">pstmt =</span><span class="err"> </span><span class="s">null</span> <span class="err">;//声明数据库操作</span>
+	<span class="na">ResultSet</span> <span class="na">rs =</span><span class="err"> </span><span class="s">null</span> <span class="err">;//声明数据库结果集</span>
+<span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="na">try</span><span class="err">{//数据库的操作中会出现异常，所以要用</span><span class="na">try</span><span class="err">...</span><span class="na">catch</span><span class="err">处理</span>
+		<span class="na">Class</span><span class="err">.</span><span class="na">forName</span><span class="err">(</span><span class="na">DBDRIVER</span><span class="err">)</span> <span class="err">;//数据库驱动程序加载</span>
+		<span class="na">conn =</span><span class="err"> </span><span class="s">DriverManager.getConnection(DBURL,DBUSER,DBPASS)</span> <span class="err">;//取得数据库连接</span>
+		<span class="na">String</span> <span class="na">sql =</span><span class="err"> </span><span class="s">"SELECT empno,ename,job,sal,hiredate FROM emp"</span> <span class="err">;</span>
+		<span class="na">pstmt =</span><span class="err"> </span><span class="s">conn.prepareStatement(sql)</span> <span class="err">;//实例化</span><span class="na">PreparedStatement</span><span class="err">对象</span>
+		<span class="na">rs =</span><span class="err"> </span><span class="s">pstmt.executeQuery()</span> <span class="err">;//执行查询操作</span>
+<span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;center&gt;</span>
+	<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">width=</span><span class="s">"80%"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td&gt;</span>雇员编号<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span>雇员姓名<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span>雇员工作<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span>雇员工资<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span>雇佣日期<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="na">while</span><span class="err">(</span><span class="na">rs</span><span class="err">.</span><span class="na">next</span><span class="err">()){</span>
+	<span class="na">int</span> <span class="na">empno =</span><span class="err"> </span><span class="s">rs.getInt(1)</span> <span class="err">;//取出雇员编号</span>
+	<span class="na">String</span> <span class="na">ename =</span><span class="err"> </span><span class="s">rs.getString(2)</span> <span class="err">;//取出雇员姓名</span>
+	<span class="na">String</span> <span class="na">job =</span><span class="err"> </span><span class="s">rs.getString(3)</span> <span class="err">;//取出雇员工作</span>
+	<span class="na">float</span> <span class="na">sal =</span><span class="err"> </span><span class="s">rs.getFloat(4)</span> <span class="err">;//取出雇员工资</span>
+	<span class="na">java</span><span class="err">.</span><span class="na">util</span><span class="err">.</span><span class="na">Date</span> <span class="na">date =</span><span class="err"> </span><span class="s">rs.getDate(5)</span> <span class="err">;//取出雇用日期</span>
+<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">empno</span><span class="err">%</span><span class="nt">&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">ename</span><span class="err">%</span><span class="nt">&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">job</span><span class="err">%</span><span class="nt">&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">sal</span><span class="err">%</span><span class="nt">&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;</span><span class="err">%=</span><span class="na">date</span><span class="err">%</span><span class="nt">&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="err">}</span>
+<span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/center&gt;</span>
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="err">}</span><span class="na">catch</span><span class="err">(</span><span class="na">Exception</span> <span class="na">e</span><span class="err">){</span>
+	<span class="na">System</span><span class="err">.</span><span class="na">out</span><span class="err">.</span><span class="na">println</span><span class="err">(</span><span class="na">e</span><span class="err">)</span> <span class="err">;</span>
+<span class="err">}</span><span class="na">finally</span><span class="err">{</span>
+	<span class="na">rs</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+	<span class="na">pstmt</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+	<span class="na">conn</span><span class="err">.</span><span class="na">close</span><span class="err">()</span> <span class="err">;</span>
+<span class="err">}</span>
+<span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<p>2015/8/6</p>
+
+<hr />
+
+<h2 id="包含指令">包含指令</h2>
+
+<h3 id="包含的意义">包含的意义</h3>
+
+<p>包含指令可以实现这样的功能：将工具栏、页面头部、页面尾部(代码基本上是固定的)分别作成一个文件，然后在需要的地方导入（包含）。</p>
+
+<h3 id="静态包含">静态包含</h3>
+
+<blockquote>
+  <p>静态包含指令是在JSP编译时插入一个包含文本或者代码的文件，这个包含的过程是静态的，而包含文件可以使JSP文件、HTML文件、文本文件，或者一段java程序。</p>
+</blockquote>
+
+<blockquote>
+  <p>在每一个完整的页面中，对于&lt;html&gt;、&lt;/html&gt;、&lt;head&gt;、&lt;/head&gt;、&lt;body&gt;、&lt;body&gt;、<title>、</title>这几个元素只能出现一次，如果重复出现则会造成显示的错误。</p>
+</blockquote>
+
+<p>静态包含语法：<code class="highlighter-rouge">&lt;%@ include file="要包含的文件路径"%&gt;</code></p>
+
+<p>示例代码：</p>
+
+<p>包含文件1</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2&gt;
+&lt;font color="red"&gt;info.html&lt;/font&gt;
+&lt;/h2&gt;
+</code></pre></div></div>
+
+<p>包含文件2</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2&gt;
+	&lt;font color="green"&gt;
+		&lt;%="info.jsp"%&gt;
+	&lt;/font&gt;
+&lt;/h2&gt;
+</code></pre></div></div>
+
+<p>包含文件3</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2&gt;
+	&lt;font color="blue"&gt;info.inc&lt;/font&gt;
+&lt;/h2&gt;
+</code></pre></div></div>
+
+<p>使用静态包含指令包含上述三个文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>静态包含操作<span class="nt">&lt;/h1&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">include</span> <span class="na">file=</span><span class="s">"info.html"</span><span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">include</span> <span class="na">file=</span><span class="s">"info.jsp"</span><span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">include</span> <span class="na">file=</span><span class="s">"info.inc"</span><span class="err">%</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>在以上静态包含指令中，实际上是所包含的三个文件的内容导入到有包含指令的文件中，然后在进行一起编译，也就是先包含，然后将全部的代码进行集中的编译处理。</p>
+</blockquote>
+
+<h3 id="动态包含">动态包含</h3>
+
+<blockquote>
+  <p>动态包含与静态包含不同，动态语句可以自动区分被包含的页面是静态的还是动态的。如果是静态页面和之前的静态包含相同，将静态内容包好进来；如果是动态页面，则要先进行动态处理，然后再将处理后的结果包含进来。</p>
+</blockquote>
+
+<h4 id="动态包含语法">动态包含语法</h4>
+
+<ol>
+  <li>
+    <p>不传递参数类型：<code class="highlighter-rouge">&lt;jsp:include page="{要包含的文件路径|&lt;%= 表达式%&gt;}" flush="true|false"/</code></p>
+  </li>
+  <li>
+    <p>传递参数类型：<code class="highlighter-rouge">&lt;jsp:include page="{要包含的文件路径|&lt;%= %&gt;}" flush="true|false"&gt;&lt;jsp:param name="参数名称" value="参数内容"/&gt;&lt;/jsp:include&gt;</code></p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>可以向包含语句中传递多个参数</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">&lt;jsp:include&gt;</code>这样的语法格式属于标签指令形式，所有的标签指令必须完结</p>
+</blockquote>
+
+<p>使用动态包含的第二种语法可以向被包含页面传递参数，被包含也变可以使用<code class="highlighter-rouge">request.getParameter()</code>方法进行参数的接收</p>
+
+<p>定义被包含页</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%@ page contentType="text/html" pageEncoding="utf-8"%&gt;
+&lt;h1&gt;
+	参数一：&lt;%=request.getParameter("name")%&gt;
+&lt;/h1&gt;
+&lt;h1&gt;
+	参数二：&lt;%=request.getParameter("info")%&gt;
+&lt;/h1&gt;
+</code></pre></div></div>
+
+<p>定义包含页</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;</span><span class="err">%</span>
+			<span class="na">String</span> <span class="na">username =</span><span class="err"> </span><span class="s">"fmz"</span> <span class="err">;</span>
+		<span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>动态包含传递参数<span class="nt">&lt;/h1&gt;</span>
+		<span class="nt">&lt;jsp:include</span> <span class="na">page=</span><span class="s">"receive_param.jsp"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">value=</span><span class="s">"&lt;%=username%&gt;"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">value=</span><span class="s">"http:fengmengzhao.github.io"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/jsp:include&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="静态包含or动态包含">静态包含OR动态包含</h3>
+
+<p>静态包含的处理方式是先包含再处理，而动态包含的处理方式是先处理后包含，如果包含页和处理页定义了相同的变量，则使用静态处理方式会出现错误，而在开发中很难避免定义相同变量，所以使用动态处理会更加方便。</p>
+
+<h2 id="跳转指令">跳转指令</h2>
+
+<h3 id="页面跳转语法">页面跳转语法</h3>
+
+<ol>
+  <li>不传递参数：<code class="highlighter-rouge">&lt;jsp:forward page="{要包含的文件路径|&lt;%=表达式%&gt;}"/&gt;</code></li>
+  <li>传递参数：<code class="highlighter-rouge">&lt;jsp:forward page="{要包含的文件路径|&lt;%=表达式%&gt;}"&gt;&lt;jsp:param name="参数名称" value="参数内容"/&gt;&lt;/jsp:forward&gt;</code></li>
+</ol>
+
+<blockquote>
+  <p>可以向页面中传递多个参数</p>
+</blockquote>
+
+<p>跳转页</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html"</span> <span class="na">pageEncoding=</span><span class="s">"utf-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;jsp:forward</span> <span class="na">page=</span><span class="s">"skip_demo01.jsp"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">value=</span><span class="s">"fmz"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">"info"</span> <span class="na">value=</span><span class="s">"http://fengmengzhao.github.io"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/jsp:forward&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>跳转到的页面</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%@ page contentType="text/html" pageEncoding="utf-8"%&gt;
+&lt;center&gt;
+	&lt;h1&gt;跳转到页面&lt;/h1&gt;
+	&lt;h2&gt;
+		&lt;%=request.getParameter("name")%&gt;
+	&lt;/h2&gt;
+	&lt;h2&gt;
+		&lt;%=request.getParameter("info")%&gt;
+	&lt;/h2&gt;
+&lt;/center&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意这种跳转实在地址栏没有发生改变的情况下发生的，故称为：服务器跳转。</p>
+</blockquote>
+
+</div>
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and I am only responsible for myself
+  </p>
+  
+
+  <p>
+    © 麦羞, 2017 &mdash; built with Jekyll based on Github
+  </p>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34087103-1']);
+  
+  _gaq.push(['_setDomainName', 'lenage.com']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script type="text/javascript" src="/blogs/assets/scripts/MathJax-2.0-min.js"></script>
+<script type="text/javascript" src="/blogs/assets/scripts/jquery-1.11.3.min.js"></script>
+<script>
+  $(function(){
+    var $category = $('ul#java-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.java-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.java-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.java-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+
+  $(function(){
+    var $category = $('ul#diary-posts li:gt(8):not(:last)');
+    $category.hide();
+    var $toggleBtn=$('div.diary-showmore > a') ;
+    $toggleBtn.click(function(){
+      if($category.is(":visible")){
+            $category.hide() ;
+            $('div.diary-showmore a span')
+              .text("More...") ;
+          }else{
+            $category.show() ;
+            $('div.diary-showmore a span')
+            .text("Less") ;
+          }
+          return false ;
+    })
+  })
+</script>
+
+</body>
+</html>
