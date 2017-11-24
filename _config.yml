@@ -1,6 +1,6 @@
 # General Jekyll Config
 markdown: kramdown
-#pygments: true
+pygments: true
 url: http://fengmengzhao.github.io
 baseurl: /blogs
 lsi: false
@@ -14,19 +14,16 @@ paginate_path: "page:num"
 theme:
   # Color for top bar, links, etc
   highlight_color: '#3498db'
-
   # Profile links on the left sidebar, leave blank to ignore
   social:
     github: FengMengZhao
     twitter: fengmengzhao
     facebook: 100008350779619
     gplus: 105478354193409781551
-
   # "Hi, I'm _______"
   name: 麦羞
   email: fengmengzhao@gmail.com
   tagline: "weak opinions, strongly held"
-
   # Google Analytics key, leave blank to ignore
   google_analytics_key: UA-34087103-1
   google_analytics_domain: 'lenage.com'
